@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 
 import "./App.css";
 
-const makeid = (length: number) => {
+const buildRandomID = (length: number) => {
   var result = "";
   var characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -85,7 +85,7 @@ const App = () => {
   const handleCreateItem = () => {
     axios
       .put(`https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items`, {
-        id: makeid(4),
+        id: buildRandomID(5),
         name: newItemName,
       })
       .then((res) => {
