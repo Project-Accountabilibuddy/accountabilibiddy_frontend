@@ -10,19 +10,16 @@ const App = () => {
 
   const handleGetEverything = () => {
     axios
-      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items", {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
-      })
+      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
       .then((res) => {
-        console.log({ res });
-        setEverything(JSON.stringify(res));
+        console.log(res?.data?.Items);
+        setEverything(JSON.stringify(res?.data?.Items));
       })
       .catch((err) => console.log({ err }));
   };
 
+  // TODO: BUILD OUT SHORT AND SWEET CRUD APP HERE
+  // API GATEWAY ~ LAMBDA ~ DYNAMODB
   return (
     <div className="App">
       <header className="App-header">
@@ -30,7 +27,7 @@ const App = () => {
         <Button onClick={handleGetEverything} variant="contained">
           GET everyting!
         </Button>
-        <h1>{everything}</h1>
+        <h4>{everything}</h4>
       </header>
     </div>
   );
