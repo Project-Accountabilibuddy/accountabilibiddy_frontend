@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-accountabilibuddy-dev-101509-authRole",
+      "UnauthRoleArn": "arn:aws:iam::912897402161:role/amplify-accountabilibuddy-dev-101509-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::912897402161:role/amplify-accountabilibuddy-dev-101509-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-accountabilibuddy-dev-101509-deployment",
+      "UnauthRoleName": "amplify-accountabilibuddy-dev-101509-unauthRole",
+      "StackName": "amplify-accountabilibuddy-dev-101509",
+      "StackId": "arn:aws:cloudformation:us-east-1:912897402161:stack/amplify-accountabilibuddy-dev-101509/c649a480-7a2f-11ed-92fa-0efc7f49ca19",
+      "AmplifyAppId": "d2279c7biuwobs"
+    },
+    "categories": {
+      "auth": {
+        "accountabilibuddy95ca20e4": {}
+      }
+    }
+  }
+}
