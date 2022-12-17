@@ -21,6 +21,8 @@ const Authentication = () => {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [code, setCode] = useState("");
+
   const navigate = useNavigate();
 
   const handleSignUpUser = async () => {
@@ -35,6 +37,14 @@ const Authentication = () => {
       navigate("/");
     } catch (error) {
       console.log("error signing up:", error);
+    }
+  };
+
+  const handleConfirmSignUp = async () => {
+    try {
+      await Auth.confirmSignUp(userEmail, code);
+    } catch (error) {
+      console.log("error confirming sign up", error);
     }
   };
 
@@ -57,6 +67,15 @@ const Authentication = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button onClick={handleSignUpUser}>Sign Up</Button>
+
+      <TextField
+        className="text_field"
+        variant="outlined"
+        label="Code"
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+      />
+      <Button onClick={handleConfirmSignUp}>Verify Code</Button>
     </StyledAuthentication>
   );
 };

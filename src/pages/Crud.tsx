@@ -64,9 +64,11 @@ const Crud = () => {
       .catch((err) => console.log({ err }));
   };
 
-  useEffect(() => {
-    getAllItems();
-  }, []);
+    useEffect(() => {
+      if (allItems.length) return;
+
+      getAllItems();
+    }, [allItems]);
 
   const handleDeleteItem = (id: string) => {
     axios
