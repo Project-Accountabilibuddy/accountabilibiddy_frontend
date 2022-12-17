@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Auth } from "aws-amplify";
-import { Route, Routes, useNavigate } from "react-router-dom";
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -27,8 +26,6 @@ const Authentication = () => {
   const [userEmailSignIn, setUserEmailSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
 
-  const navigate = useNavigate();
-
   const handleSignUpUser = async () => {
     try {
       const { user } = await Auth.signUp({
@@ -38,7 +35,6 @@ const Authentication = () => {
         autoSignIn: { enabled: true },
       });
       console.log(user);
-      navigate("/");
     } catch (error) {
       console.log("error signing up:", error);
     }

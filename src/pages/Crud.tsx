@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 
 const buildRandomID = (length: number) => {
   var result = "";
@@ -55,6 +56,8 @@ const Crud = () => {
   const [allItems, setAllItems] = useState([]);
   const [newItemName, setNewItemName] = useState("");
 
+  const navigate = useNavigate();
+
   const getAllItems = () => {
     axios
       .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
@@ -99,7 +102,7 @@ const Crud = () => {
 
   const handleSignOut = async () => {
     try {
-      await Auth.signOut();
+      await Auth.signOut().then(() => navigate("/auth"));
     } catch (error) {
       console.log("error signing out: ", error);
     }

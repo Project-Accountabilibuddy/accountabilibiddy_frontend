@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Auth, Hub } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
+import isEmpty from "lodash/isEmpty";
 
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
@@ -13,16 +14,36 @@ const App = () => {
 
   const navigate = useNavigate();
 
+  Hub.listen("auth", (data) => {
+    console.log("auth payload: ", data.payload.event);
+    switch (data.payload.event) {
+      case "signIn":
+        console.log("user signed in");
+        navigate("/");
+        break;
+      case "signUp":
+        console.log("user signed up");
+        break;
+      case "signOut":
+        console.log("user signed out");
+        navigate("/auth");
+        break;
+      case "signIn_failure":
+        console.log("user sign in failed");
+        break;
+      case "configured":
+        console.log("the Auth module is configured");
+    }
+  });
+
   useEffect(() => {
     setLoading(true);
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
-        console.log({ user });
         setUser(user);
       })
       .catch((err) => {
         console.log({ err });
-        setLoading(false);
       })
       .finally(() => {
         setLoading(false);
@@ -35,9 +56,7 @@ const App = () => {
     } else {
       navigate("/auth");
     }
-  }, [user, navigate]);
-
-  console.log({ user });
+  }, [navigate, user]);
 
   return (
     <div className="App">
