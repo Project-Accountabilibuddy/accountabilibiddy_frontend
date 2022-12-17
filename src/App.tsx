@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
 import CrudPage from "./pages/Crud";
@@ -8,11 +8,24 @@ import AuthPage from "./pages/Auth";
 import "./App.css";
 
 const App = () => {
-  Auth.currentAuthenticatedUser({
-    bypassCache: false, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-  })
-    .then((user) => console.log(user))
-    .catch((err) => console.log(err));
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  Auth.currentAuthenticatedUser({ bypassCache: true })
+    .then((user) => {
+      console.log({ user });
+      setUser(user);
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="App">
