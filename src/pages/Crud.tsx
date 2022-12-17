@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
+import { Auth } from "aws-amplify";
 
 const buildRandomID = (length: number) => {
   var result = "";
@@ -64,11 +65,11 @@ const Crud = () => {
       .catch((err) => console.log({ err }));
   };
 
-    useEffect(() => {
-      if (allItems.length) return;
+  useEffect(() => {
+    if (allItems.length) return;
 
-      getAllItems();
-    }, [allItems]);
+    getAllItems();
+  }, [allItems]);
 
   const handleDeleteItem = (id: string) => {
     axios
@@ -96,8 +97,14 @@ const Crud = () => {
       .catch((err) => console.log({ err }));
   };
 
-  // TODO: BUILD OUT SHORT AND SWEET CRUD Crud HERE
-  // API GATEWAY ~ LAMBDA ~ DYNAMODB
+  const handleSignOut = async () => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
+
   return (
     <StyledCrud>
       <h1>AWS CRUD</h1>
@@ -119,6 +126,7 @@ const Crud = () => {
           </div>
         );
       })}
+      <Button onClick={handleSignOut}>Sign Out</Button>
     </StyledCrud>
   );
 };
