@@ -1,131 +1,68 @@
-import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import axios from "axios";
-import styled from "styled-components";
-import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { Auth, Hub } from "aws-amplify";
+import CircularProgress from "@mui/material/CircularProgress";
 
+import CrudPage from "./pages/Crud";
+import AuthPage from "./pages/Auth";
 import "./App.css";
 
-const buildRandomID = (length: number) => {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-};
-
-type Item = {
-  id: string;
-  name: string;
-};
-
-const StyledTodo = styled.div`
-  .create_components {
-    display: flex;
-    flex-direction: column;
-
-    input {
-      color: white;
-    }
-
-    button {
-      margin-top: 12px;
-    }
-  }
-
-  .items_title {
-    text-align: start;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: row;
-    margin-top: 12px;
-    align-items: center;
-
-    h6 {
-      margin: 0;
-    }
-  }
-`;
-
 const App = () => {
-  const [allItems, setAllItems] = useState([]);
-  const [newItemName, setNewItemName] = useState("");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const getAllItems = () => {
-    axios
-      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
-      .then((res) => {
-        console.log(res?.data?.Items);
-        setAllItems(res?.data?.Items);
-      })
-      .catch((err) => console.log({ err }));
-  };
+  const navigate = useNavigate();
+
+  Hub.listen("auth", (data) => {
+    console.log("auth payload: ", data.payload.event);
+    switch (data.payload.event) {
+      case "signIn":
+        console.log("user signed in");
+        navigate("/");
+        break;
+      case "confirmSignUp":
+        console.log("user confirmed account");
+        navigate("/");
+        break;
+      case "signOut":
+        console.log("user signed out");
+        navigate("/auth");
+        break;
+    }
+  });
 
   useEffect(() => {
-    getAllItems();
+    setLoading(true);
+    Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((err) => {
+        console.log({ err });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  const handleDeleteItem = (id: string) => {
-    axios
-      .delete(
-        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
-      )
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-      })
-      .catch((err) => console.log({ err }));
-  };
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    } else {
+      navigate("/auth");
+    }
+  }, [navigate, user]);
 
-  const handleCreateItem = () => {
-    axios
-      .put(`https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items`, {
-        id: buildRandomID(5),
-        name: newItemName,
-      })
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-        setNewItemName("");
-      })
-      .catch((err) => console.log({ err }));
-  };
-
-  // TODO: BUILD OUT SHORT AND SWEET CRUD APP HERE
-  // API GATEWAY ~ LAMBDA ~ DYNAMODB
   return (
     <div className="App">
       <header className="App-header">
-        <StyledTodo>
-          <h1>AWS CRUD</h1>
-          <h6>
-            S3 ~ Lambda ~ API Gateway ~ DynamoDB ~ Cloud Watch ~ Cloud Front
-          </h6>
-          <div className="create_components">
-            <TextField
-              variant="outlined"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-            />
-            <Button onClick={handleCreateItem}>Create New Item</Button>
-          </div>
-          <h3 className="items_title">Your Items:</h3>
-          {allItems.map((item: Item, i) => {
-            return (
-              <div key={i} className="item">
-                <Button onClick={() => handleDeleteItem(item?.id)}>
-                  Delete
-                </Button>
-                <h6>{item?.name}</h6>
-              </div>
-            );
-          })}
-        </StyledTodo>
+        {loading && <CircularProgress />}
+        {!loading && (
+          <Routes>
+            <Route path="/" element={<CrudPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+          </Routes>
+        )}
       </header>
     </div>
   );
