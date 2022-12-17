@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth, Hub } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
-import isEmpty from "lodash/isEmpty";
 
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
@@ -21,18 +20,14 @@ const App = () => {
         console.log("user signed in");
         navigate("/");
         break;
-      case "signUp":
-        console.log("user signed up");
+      case "confirmSignUp":
+        console.log("user confirmed account");
+        navigate("/");
         break;
       case "signOut":
         console.log("user signed out");
         navigate("/auth");
         break;
-      case "signIn_failure":
-        console.log("user sign in failed");
-        break;
-      case "configured":
-        console.log("the Auth module is configured");
     }
   });
 
