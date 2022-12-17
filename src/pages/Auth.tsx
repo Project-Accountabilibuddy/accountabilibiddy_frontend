@@ -21,7 +21,11 @@ const Authentication = () => {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [userEmailConfirmSignUp, setUserEmailConfirmSignUp] = useState("");
   const [code, setCode] = useState("");
+
+  const [userEmailSignIn, setUserEmailSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
 
   const navigate = useNavigate();
 
@@ -40,11 +44,19 @@ const Authentication = () => {
     }
   };
 
-  const handleConfirmSignUp = async () => {
+  const handleConfirmSignUpUser = async () => {
     try {
-      await Auth.confirmSignUp(userEmail, code);
+      await Auth.confirmSignUp(userEmailConfirmSignUp, code);
     } catch (error) {
       console.log("error confirming sign up", error);
+    }
+  };
+
+  const handleSignInUser = async () => {
+    try {
+      await Auth.signIn(userEmailSignIn, passwordSignIn);
+    } catch (error) {
+      console.log("error signing in", error);
     }
   };
 
@@ -52,6 +64,7 @@ const Authentication = () => {
     <StyledAuthentication>
       <h1>AWS Auth</h1>
       <h6>S3 ~ Lambda ~ API Gateway ~ DynamoDB ~ Cloud Watch ~ Cloud Front</h6>
+      <h2>Sign Up</h2>
       <TextField
         className="text_field"
         variant="outlined"
@@ -67,7 +80,14 @@ const Authentication = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button onClick={handleSignUpUser}>Sign Up</Button>
-
+      <h2>Confirm Sign Up</h2>
+      <TextField
+        className="text_field"
+        variant="outlined"
+        label="Email"
+        value={userEmailConfirmSignUp}
+        onChange={(e) => setUserEmailConfirmSignUp(e.target.value)}
+      />
       <TextField
         className="text_field"
         variant="outlined"
@@ -75,7 +95,23 @@ const Authentication = () => {
         value={code}
         onChange={(e) => setCode(e.target.value)}
       />
-      <Button onClick={handleConfirmSignUp}>Verify Code</Button>
+      <Button onClick={handleConfirmSignUpUser}>Verify Code</Button>
+      <h2>Sign In</h2>
+      <TextField
+        className="text_field"
+        variant="outlined"
+        label="Email"
+        value={userEmailSignIn}
+        onChange={(e) => setUserEmailSignIn(e.target.value)}
+      />
+      <TextField
+        className="text_field"
+        variant="outlined"
+        label="Password"
+        value={passwordSignIn}
+        onChange={(e) => setPasswordSignIn(e.target.value)}
+      />
+      <Button onClick={handleSignInUser}>Sign In</Button>
     </StyledAuthentication>
   );
 };

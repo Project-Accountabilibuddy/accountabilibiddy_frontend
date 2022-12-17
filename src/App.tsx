@@ -22,6 +22,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log({ err });
+        setLoading(false);
       })
       .finally(() => {
         setLoading(false);
@@ -35,6 +36,8 @@ const App = () => {
       navigate("/auth");
     }
   }, [user, navigate]);
+
+  console.log({ user });
 
   return (
     <div className="App">
