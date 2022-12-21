@@ -12,7 +12,7 @@ import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
-  background-color: ${({ theme }) => theme.colors.primaryLight};
+  background-color: ${({ theme }) => theme.colors.background};
   height: 100vh;
   width: 100vw;
 `;
