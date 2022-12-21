@@ -3,9 +3,10 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth, Hub } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import GlobalTheme from "./global/GlobalTheme";
+
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
-import "./App.css";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -55,15 +56,17 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {loading && <CircularProgress />}
-        {!loading && (
-          <Routes>
-            <Route path="/" element={<CrudPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-          </Routes>
-        )}
-      </header>
+      <GlobalTheme>
+        <>
+          {loading && <CircularProgress />}
+          {!loading && (
+            <Routes>
+              <Route path="/" element={<CrudPage />} />
+              <Route path="/auth" element={<AuthPage />} />
+            </Routes>
+          )}
+        </>
+      </GlobalTheme>
     </div>
   );
 };
