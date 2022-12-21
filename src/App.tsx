@@ -2,11 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth, Hub } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
+import styled from "styled-components";
 
 import GlobalTheme from "./global/GlobalTheme";
 
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
+
+const StyledApp = styled.div`
+  background-color: ${({ theme }) => theme.colors.primaryLight};
+  width: 100vw;
+  height: 100vh;
+  padding: 48px;
+`;
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -57,7 +65,7 @@ const App = () => {
   return (
     <div className="App">
       <GlobalTheme>
-        <>
+        <StyledApp>
           {loading && <CircularProgress />}
           {!loading && (
             <Routes>
@@ -65,7 +73,7 @@ const App = () => {
               <Route path="/auth" element={<AuthPage />} />
             </Routes>
           )}
-        </>
+        </StyledApp>
       </GlobalTheme>
     </div>
   );
