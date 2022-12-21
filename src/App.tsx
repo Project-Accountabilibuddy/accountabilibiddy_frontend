@@ -70,8 +70,8 @@ const App = () => {
           {loading && <CircularProgress />}
           {!loading && (
             <Routes>
-              <Route path="/landing" element={<LandingPage />} />
               <Route path="/" element={<CrudPage />} />
+              <Route path="/landing" element={<LandingPage />} />
               <Route path="/auth" element={<AuthPage />} />
             </Routes>
           )}
