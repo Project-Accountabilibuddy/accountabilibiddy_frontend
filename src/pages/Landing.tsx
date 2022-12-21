@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "@mui/material/Button";
 
 const StyledLanding = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   text-align: center;
+  justify-content: center;
+  padding: 0 200px;
+  height: 100%;
 `;
 
 const Landing = () => {
@@ -22,8 +25,11 @@ const Landing = () => {
       <h3 className="heading-3">
         Just because it will take time does not mean you have to do it all in a
         single setting I recommend taking breaks in between questions to keep
-        your brain from melting ~
+        your brain from melting
       </h3>
+      <Button variant="outlined" onClick={() => alert("button click")}>
+        Begin Journey
+      </Button>
     </StyledLanding>
   );
 };

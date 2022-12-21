@@ -15,10 +15,6 @@ const StyledApp = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryLight};
   height: 100vh;
   width: 100vw;
-
-  .app_content {
-    padding: 48px;
-  }
 `;
 
 const App = () => {
@@ -71,16 +67,14 @@ const App = () => {
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          <div className="app_content">
-            {loading && <CircularProgress />}
-            {!loading && (
-              <Routes>
-                <Route path="/landing" element={<LandingPage />} />
-                <Route path="/" element={<CrudPage />} />
-                <Route path="/auth" element={<AuthPage />} />
-              </Routes>
-            )}
-          </div>
+          {loading && <CircularProgress />}
+          {!loading && (
+            <Routes>
+              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/" element={<CrudPage />} />
+              <Route path="/auth" element={<AuthPage />} />
+            </Routes>
+          )}
         </StyledApp>
       </GlobalTypography>
     </GlobalTheme>
