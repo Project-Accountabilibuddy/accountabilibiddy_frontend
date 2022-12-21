@@ -5,14 +5,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import styled from "styled-components";
 
 import GlobalTheme from "./global/GlobalTheme";
+import GlobalTypography from "./global/GlobalTypography";
 
+import LandingPage from "./pages/Landing";
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryLight};
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
   padding: 48px;
 `;
 
@@ -54,28 +56,29 @@ const App = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    } else {
-      navigate("/auth");
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   } else {
+  //     navigate("/auth");
+  //   }
+  // }, [navigate, user]);
 
   return (
-    <div className="App">
-      <GlobalTheme>
+    <GlobalTheme>
+      <GlobalTypography>
         <StyledApp>
           {loading && <CircularProgress />}
           {!loading && (
             <Routes>
+              <Route path="/landing" element={<LandingPage />} />
               <Route path="/" element={<CrudPage />} />
               <Route path="/auth" element={<AuthPage />} />
             </Routes>
           )}
         </StyledApp>
-      </GlobalTheme>
-    </div>
+      </GlobalTypography>
+    </GlobalTheme>
   );
 };
 
