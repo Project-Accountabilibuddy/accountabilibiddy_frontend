@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Auth, Amplify } from "aws-amplify";
 
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import awsconfig from "./aws-exports";

@@ -2,10 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth, Hub } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
+import styled from "styled-components";
 
+import GlobalTheme from "./global/GlobalTheme";
+import GlobalTypography from "./global/GlobalTypography";
+
+import LandingPage from "./pages/Landing";
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
-import "./App.css";
+
+const StyledApp = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  height: 100vh;
+  width: 100vw;
+`;
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -45,26 +55,29 @@ const App = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    } else {
-      navigate("/auth");
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   } else {
+  //     navigate("/auth");
+  //   }
+  // }, [navigate, user]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {loading && <CircularProgress />}
-        {!loading && (
-          <Routes>
-            <Route path="/" element={<CrudPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-          </Routes>
-        )}
-      </header>
-    </div>
+    <GlobalTheme>
+      <GlobalTypography>
+        <StyledApp>
+          {loading && <CircularProgress />}
+          {!loading && (
+            <Routes>
+              <Route path="/" element={<CrudPage />} />
+              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/auth" element={<AuthPage />} />
+            </Routes>
+          )}
+        </StyledApp>
+      </GlobalTypography>
+    </GlobalTheme>
   );
 };
 
