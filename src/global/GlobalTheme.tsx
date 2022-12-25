@@ -1,11 +1,12 @@
 import React from "react";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 type ThemeProps = {
   children: JSX.Element;
 };
 
-export const theme = {
+export const GlobalPallete = {
   colors: {
     primary: "#86c232",
     secondary: "#61892F",
@@ -16,8 +17,25 @@ export const theme = {
   },
 };
 
+const MaterialUIPallet = createTheme({
+  palette: {
+    primary: {
+      main: GlobalPallete.colors.primary,
+    },
+    secondary: {
+      main: GlobalPallete.colors.secondary,
+    },
+  },
+});
+
 const GlobalTheme = ({ children }: ThemeProps) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={MaterialUIPallet}>
+      <StyledComponentsThemeProvider theme={GlobalPallete}>
+        {children}
+      </StyledComponentsThemeProvider>
+    </ThemeProvider>
+  );
 };
 
 export default GlobalTheme;
