@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
 
-const StyledLanding = styled.div`
+const StyledProjectSetup = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -24,12 +23,10 @@ const StyledLanding = styled.div`
   }
 `;
 
-const Landing = () => {
-  const navigate = useNavigate();
-
+const ProjectSetup = () => {
   return (
-    <StyledLanding>
-      <h1 className="heading-1">Welcome To Pain</h1>
+    <StyledProjectSetup>
+      <h1 className="heading-1">Are you ready?</h1>
       <h3 className="heading-2">
         The setup process for Accoutabilibuddy will take real effort and time.
         It’s designed that way to ensure you are serious about your chosen
@@ -42,11 +39,11 @@ const Landing = () => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button variant="outlined" onClick={() => navigate("/project-setup")}>
+      <Button variant="outlined" onClick={() => alert("button click")}>
         Begin Journey
       </Button>
-    </StyledLanding>
+    </StyledProjectSetup>
   );
 };
 
-export default Landing;
+export default ProjectSetup;
