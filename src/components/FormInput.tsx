@@ -22,10 +22,6 @@ const StyledFormInput = styled.div`
     color: ${({ theme }) => theme.colors.lightGrey};
   }
 
-  .body-1 {
-    color: ${({ theme }) => theme.colors.lightGrey};
-  }
-
   button {
     margin-top: 120px;
   }
