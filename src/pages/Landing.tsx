@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const StyledLanding = styled.div`
   display: flex;
@@ -24,6 +25,8 @@ const StyledLanding = styled.div`
 `;
 
 const Landing = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledLanding>
       <h1 className="heading-1">Welcome To Pain</h1>
@@ -39,7 +42,7 @@ const Landing = () => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button variant="outlined" onClick={() => alert("button click")}>
+      <Button variant="outlined" onClick={() => navigate("/project-setup")}>
         Begin Journey
       </Button>
     </StyledLanding>

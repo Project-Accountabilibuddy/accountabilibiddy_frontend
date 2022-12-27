@@ -8,6 +8,7 @@ import GlobalTheme from "./global/GlobalTheme";
 import GlobalTypography from "./global/GlobalTypography";
 
 import LandingPage from "./pages/Landing";
+import ProjectSetUpPage from "./pages/ProjectSetup";
 import CrudPage from "./pages/Crud";
 import AuthPage from "./pages/Auth";
 
@@ -72,6 +73,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<CrudPage />} />
               <Route path="/landing" element={<LandingPage />} />
+              <Route path="/project-setup" element={<ProjectSetUpPage />} />
               <Route path="/auth" element={<AuthPage />} />
             </Routes>
           )}
