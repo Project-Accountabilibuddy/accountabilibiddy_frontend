@@ -50,13 +50,13 @@ const FormInput = ({
 }: FormInputProps) => {
   const navigate = useNavigate();
 
-//   const ref = useRef(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
-//   useEffect(() => {
-//     if (ref?.current) {
-//       ref?.current?.focus();
-//     }
-//   }, []);
+  useEffect(() => {
+    if (ref?.current) {
+      ref?.current?.focus();
+    }
+  }, []);
 
   return (
     <StyledFormInput>

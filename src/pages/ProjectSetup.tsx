@@ -17,8 +17,8 @@ const ProjectSetup = () => {
   return (
     <StyledProjectSetup>
       <FormInput
-        title="What is the name of your project?"
-        description="This is the name of your project. It will be used to identify your project in the future."
+        title="Why the fuck are you doing this?"
+        description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
         responseText={responseText}
         setResponseText={setResponseText}
       />
