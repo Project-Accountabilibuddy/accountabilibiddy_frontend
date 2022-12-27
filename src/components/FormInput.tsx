@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 type FormInputProps = {
   title: string;
-  description: string;
+  description?: string;
   responseText: string;
   setResponseText: (responseText: string) => void;
+  continueAction: () => void;
 };
 
 const StyledFormInput = styled.div`
@@ -43,9 +44,8 @@ const FormInput = ({
   description,
   responseText,
   setResponseText,
+  continueAction,
 }: FormInputProps) => {
-  const navigate = useNavigate();
-
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const FormInput = ({
   return (
     <StyledFormInput>
       <h1 className="heading-1">{title}</h1>
-      <h3 className="heading-2">{description}</h3>
+      {description && <h3 className="heading-2">{description}</h3>}
       <textarea
         ref={ref}
         name="text"
@@ -67,7 +67,7 @@ const FormInput = ({
         value={responseText}
         onChange={(e) => setResponseText(e.target.value)}
       />
-      <Button variant="outlined" onClick={() => navigate("/landing")}>
+      <Button variant="outlined" onClick={continueAction}>
         Continue Journey
       </Button>
     </StyledFormInput>
