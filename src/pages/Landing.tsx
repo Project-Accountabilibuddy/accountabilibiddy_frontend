@@ -42,7 +42,7 @@ const Landing = () => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button variant="outlined" onClick={() => navigate("/project-setup")}>
+      <Button variant="outlined" onClick={() => navigate("/auth")}>
         Begin Journey
       </Button>
     </StyledLanding>

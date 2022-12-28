@@ -7,6 +7,14 @@ import { Auth } from "aws-amplify";
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  padding: 0 200px;
+  height: 100%;
+
+  .heading-2 {
+    color: ${({ theme }) => theme.colors.lightGrey};
+  }
 
   .text_field {
     padding-top: 12px;
@@ -14,9 +22,15 @@ const StyledAuthentication = styled.div`
       color: white;
     }
   }
+
+  button {
+    margin-top: 24px;
+  }
 `;
 
 const Authentication = () => {
+  const [authFormInView, setAuthFormInView] = useState("SIGN_UP");
+
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,56 +72,69 @@ const Authentication = () => {
 
   return (
     <StyledAuthentication>
-      <h1>AWS Auth</h1>
-      <h6>S3 ~ Lambda ~ API Gateway ~ DynamoDB ~ Cloud Watch ~ Cloud Front</h6>
-      <h2>Sign Up</h2>
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Email"
-        value={userEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
-      />
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button onClick={handleSignUpUser}>Sign Up</Button>
-      <h2>Confirm Sign Up</h2>
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Email"
-        value={userEmailConfirmSignUp}
-        onChange={(e) => setUserEmailConfirmSignUp(e.target.value)}
-      />
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Code"
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-      />
-      <Button onClick={handleConfirmSignUpUser}>Verify Code</Button>
-      <h2>Sign In</h2>
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Email"
-        value={userEmailSignIn}
-        onChange={(e) => setUserEmailSignIn(e.target.value)}
-      />
-      <TextField
-        className="text_field"
-        variant="outlined"
-        label="Password"
-        value={passwordSignIn}
-        onChange={(e) => setPasswordSignIn(e.target.value)}
-      />
-      <Button onClick={handleSignInUser}>Sign In</Button>
+      <h1 className="heading-1">Accountabilibuddy</h1>
+      {authFormInView === "SIGN_UP" && (
+        <>
+          <h3 className="heading-2">
+            Let's get you set up before your ass is kicked
+          </h3>
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Email"
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+          />
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleSignUpUser}>Sign Up</Button>
+        </>
+      )}
+      {authFormInView === "CONFIRM_EMAIL" && (
+        <>
+          <h3 className="heading-2">Confirm Sign Up</h3>
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Email"
+            value={userEmailConfirmSignUp}
+            onChange={(e) => setUserEmailConfirmSignUp(e.target.value)}
+          />
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <Button onClick={handleConfirmSignUpUser}>Verify Code</Button>
+        </>
+      )}
+      {authFormInView === "SIGN_IN" && (
+        <>
+          <h3 className="heading-2">Let's get back to work</h3>
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Email"
+            value={userEmailSignIn}
+            onChange={(e) => setUserEmailSignIn(e.target.value)}
+          />
+          <TextField
+            className="text_field"
+            variant="outlined"
+            label="Password"
+            value={passwordSignIn}
+            onChange={(e) => setPasswordSignIn(e.target.value)}
+          />
+          <Button onClick={handleSignInUser}>Sign In</Button>
+        </>
+      )}
     </StyledAuthentication>
   );
 };
