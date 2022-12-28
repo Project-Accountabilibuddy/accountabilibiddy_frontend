@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -40,15 +41,18 @@ const Authentication = () => {
   const [userEmailSignIn, setUserEmailSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSignUpUser = async () => {
     try {
-      const { user } = await Auth.signUp({
+      await Auth.signUp({
         username: userEmail,
         password,
         attributes: { email: userEmail },
         autoSignIn: { enabled: true },
+      }).then(() => {
+        setAuthFormInView("CONFIRM_EMAIL");
       });
-      console.log(user);
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -56,7 +60,9 @@ const Authentication = () => {
 
   const handleConfirmSignUpUser = async () => {
     try {
-      await Auth.confirmSignUp(userEmailConfirmSignUp, code);
+      await Auth.confirmSignUp(userEmailConfirmSignUp, code).then(() => {
+        navigate("/project-setup");
+      });
     } catch (error) {
       console.log("error confirming sign up", error);
     }
@@ -64,7 +70,9 @@ const Authentication = () => {
 
   const handleSignInUser = async () => {
     try {
-      await Auth.signIn(userEmailSignIn, passwordSignIn);
+      await Auth.signIn(userEmailSignIn, passwordSignIn).then(() => {
+        navigate("/");
+      });
     } catch (error) {
       console.log("error signing in", error);
     }
@@ -93,6 +101,9 @@ const Authentication = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleSignUpUser}>Sign Up</Button>
+          <Button onClick={() => setAuthFormInView("SIGN_IN")}>
+            I have an account
+          </Button>
         </>
       )}
       {authFormInView === "CONFIRM_EMAIL" && (
@@ -133,6 +144,9 @@ const Authentication = () => {
             onChange={(e) => setPasswordSignIn(e.target.value)}
           />
           <Button onClick={handleSignInUser}>Sign In</Button>
+          <Button onClick={() => setAuthFormInView("SIGN_UP")}>
+            I don't have an account
+          </Button>
         </>
       )}
     </StyledAuthentication>
