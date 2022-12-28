@@ -22,11 +22,11 @@ const DEFAULT_FORM_RESPONSES = {
 };
 
 const ProjectSetup = () => {
+  const [formInView, setFormInView] = useState("WHAT_LONG_FORM");
+
   const [allFormResponses, setAllFormResponses] = useState(
     DEFAULT_FORM_RESPONSES
   );
-
-  const [formInView, setFormInView] = useState("WHAT_LONG_FORM");
 
   const navigate = useNavigate();
 
