@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../components/FormInput";
 
@@ -26,6 +27,8 @@ const ProjectSetup = () => {
   );
 
   const [formInView, setFormInView] = useState("WHAT_LONG_FORM");
+
+  const navigate = useNavigate();
 
   const onChange = (responseText: string, field: string) => {
     setAllFormResponses({ ...allFormResponses, [field]: responseText });
@@ -74,7 +77,7 @@ const ProjectSetup = () => {
           title="Better come up with an inspring name"
           responseText={allFormResponses.JOURNEY_NAME}
           setResponseText={(text) => onChange(text, "JOURNEY_NAME")}
-          continueAction={() => alert("we done")}
+          continueAction={() => navigate("/")}
         />
       )}
     </StyledProjectSetup>
