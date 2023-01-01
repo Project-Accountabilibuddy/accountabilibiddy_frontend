@@ -77,7 +77,7 @@ const ProjectSetup = () => {
           title="Better come up with an inspring name"
           responseText={allFormResponses.JOURNEY_NAME}
           setResponseText={(text) => onChange(text, "JOURNEY_NAME")}
-          continueAction={() => navigate("/")}
+          continueAction={() => navigate("/my-project")}
         />
       )}
     </StyledProjectSetup>

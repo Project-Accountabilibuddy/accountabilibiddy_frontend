@@ -110,8 +110,6 @@ const Project = () => {
 
   return (
     <StyledProject>
-      <h1>AWS Project</h1>
-      <h6>S3 ~ Lambda ~ API Gateway ~ DynamoDB ~ Cloud Watch ~ Cloud Front</h6>
       <div className="create_components">
         <TextField
           variant="outlined"

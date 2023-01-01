@@ -26,49 +26,49 @@ const StyledGlobalLoading = styled.div`
 `;
 
 const App = () => {
-  const [user, setUser] = useState("SHIT");
-  const [loading, setLoading] = useState(true);
+  // const [user, setUser] = useState("SHIT");
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  Hub.listen("auth", (data) => {
-    // console.log("auth payload: ", data.payload.event);
-    // switch (data.payload.event) {
-    //   case "signIn":
-    //     navigate("/my-project");
-    //     break;
-    //   case "confirmSignUp":
-    //     navigate("/project-setup");
-    //     break;
-    //   case "signOut":
-    //     navigate("/");
-    //     break;
-    // }
-  });
+  // Hub.listen("auth", (data) => {
+  // console.log("auth payload: ", data.payload.event);
+  // switch (data.payload.event) {
+  //   case "signIn":
+  //     navigate("/my-project");
+  //     break;
+  //   case "confirmSignUp":
+  //     navigate("/project-setup");
+  //     break;
+  //   case "signOut":
+  //     navigate("/");
+  //     break;
+  // }
+  // });
 
-  useEffect(() => {
-    setLoading(true);
-    Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((err) => {
-        console.log({ err });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   Auth.currentAuthenticatedUser({ bypassCache: true })
+  //     .then((user) => {
+  //       setUser(user);
+  //     })
+  //     .catch((err) => {
+  //       console.log({ err });
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
-  useEffect(() => {
-    if (user !== "SHIT") {
-      navigate("/my-project");
-    } else {
-      navigate("/");
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (user !== "SHIT") {
+  //     navigate("/my-project");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, [navigate, user]);
 
   return (
     <GlobalTheme>
