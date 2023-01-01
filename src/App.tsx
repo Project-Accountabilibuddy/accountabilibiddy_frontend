@@ -18,14 +18,21 @@ const StyledApp = styled.div`
   width: 100vw;
 `;
 
+const StyledGlobalLoading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("SHIT");
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   Hub.listen("auth", (data) => {
-    console.log("auth payload: ", data.payload.event);
+    // console.log("auth payload: ", data.payload.event);
     // switch (data.payload.event) {
     //   case "signIn":
     //     navigate("/my-project");
@@ -53,19 +60,25 @@ const App = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
-  //   } else {
-  //     navigate("/auth");
-  //   }
-  // }, [navigate, user]);
+  console.log("user: ", user);
+
+  useEffect(() => {
+    if (user !== "SHIT") {
+      navigate("/my-project");
+    } else {
+      navigate("/");
+    }
+  }, [navigate, user]);
 
   return (
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          {loading && <CircularProgress />}
+          {loading && (
+            <StyledGlobalLoading>
+              <CircularProgress />
+            </StyledGlobalLoading>
+          )}
           {!loading && (
             <Routes>
               <Route path="/" element={<LandingPage />} />
