@@ -24,23 +24,20 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  // Hub.listen("auth", (data) => {
-  //   console.log("auth payload: ", data.payload.event);
-  //   switch (data.payload.event) {
-  //     case "signIn":
-  //       console.log("user signed in");
-  //       navigate("/");
-  //       break;
-  //     case "confirmSignUp":
-  //       console.log("user confirmed account");
-  //       navigate("/");
-  //       break;
-  //     case "signOut":
-  //       console.log("user signed out");
-  //       navigate("/auth");
-  //       break;
-  //   }
-  // });
+  Hub.listen("auth", (data) => {
+    console.log("auth payload: ", data.payload.event);
+    // switch (data.payload.event) {
+    //   case "signIn":
+    //     navigate("/my-project");
+    //     break;
+    //   case "confirmSignUp":
+    //     navigate("/project-setup");
+    //     break;
+    //   case "signOut":
+    //     navigate("/");
+    //     break;
+    // }
+  });
 
   useEffect(() => {
     setLoading(true);

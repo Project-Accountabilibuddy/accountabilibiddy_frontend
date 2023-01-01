@@ -102,7 +102,7 @@ const Project = () => {
 
   const handleSignOut = async () => {
     try {
-      await Auth.signOut().then(() => navigate("/auth"));
+      await Auth.signOut().then(() => navigate("/"));
     } catch (error) {
       console.log("error signing out: ", error);
     }

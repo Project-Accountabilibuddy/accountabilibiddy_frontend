@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Auth } from "aws-amplify";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -35,7 +35,6 @@ const Authentication = () => {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [userEmailConfirmSignUp, setUserEmailConfirmSignUp] = useState("");
   const [code, setCode] = useState("");
 
   const [userEmailSignIn, setUserEmailSignIn] = useState("");
@@ -69,7 +68,7 @@ const Authentication = () => {
 
   const handleConfirmSignUpUser = async () => {
     try {
-      await Auth.confirmSignUp(userEmailConfirmSignUp, code).then(() => {
+      await Auth.confirmSignUp(userEmail, code).then(() => {
         navigate("/project-setup");
       });
     } catch (error) {
@@ -80,7 +79,7 @@ const Authentication = () => {
   const handleSignInUser = async () => {
     try {
       await Auth.signIn(userEmailSignIn, passwordSignIn).then(() => {
-        navigate("/");
+        navigate("/my-project");
       });
     } catch (error) {
       console.log("error signing in", error);
@@ -118,13 +117,6 @@ const Authentication = () => {
       {authFormInView === "CONFIRM_EMAIL" && (
         <>
           <h3 className="heading-2">Confirm Sign Up</h3>
-          <TextField
-            className="text_field"
-            variant="outlined"
-            label="Email"
-            value={userEmailConfirmSignUp}
-            onChange={(e) => setUserEmailConfirmSignUp(e.target.value)}
-          />
           <TextField
             className="text_field"
             variant="outlined"
