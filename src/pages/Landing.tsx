@@ -22,6 +22,10 @@ const StyledLanding = styled.div`
   .body-1 {
     color: ${({ theme }) => theme.colors.lightGrey};
   }
+
+  button {
+    margin-top: 24px;
+  }
 `;
 
 const Landing = () => {
@@ -42,8 +46,11 @@ const Landing = () => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button variant="outlined" onClick={() => navigate("/project-setup")}>
+      <Button variant="outlined" onClick={() => navigate("/auth/sign-up")}>
         Begin Journey
+      </Button>
+      <Button variant="outlined" onClick={() => navigate("/auth/sign-in")}>
+        Sign In
       </Button>
     </StyledLanding>
   );

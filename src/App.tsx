@@ -9,7 +9,7 @@ import GlobalTypography from "./global/GlobalTypography";
 
 import LandingPage from "./pages/Landing";
 import ProjectSetUpPage from "./pages/ProjectSetup";
-import CrudPage from "./pages/Crud";
+import ProjectPage from "./pages/Project";
 import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
@@ -18,49 +18,55 @@ const StyledApp = styled.div`
   width: 100vw;
 `;
 
+const StyledGlobalLoading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [user, setUser] = useState("SHIT");
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  Hub.listen("auth", (data) => {
-    console.log("auth payload: ", data.payload.event);
-    switch (data.payload.event) {
-      case "signIn":
-        console.log("user signed in");
-        navigate("/");
-        break;
-      case "confirmSignUp":
-        console.log("user confirmed account");
-        navigate("/");
-        break;
-      case "signOut":
-        console.log("user signed out");
-        navigate("/auth");
-        break;
-    }
-  });
-
-  useEffect(() => {
-    setLoading(true);
-    Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((err) => {
-        console.log({ err });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  // Hub.listen("auth", (data) => {
+  // console.log("auth payload: ", data.payload.event);
+  // switch (data.payload.event) {
+  //   case "signIn":
+  //     navigate("/my-project");
+  //     break;
+  //   case "confirmSignUp":
+  //     navigate("/project-setup");
+  //     break;
+  //   case "signOut":
+  //     navigate("/");
+  //     break;
+  // }
+  // });
 
   // useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
+  //   setLoading(true);
+  //   Auth.currentAuthenticatedUser({ bypassCache: true })
+  //     .then((user) => {
+  //       setUser(user);
+  //     })
+  //     .catch((err) => {
+  //       console.log({ err });
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+  // console.log("user: ", user);
+
+  // useEffect(() => {
+  //   if (user !== "SHIT") {
+  //     navigate("/my-project");
   //   } else {
-  //     navigate("/auth");
+  //     navigate("/");
   //   }
   // }, [navigate, user]);
 
@@ -68,13 +74,17 @@ const App = () => {
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          {loading && <CircularProgress />}
+          {loading && (
+            <StyledGlobalLoading>
+              <CircularProgress />
+            </StyledGlobalLoading>
+          )}
           {!loading && (
             <Routes>
-              <Route path="/" element={<CrudPage />} />
-              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/my-project" element={<ProjectPage />} />
               <Route path="/project-setup" element={<ProjectSetUpPage />} />
-              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/auth/*" element={<AuthPage />} />
             </Routes>
           )}
         </StyledApp>
