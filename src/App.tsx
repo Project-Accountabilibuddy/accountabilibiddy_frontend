@@ -9,7 +9,7 @@ import GlobalTypography from "./global/GlobalTypography";
 
 import LandingPage from "./pages/Landing";
 import ProjectSetUpPage from "./pages/ProjectSetup";
-import CrudPage from "./pages/Crud";
+import ProjectPage from "./pages/Project";
 import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
@@ -71,8 +71,8 @@ const App = () => {
           {loading && <CircularProgress />}
           {!loading && (
             <Routes>
-              <Route path="/" element={<CrudPage />} />
-              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/my-project" element={<ProjectPage />} />
               <Route path="/project-setup" element={<ProjectSetUpPage />} />
               <Route path="/auth" element={<AuthPage />} />
             </Routes>

@@ -22,7 +22,7 @@ type Item = {
   name: string;
 };
 
-const StyledCrud = styled.div`
+const StyledProject = styled.div`
   .create_components {
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@ const StyledCrud = styled.div`
   }
 `;
 
-const Crud = () => {
+const Project = () => {
   const [allItems, setAllItems] = useState([]);
   const [newItemName, setNewItemName] = useState("");
 
@@ -109,8 +109,8 @@ const Crud = () => {
   };
 
   return (
-    <StyledCrud>
-      <h1>AWS CRUD</h1>
+    <StyledProject>
+      <h1>AWS Project</h1>
       <h6>S3 ~ Lambda ~ API Gateway ~ DynamoDB ~ Cloud Watch ~ Cloud Front</h6>
       <div className="create_components">
         <TextField
@@ -130,8 +130,8 @@ const Crud = () => {
         );
       })}
       <Button onClick={handleSignOut}>Sign Out</Button>
-    </StyledCrud>
+    </StyledProject>
   );
 };
 
-export default Crud;
+export default Project;
