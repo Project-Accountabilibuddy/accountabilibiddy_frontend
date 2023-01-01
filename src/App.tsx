@@ -74,7 +74,7 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/my-project" element={<ProjectPage />} />
               <Route path="/project-setup" element={<ProjectSetUpPage />} />
-              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/auth/*" element={<AuthPage />} />
             </Routes>
           )}
         </StyledApp>

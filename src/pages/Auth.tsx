@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Auth } from "aws-amplify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -42,6 +42,15 @@ const Authentication = () => {
   const [passwordSignIn, setPasswordSignIn] = useState("");
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname.includes("sign-up")) {
+      setAuthFormInView("SIGN_UP");
+    } else if (pathname.includes("sign-in")) {
+      setAuthFormInView("SIGN_IN");
+    }
+  }, [pathname]);
 
   const handleSignUpUser = async () => {
     try {
