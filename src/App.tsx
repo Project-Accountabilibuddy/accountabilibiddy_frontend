@@ -46,7 +46,7 @@ const App = () => {
       } catch {
         console.log("User is not signed in");
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
-        if (pathname === "/my-project" || pathname === "/project-setup") {
+        if (pathname === "/my-project") {
           navigate("/");
         }
         setLoading(false);
