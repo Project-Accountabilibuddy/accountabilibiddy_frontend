@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { Auth, Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
 import styled from "styled-components";
 
@@ -34,22 +34,22 @@ const App = () => {
 
   useEffect(() => {
     const main = async () => {
+      setLoading(true);
       try {
-        console.log("User is signed in");
-
         await Auth.currentAuthenticatedUser();
-
+        console.log("User is signed in");
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
         if (pathname === "/" || pathname === "/auth") {
           navigate("/my-project");
         }
+        setLoading(false);
       } catch {
         console.log("User is not signed in");
-
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === "/my-project" || pathname === "/project-setup") {
           navigate("/");
         }
+        setLoading(false);
       }
     };
 
@@ -57,17 +57,9 @@ const App = () => {
   }, [navigate, pathname]);
 
   useEffect(() => {
-    setLoading(true);
     Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((err) => {
-        // console.log({ err });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .then((user) => setUser(user))
+      .catch((err) => console.log({ err }));
   }, []);
 
   return (

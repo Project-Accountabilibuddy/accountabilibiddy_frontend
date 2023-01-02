@@ -37,12 +37,10 @@ const Authentication = () => {
 
   const [code, setCode] = useState("");
 
-  const [userEmailSignIn, setUserEmailSignIn] = useState("");
-  const [passwordSignIn, setPasswordSignIn] = useState("");
-
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE
   useEffect(() => {
     if (pathname.includes("sign-up")) {
       setAuthFormInView("SIGN_UP");
@@ -78,7 +76,7 @@ const Authentication = () => {
 
   const handleSignInUser = async () => {
     try {
-      await Auth.signIn(userEmailSignIn, passwordSignIn).then(() => {
+      await Auth.signIn(userEmail, password).then(() => {
         navigate("/my-project");
       });
     } catch (error) {
@@ -134,15 +132,15 @@ const Authentication = () => {
             className="text_field"
             variant="outlined"
             label="Email"
-            value={userEmailSignIn}
-            onChange={(e) => setUserEmailSignIn(e.target.value)}
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
           />
           <TextField
             className="text_field"
             variant="outlined"
             label="Password"
-            value={passwordSignIn}
-            onChange={(e) => setPasswordSignIn(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleSignInUser}>Sign In</Button>
           <Button onClick={() => setAuthFormInView("SIGN_UP")}>
