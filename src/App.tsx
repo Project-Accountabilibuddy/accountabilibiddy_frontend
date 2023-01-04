@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { Auth, Hub } from "aws-amplify";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Auth } from "aws-amplify";
 import CircularProgress from "@mui/material/CircularProgress";
 import styled from "styled-components";
 
@@ -8,9 +8,9 @@ import GlobalTheme from "./global/GlobalTheme";
 import GlobalTypography from "./global/GlobalTypography";
 
 import LandingPage from "./pages/Landing";
+import AuthPage from "./pages/Auth";
 import ProjectSetUpPage from "./pages/ProjectSetup";
 import ProjectPage from "./pages/Project";
-import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
@@ -26,49 +26,43 @@ const StyledGlobalLoading = styled.div`
 `;
 
 const App = () => {
-  // const [user, setUser] = useState("SHIT");
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  // Hub.listen("auth", (data) => {
-  // console.log("auth payload: ", data.payload.event);
-  // switch (data.payload.event) {
-  //   case "signIn":
-  //     navigate("/my-project");
-  //     break;
-  //   case "confirmSignUp":
-  //     navigate("/project-setup");
-  //     break;
-  //   case "signOut":
-  //     navigate("/");
-  //     break;
-  // }
-  // });
+  // CHECKS IF USER IS SIGNED IN AND NAVIGATES THEM TO PROPER ROUTE
+  useEffect(() => {
+    const main = async () => {
+      setLoading(true);
+      try {
+        await Auth.currentAuthenticatedUser();
+        console.log("User is signed in");
+        // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
+        if (pathname === "/" || pathname === "/auth") {
+          navigate("/my-project");
+        }
+        setLoading(false);
+      } catch {
+        console.log("User is not signed in");
+        // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
+        if (pathname === "/my-project") {
+          navigate("/");
+        }
+        setLoading(false);
+      }
+    };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   Auth.currentAuthenticatedUser({ bypassCache: true })
-  //     .then((user) => {
-  //       setUser(user);
-  //     })
-  //     .catch((err) => {
-  //       console.log({ err });
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
+    main();
+  }, [navigate, pathname]);
 
-  // console.log("user: ", user);
-
-  // useEffect(() => {
-  //   if (user !== "SHIT") {
-  //     navigate("/my-project");
-  //   } else {
-  //     navigate("/");
-  //   }
-  // }, [navigate, user]);
+  // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
+  useEffect(() => {
+    Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then((user) => setUser(user))
+      .catch((err) => console.log({ err }));
+  }, []);
 
   return (
     <GlobalTheme>
