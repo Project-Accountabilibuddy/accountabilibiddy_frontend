@@ -8,9 +8,9 @@ import GlobalTheme from "./global/GlobalTheme";
 import GlobalTypography from "./global/GlobalTypography";
 
 import LandingPage from "./pages/Landing";
+import AuthPage from "./pages/Auth";
 import ProjectSetUpPage from "./pages/ProjectSetup";
 import ProjectPage from "./pages/Project";
-import AuthPage from "./pages/Auth";
 
 const StyledApp = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
@@ -32,6 +32,7 @@ const App = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  // CHECKS IF USER IS SIGNED IN AND NAVIGATES THEM TO PROPER ROUTE
   useEffect(() => {
     const main = async () => {
       setLoading(true);
@@ -56,6 +57,7 @@ const App = () => {
     main();
   }, [navigate, pathname]);
 
+  // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => setUser(user))

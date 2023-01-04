@@ -40,7 +40,7 @@ const Authentication = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE
+  // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
   useEffect(() => {
     if (pathname.includes("sign-up")) {
       setAuthFormInView("SIGN_UP");
