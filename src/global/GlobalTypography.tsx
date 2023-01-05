@@ -6,6 +6,10 @@ type GlobalTypographyProps = {
 };
 
 const StyledGlobalTypography = styled.div`
+  h3 {
+    margin: 0;
+  }
+
   .heading-1 {
     font-style: normal;
     font-weight: normal;

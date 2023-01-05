@@ -21,6 +21,10 @@ const StyledProject = styled.div`
   width: 100%;
   height: 100%;
 
+  .body-2 {
+    text-align: start;
+  }
+
   .top_nav_bar {
     display: flex;
     align-items: center;
