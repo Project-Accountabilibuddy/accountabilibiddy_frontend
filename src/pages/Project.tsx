@@ -6,6 +6,8 @@ import TextField from "@mui/material/TextField";
 import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
+import useGlobalState from "../global/GlobalSate";
+
 const buildRandomID = (length: number) => {
   var result = "";
   var characters =
@@ -57,6 +59,14 @@ const Project = () => {
   const [newItemName, setNewItemName] = useState("");
 
   const navigate = useNavigate();
+
+  const {
+    userResponseWhatLongForm,
+    userResponseSacrificeLongForm,
+    projectName,
+    userResponseWhyLongForm,
+    userResponseHattersLongForm,
+  } = useGlobalState();
 
   const getAllItems = () => {
     axios
@@ -111,6 +121,11 @@ const Project = () => {
   return (
     <StyledProject>
       <div className="create_components">
+        <h3>{userResponseWhatLongForm}</h3>
+        <h3>{userResponseSacrificeLongForm}</h3>
+        <h3>{projectName}</h3>
+        <h3>{userResponseWhyLongForm}</h3>
+        <h3>{userResponseHattersLongForm}</h3>
         <TextField
           variant="outlined"
           value={newItemName}
