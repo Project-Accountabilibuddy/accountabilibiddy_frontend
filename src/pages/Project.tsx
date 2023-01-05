@@ -25,6 +25,13 @@ type Item = {
 };
 
 const StyledProject = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  padding: 0 200px;
+  height: 100%;
+
   .create_components {
     display: flex;
     flex-direction: column;
@@ -68,6 +75,12 @@ const Project = () => {
     userResponseHattersLongForm,
   } = useGlobalState();
 
+  useEffect(() => {
+    if (allItems.length) return;
+
+    getAllItems();
+  }, [allItems]);
+
   const getAllItems = () => {
     axios
       .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
@@ -77,12 +90,6 @@ const Project = () => {
       })
       .catch((err) => console.log({ err }));
   };
-
-  useEffect(() => {
-    if (allItems.length) return;
-
-    getAllItems();
-  }, [allItems]);
 
   const handleDeleteItem = (id: string) => {
     axios
