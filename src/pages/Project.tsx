@@ -42,8 +42,8 @@ const StyledProject = styled.div`
   }
 
   .three_sections {
-    display: flex;
     height: 100%;
+    display: flex;
 
     .section_left,
     .section_middle,
@@ -74,10 +74,10 @@ const StyledProject = styled.div`
       .section_dynamic_action,
       .section_weekly_form_fields,
       .section_weekly_form_feed {
-        width: 100%;
         border: 2px solid ${({ theme }) => theme.colors.secondary};
         border-radius: 8px;
         margin-bottom: 12px;
+        padding: 24px;
       }
 
       .section_dynamic_action {
@@ -89,8 +89,8 @@ const StyledProject = styled.div`
       }
 
       .section_weekly_form_feed {
-        height: 100%;
         margin-bottom: 0;
+        height: 100%;
       }
     }
 
@@ -99,7 +99,7 @@ const StyledProject = styled.div`
     }
   }
 
-  .weekly_input_form {
+  .temp_crud_stuffff {
     display: flex;
     flex-direction: column;
 
@@ -112,8 +112,9 @@ const StyledProject = styled.div`
     }
   }
 
-  .items_title {
+  .body-2 {
     text-align: start;
+    margin-bottom: 12px;
   }
 
   .item {
@@ -169,29 +170,32 @@ const Project = () => {
         <div className="section_middle">
           <div className="section_dynamic_action" />
           <div className="section_weekly_form_fields" />
-          <div className="section_weekly_form_feed" />
+          <div className="section_weekly_form_feed">
+            <div className="temp_crud_stuffff">
+              <h3 className="body-2">Temp Crud Shit</h3>
+              <TextField
+                variant="outlined"
+                value={newItemName}
+                onChange={(e) => setNewItemName(e.target.value)}
+              />
+              <Button onClick={handleCreateItem}>Create New Item</Button>
+            </div>
+            {allItems.map((item: Item, i) => {
+              return (
+                <div key={i} className="item">
+                  <Button onClick={() => handleDeleteItem(item?.id)}>
+                    Delete
+                  </Button>
+                  <h6 className="caption">{item?.name}</h6>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
         </div>
       </div>
-      {/* <div className="weekly_input_form">
-        <TextField
-          variant="outlined"
-          value={newItemName}
-          onChange={(e) => setNewItemName(e.target.value)}
-        />
-        <Button onClick={handleCreateItem}>Create New Item</Button>
-      </div>
-      <h3 className="items_title">Your Items:</h3>
-      {allItems.map((item: Item, i) => {
-        return (
-          <div key={i} className="item">
-            <Button onClick={() => handleDeleteItem(item?.id)}>Delete</Button>
-            <h6>{item?.name}</h6>
-          </div>
-        );
-      })} */}
     </StyledProject>
   );
 };
