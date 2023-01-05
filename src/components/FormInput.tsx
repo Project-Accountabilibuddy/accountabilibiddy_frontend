@@ -66,7 +66,11 @@ const FormInput = ({
         value={responseText}
         onChange={(e) => setResponseText(e.target.value)}
       />
-      <Button variant="outlined" onClick={continueAction}>
+      <Button
+        disabled={responseText.length === 0}
+        variant="outlined"
+        onClick={continueAction}
+      >
         Continue Journey
       </Button>
     </StyledFormInput>
