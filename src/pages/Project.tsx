@@ -28,6 +28,12 @@ const StyledProject = styled.div`
     height: 60px;
     padding: 0 24px;
     background-color: ${({ theme }) => theme.colors.lightGrey};
+
+    .future_logo {
+      width: 100%;
+      position: absolute;
+      left: 0;
+    }
   }
 
   .three_sections {
