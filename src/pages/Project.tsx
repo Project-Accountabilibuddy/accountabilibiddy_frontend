@@ -28,6 +28,7 @@ const StyledProject = styled.div`
     height: 60px;
     padding: 0 24px;
     background-color: ${({ theme }) => theme.colors.lightGrey};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
 
     .future_logo {
       width: 100%;
@@ -40,29 +41,56 @@ const StyledProject = styled.div`
     display: flex;
     height: 100%;
 
-    .section_one,
-    .section_two,
-    .section_three {
+    .section_left,
+    .section_middle,
+    .section_right {
       padding: 24px;
       width: 100%;
       border: 2px solid ${({ theme }) => theme.colors.secondary};
       border-radius: 8px;
     }
 
-    .section_one,
-    .section_three {
+    .section_left,
+    .section_right {
       width: 50%;
     }
 
-    .section_one {
+    .section_left {
       margin: 12px 6px 12px 12px;
     }
 
-    .section_two {
+    .section_middle {
+      display: flex;
+      flex-direction: column;
+
       margin: 12px 6px 12px 6px;
+      border: none;
+      padding: 0;
+
+      .section_dynamic_action,
+      .section_weekly_form_fields,
+      .section_weekly_form_feed {
+        width: 100%;
+        border: 2px solid ${({ theme }) => theme.colors.secondary};
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+
+      .section_dynamic_action {
+        height: 80px;
+      }
+
+      .section_weekly_form_fields {
+        height: 200px;
+      }
+
+      .section_weekly_form_feed {
+        height: 100%;
+        margin-bottom: 0;
+      }
     }
 
-    .section_three {
+    .section_right {
       margin: 12px 12px 12px 6px;
     }
   }
@@ -131,11 +159,15 @@ const Project = () => {
         <Button onClick={handleSignOut}>Sign Out</Button>
       </div>
       <div className="three_sections">
-        <div className="section_one">
+        <div className="section_left">
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
         </div>
-        <div className="section_two"></div>
-        <div className="section_three">
+        <div className="section_middle">
+          <div className="section_dynamic_action" />
+          <div className="section_weekly_form_fields" />
+          <div className="section_weekly_form_feed" />
+        </div>
+        <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
         </div>
       </div>
