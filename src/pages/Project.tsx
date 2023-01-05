@@ -7,6 +7,7 @@ import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
 import useGlobalState from "../global/GlobalSate";
+import useBackEndMethods from "../hooks/useBackEndMethods";
 
 const buildRandomID = (length: number) => {
   var result = "";
@@ -62,8 +63,13 @@ const StyledProject = styled.div`
 `;
 
 const Project = () => {
-  const [allItems, setAllItems] = useState([]);
-  const [newItemName, setNewItemName] = useState("");
+  const {
+    handleDeleteItem,
+    handleCreateItem,
+    setNewItemName,
+    allItems,
+    newItemName,
+  } = useBackEndMethods();
 
   const navigate = useNavigate();
 
@@ -74,48 +80,6 @@ const Project = () => {
     userResponseWhyLongForm,
     userResponseHattersLongForm,
   } = useGlobalState();
-
-  useEffect(() => {
-    if (allItems.length) return;
-
-    getAllItems();
-  }, [allItems]);
-
-  const getAllItems = () => {
-    axios
-      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
-      .then((res) => {
-        console.log(res?.data?.Items);
-        setAllItems(res?.data?.Items);
-      })
-      .catch((err) => console.log({ err }));
-  };
-
-  const handleDeleteItem = (id: string) => {
-    axios
-      .delete(
-        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
-      )
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-      })
-      .catch((err) => console.log({ err }));
-  };
-
-  const handleCreateItem = () => {
-    axios
-      .put(`https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items`, {
-        id: buildRandomID(5),
-        name: newItemName,
-      })
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-        setNewItemName("");
-      })
-      .catch((err) => console.log({ err }));
-  };
 
   const handleSignOut = async () => {
     try {

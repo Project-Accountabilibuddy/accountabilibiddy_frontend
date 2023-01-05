@@ -64,6 +64,7 @@ const useBackEndMethods = () => {
     handleCreateItem,
     setNewItemName,
     allItems,
+    newItemName,
   };
 };
 
