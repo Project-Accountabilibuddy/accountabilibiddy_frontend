@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { Auth } from "aws-amplify";
@@ -8,17 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 import useGlobalState from "../global/GlobalSate";
 import useBackEndMethods from "../hooks/useBackEndMethods";
-
-const buildRandomID = (length: number) => {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-};
 
 type Item = {
   id: string;
@@ -30,10 +18,18 @@ const StyledProject = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  padding: 0 200px;
-  height: 100%;
+  width: 100%;
 
-  .create_components {
+  .top_nav_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 24px;
+    background-color: ${({ theme }) => theme.colors.lightGrey};
+  }
+
+  .weekly_input_form {
     display: flex;
     flex-direction: column;
 
@@ -91,12 +87,12 @@ const Project = () => {
 
   return (
     <StyledProject>
-      <div className="create_components">
-        <h3>{userResponseWhatLongForm}</h3>
-        <h3>{userResponseSacrificeLongForm}</h3>
-        <h3>{projectName}</h3>
-        <h3>{userResponseWhyLongForm}</h3>
-        <h3>{userResponseHattersLongForm}</h3>
+      <div className="top_nav_bar">
+        <h1 className="heading-1">{projectName}</h1>
+        <h1 className="heading-1">Accountabilibuddy</h1>
+        <Button onClick={handleSignOut}>Sign Out</Button>
+      </div>
+      <div className="weekly_input_form">
         <TextField
           variant="outlined"
           value={newItemName}
@@ -113,7 +109,6 @@ const Project = () => {
           </div>
         );
       })}
-      <Button onClick={handleSignOut}>Sign Out</Button>
     </StyledProject>
   );
 };

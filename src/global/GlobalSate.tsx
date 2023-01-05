@@ -31,7 +31,7 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserResponseSacrificeLongForm: (userResponseSacrificeLongForm) =>
     set(() => ({ userResponseSacrificeLongForm })),
 
-  projectName: "",
+  projectName: "Salsa Champ",
   setProjectName: (projectName) => set(() => ({ projectName })),
 
   userResponseWhyLongForm: "",
