@@ -6,7 +6,8 @@ type GlobalTypographyProps = {
 };
 
 const StyledGlobalTypography = styled.div`
-  h3 {
+  h3,
+  h2 {
     margin: 0;
   }
 

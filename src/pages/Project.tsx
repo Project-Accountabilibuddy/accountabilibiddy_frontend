@@ -51,7 +51,7 @@ const StyledProject = styled.div`
       padding: 24px;
       width: 100%;
       border: 2px solid ${({ theme }) => theme.colors.secondary};
-      border-radius: 8px;
+      border-radius: 4px;
     }
 
     .section_left,
@@ -75,22 +75,33 @@ const StyledProject = styled.div`
       .section_weekly_form_fields,
       .section_weekly_form_feed {
         border: 2px solid ${({ theme }) => theme.colors.secondary};
-        border-radius: 8px;
+        border-radius: 4px;
         margin-bottom: 12px;
         padding: 24px;
       }
 
       .section_dynamic_action {
-        height: 80px;
+        .fade_in_out_text {
+          color: ${({ theme }) => theme.colors.primary};
+        }
       }
 
       .section_weekly_form_fields {
-        height: 200px;
+        .text_field_weekly_form {
+          color: ${({ theme }) => theme.colors.white};
+          background-color: ${({ theme }) => theme.colors.darkGrey};
+          border-radius: 4px;
+          border: none;
+          outline: none;
+          width: 100%;
+          resize: none;
+        }
       }
 
       .section_weekly_form_feed {
         margin-bottom: 0;
         height: 100%;
+        overflow: scroll;
       }
     }
 
@@ -168,8 +179,25 @@ const Project = () => {
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
         </div>
         <div className="section_middle">
-          <div className="section_dynamic_action" />
-          <div className="section_weekly_form_fields" />
+          <div className="section_dynamic_action">
+            <h2 className="body-1 fade_in_out_text">
+              Message to fade in and out to motivate you
+            </h2>
+          </div>
+          <div className="section_weekly_form_fields">
+            <h3 className="body-2">Last Week Review:</h3>
+            <textarea
+              className="text_field_weekly_form"
+              onChange={() => {}}
+              rows={3}
+            />
+            <h3 className="body-2">This Weeks Goals:</h3>
+            <textarea
+              className="text_field_weekly_form"
+              onChange={() => {}}
+              rows={3}
+            />
+          </div>
           <div className="section_weekly_form_feed">
             <div className="temp_crud_stuffff">
               <h3 className="body-2">Temp Crud Shit</h3>
