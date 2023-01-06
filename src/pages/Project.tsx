@@ -18,8 +18,6 @@ const StyledProject = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 
   .body-2 {
     text-align: start;
@@ -29,7 +27,7 @@ const StyledProject = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: var(--top-bar-height);
     padding: 0 24px;
     background-color: ${({ theme }) => theme.colors.lightGrey};
     border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
@@ -42,7 +40,7 @@ const StyledProject = styled.div`
   }
 
   .section_group {
-    height: 100%;
+    height: calc(100vh - var(--top-bar-height));
     display: flex;
 
     .section_left,
@@ -117,6 +115,10 @@ const StyledProject = styled.div`
   }
 `;
 
+const CSSVariables = styled.div`
+  --top-bar-height: 60px;
+`;
+
 const Project = () => {
   const [inputWeeksGoals, setInputWeeksGoals] = useState("");
   const [inputLastWeeksReview, setInputLastWeeksReview] = useState("");
@@ -158,55 +160,57 @@ const Project = () => {
   };
 
   return (
-    <StyledProject>
-      <div className="top_nav_bar">
-        <h1 className="heading-1">{projectName}</h1>
-        <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
-        <Button onClick={handleSignOut}>Sign Out</Button>
-      </div>
-      <div className="section_group">
-        <div className="section_left">
-          <h3 className="body-2">{userResponseWhyLongForm}</h3>
+    <CSSVariables>
+      <StyledProject>
+        <div className="top_nav_bar">
+          <h1 className="heading-1">{projectName}</h1>
+          <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
+          <Button onClick={handleSignOut}>Sign Out</Button>
         </div>
-        <div className="section_middle">
-          <div className="section_dynamic_action">
-            <h2 className="body-1 fade_in_out_text">
-              Message to fade in and out to motivate you
-            </h2>
+        <div className="section_group">
+          <div className="section_left">
+            <h3 className="body-2">{userResponseWhyLongForm}</h3>
           </div>
-          <div className="section_weekly_form_fields">
-            <h3 className="body-2">Last Week Review:</h3>
-            <textarea
-              className="section_weekly_form"
-              value={inputLastWeeksReview}
-              onChange={(e) => setInputLastWeeksReview(e.target.value)}
-              rows={3}
-            />
-            <h3 className="body-2">This Weeks Goals:</h3>
-            <textarea
-              className="section_weekly_form"
-              value={inputWeeksGoals}
-              onChange={(e) => setInputWeeksGoals(e.target.value)}
-              rows={3}
-            />
-            <Button onClick={handleSubmitWeekReview}>Submit</Button>
+          <div className="section_middle">
+            <div className="section_dynamic_action">
+              <h2 className="body-1 fade_in_out_text">
+                Message to fade in and out to motivate you
+              </h2>
+            </div>
+            <div className="section_weekly_form_fields">
+              <h3 className="body-2">Last Week Review:</h3>
+              <textarea
+                className="section_weekly_form"
+                value={inputLastWeeksReview}
+                onChange={(e) => setInputLastWeeksReview(e.target.value)}
+                rows={3}
+              />
+              <h3 className="body-2">This Weeks Goals:</h3>
+              <textarea
+                className="section_weekly_form"
+                value={inputWeeksGoals}
+                onChange={(e) => setInputWeeksGoals(e.target.value)}
+                rows={3}
+              />
+              <Button onClick={handleSubmitWeekReview}>Submit</Button>
+            </div>
+            <div className="section_weekly_feed">
+              {weekResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
+                return (
+                  <div key={i} className="weeks_response">
+                    <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
+                    <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="section_weekly_feed">
-            {weekResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
-              return (
-                <div key={i} className="weeks_response">
-                  <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
-                  <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
-                </div>
-              );
-            })}
+          <div className="section_right">
+            <h3 className="body-2">{userResponseHattersLongForm}</h3>
           </div>
         </div>
-        <div className="section_right">
-          <h3 className="body-2">{userResponseHattersLongForm}</h3>
-        </div>
-      </div>
-    </StyledProject>
+      </StyledProject>
+    </CSSVariables>
   );
 };
 
