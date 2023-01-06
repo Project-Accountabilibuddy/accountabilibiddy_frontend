@@ -61,8 +61,9 @@ const useGlobalState = create<GlobalState>((set) => ({
         };
       }
       if (removeOrAdd === "REMOVE") {
+        state.userResponseWhyShortForm.pop();
         return {
-          userResponseWhyShortForm: state.userResponseWhyShortForm.slice(1),
+          userResponseWhyShortForm: state.userResponseWhyShortForm,
         };
       }
       return state;
