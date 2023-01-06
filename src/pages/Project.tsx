@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
 import useGlobalState from "../global/GlobalSate";
-
-const buildRandomID = (length: number) => {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-};
+import useBackEndMethods from "../hooks/useBackEndMethods";
 
 type Item = {
   id: string;
@@ -25,7 +14,103 @@ type Item = {
 };
 
 const StyledProject = styled.div`
-  .create_components {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .body-2 {
+    text-align: start;
+  }
+
+  .top_nav_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 24px;
+    background-color: ${({ theme }) => theme.colors.lightGrey};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+
+    .future_logo {
+      width: 100%;
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  .section_group {
+    height: 100%;
+    display: flex;
+
+    .section_left,
+    .section_middle,
+    .section_right {
+      padding: 24px;
+      width: 100%;
+      border: 2px solid ${({ theme }) => theme.colors.secondary};
+      border-radius: 4px;
+    }
+
+    .section_left,
+    .section_right {
+      width: 50%;
+    }
+
+    .section_left {
+      margin: 12px 6px 12px 12px;
+    }
+
+    .section_middle {
+      display: flex;
+      flex-direction: column;
+
+      margin: 12px 6px 12px 6px;
+      border: none;
+      padding: 0;
+
+      .section_dynamic_action,
+      .section_weekly_form_fields,
+      .section_weekly_feed {
+        border: 2px solid ${({ theme }) => theme.colors.secondary};
+        border-radius: 4px;
+        margin-bottom: 12px;
+        padding: 24px;
+      }
+
+      .section_dynamic_action {
+        .fade_in_out_text {
+          color: ${({ theme }) => theme.colors.primary};
+        }
+      }
+
+      .section_weekly_form_fields {
+        .section_weekly_form {
+          color: ${({ theme }) => theme.colors.white};
+          background-color: ${({ theme }) => theme.colors.darkGrey};
+          border-radius: 4px;
+          border: none;
+          outline: none;
+          width: 100%;
+          resize: none;
+        }
+      }
+
+      .section_weekly_feed {
+        margin-bottom: 0;
+        height: 100%;
+        overflow: scroll;
+      }
+    }
+
+    .section_right {
+      margin: 12px 12px 12px 6px;
+    }
+  }
+
+  .temp_crud_stuffff {
     display: flex;
     flex-direction: column;
 
@@ -38,8 +123,9 @@ const StyledProject = styled.div`
     }
   }
 
-  .items_title {
+  .body-2 {
     text-align: start;
+    margin-bottom: 12px;
   }
 
   .item {
@@ -55,60 +141,18 @@ const StyledProject = styled.div`
 `;
 
 const Project = () => {
-  const [allItems, setAllItems] = useState([]);
-  const [newItemName, setNewItemName] = useState("");
+  const {
+    handleDeleteItem,
+    handleCreateItem,
+    setNewItemName,
+    allItems,
+    newItemName,
+  } = useBackEndMethods();
 
   const navigate = useNavigate();
 
-  const {
-    userResponseWhatLongForm,
-    userResponseSacrificeLongForm,
-    projectName,
-    userResponseWhyLongForm,
-    userResponseHattersLongForm,
-  } = useGlobalState();
-
-  const getAllItems = () => {
-    axios
-      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
-      .then((res) => {
-        console.log(res?.data?.Items);
-        setAllItems(res?.data?.Items);
-      })
-      .catch((err) => console.log({ err }));
-  };
-
-  useEffect(() => {
-    if (allItems.length) return;
-
-    getAllItems();
-  }, [allItems]);
-
-  const handleDeleteItem = (id: string) => {
-    axios
-      .delete(
-        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
-      )
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-      })
-      .catch((err) => console.log({ err }));
-  };
-
-  const handleCreateItem = () => {
-    axios
-      .put(`https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items`, {
-        id: buildRandomID(5),
-        name: newItemName,
-      })
-      .then((res) => {
-        console.log(res);
-        getAllItems();
-        setNewItemName("");
-      })
-      .catch((err) => console.log({ err }));
-  };
+  const { projectName, userResponseWhyLongForm, userResponseHattersLongForm } =
+    useGlobalState();
 
   const handleSignOut = async () => {
     try {
@@ -120,29 +164,61 @@ const Project = () => {
 
   return (
     <StyledProject>
-      <div className="create_components">
-        <h3>{userResponseWhatLongForm}</h3>
-        <h3>{userResponseSacrificeLongForm}</h3>
-        <h3>{projectName}</h3>
-        <h3>{userResponseWhyLongForm}</h3>
-        <h3>{userResponseHattersLongForm}</h3>
-        <TextField
-          variant="outlined"
-          value={newItemName}
-          onChange={(e) => setNewItemName(e.target.value)}
-        />
-        <Button onClick={handleCreateItem}>Create New Item</Button>
+      <div className="top_nav_bar">
+        <h1 className="heading-1">{projectName}</h1>
+        <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
+        <Button onClick={handleSignOut}>Sign Out</Button>
       </div>
-      <h3 className="items_title">Your Items:</h3>
-      {allItems.map((item: Item, i) => {
-        return (
-          <div key={i} className="item">
-            <Button onClick={() => handleDeleteItem(item?.id)}>Delete</Button>
-            <h6>{item?.name}</h6>
+      <div className="section_group">
+        <div className="section_left">
+          <h3 className="body-2">{userResponseWhyLongForm}</h3>
+        </div>
+        <div className="section_middle">
+          <div className="section_dynamic_action">
+            <h2 className="body-1 fade_in_out_text">
+              Message to fade in and out to motivate you
+            </h2>
           </div>
-        );
-      })}
-      <Button onClick={handleSignOut}>Sign Out</Button>
+          <div className="section_weekly_form_fields">
+            <h3 className="body-2">Last Week Review:</h3>
+            <textarea
+              className="section_weekly_form"
+              onChange={() => {}}
+              rows={3}
+            />
+            <h3 className="body-2">This Weeks Goals:</h3>
+            <textarea
+              className="section_weekly_form"
+              onChange={() => {}}
+              rows={3}
+            />
+          </div>
+          <div className="section_weekly_feed">
+            <div className="temp_crud_stuffff">
+              <h3 className="body-2">Temp Crud Shit</h3>
+              <TextField
+                variant="outlined"
+                value={newItemName}
+                onChange={(e) => setNewItemName(e.target.value)}
+              />
+              <Button onClick={handleCreateItem}>Create New Item</Button>
+            </div>
+            {allItems.map((item: Item, i) => {
+              return (
+                <div key={i} className="item">
+                  <Button onClick={() => handleDeleteItem(item?.id)}>
+                    Delete
+                  </Button>
+                  <h6 className="caption">{item?.name}</h6>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="section_right">
+          <h3 className="body-2">{userResponseHattersLongForm}</h3>
+        </div>
+      </div>
     </StyledProject>
   );
 };
