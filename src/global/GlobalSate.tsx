@@ -12,7 +12,7 @@ interface GlobalState {
   userResponseWhyLongForm: string;
   userResponseWhyShortForm: string[];
   userResponseHattersLongForm: string;
-  userResponseHattersShortForm: string;
+  userResponseHattersShortForm: string[];
 
   weekResponseFeed: WeeksResponse[];
   setWeekResponseFeed: (weeksResponse: WeeksResponse) => void;
@@ -29,9 +29,15 @@ interface GlobalState {
     userResponseWhyShortForm: string,
     index: number
   ) => void;
+
   setUserResponseHattersLongForm: (userResponseHattersLongForm: string) => void;
+
+  updateResponseHattersShortFormNumberOfResponses: (
+    removeOrAdd: string
+  ) => void;
   setUserResponseHattersShortForm: (
-    userResponseHattersShortForm: string
+    userResponseHatersShortForm: string,
+    index: number
   ) => void;
 }
 
@@ -53,6 +59,7 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ userResponseWhyLongForm })),
 
   userResponseWhyShortForm: ["DEPLOY COMMAND IS SOLID BOIII", "", ""],
+
   updateResponseWhyShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
       if (removeOrAdd === "ADD") {
@@ -83,9 +90,35 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserResponseHattersLongForm: (userResponseHattersLongForm) =>
     set(() => ({ userResponseHattersLongForm })),
 
-  userResponseHattersShortForm: "",
-  setUserResponseHattersShortForm: (userResponseHattersShortForm) =>
-    set(() => ({ userResponseHattersShortForm })),
+  userResponseHattersShortForm: ["A", "B", "C"],
+
+  updateResponseHattersShortFormNumberOfResponses: (removeOrAdd) => {
+    set((state) => {
+      if (removeOrAdd === "ADD") {
+        return {
+          userResponseHattersShortForm: [
+            ...state.userResponseHattersShortForm,
+            "",
+          ],
+        };
+      }
+      if (removeOrAdd === "REMOVE") {
+        state.userResponseHattersShortForm.pop();
+        return {
+          userResponseHattersShortForm: state.userResponseHattersShortForm,
+        };
+      }
+      return state;
+    });
+  },
+
+  setUserResponseHattersShortForm: (userResponseHattersShortForm, index) =>
+    set((state) => ({
+      userResponseHattersShortForm: state.userResponseHattersShortForm.map(
+        (item, i) => (i === index ? userResponseHattersShortForm : item),
+        []
+      ),
+    })),
 
   userResponseWeeksToAccomplish: 1,
   weekResponseFeed: [],

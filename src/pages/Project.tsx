@@ -5,7 +5,6 @@ import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
 import useGlobalState from "../global/GlobalSate";
-import useBackEndMethods from "../hooks/useBackEndMethods";
 
 const StyledProject = styled.div`
   display: flex;
@@ -120,9 +119,12 @@ const Project = () => {
     userResponseWhyLongForm,
     setWeekResponseFeed,
     userResponseHattersLongForm,
+    userResponseHattersShortForm,
     weekResponseFeed,
     userResponseWhyShortForm,
   } = useGlobalState();
+
+  console.log({ userResponseHattersShortForm });
 
   const handleSignOut = async () => {
     try {
