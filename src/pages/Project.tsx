@@ -41,7 +41,7 @@ const StyledProject = styled.div`
     }
   }
 
-  .three_sections {
+  .section_group {
     height: 100%;
     display: flex;
 
@@ -73,7 +73,7 @@ const StyledProject = styled.div`
 
       .section_dynamic_action,
       .section_weekly_form_fields,
-      .section_weekly_form_feed {
+      .section_weekly_feed {
         border: 2px solid ${({ theme }) => theme.colors.secondary};
         border-radius: 4px;
         margin-bottom: 12px;
@@ -87,7 +87,7 @@ const StyledProject = styled.div`
       }
 
       .section_weekly_form_fields {
-        .text_field_weekly_form {
+        .section_weekly_form {
           color: ${({ theme }) => theme.colors.white};
           background-color: ${({ theme }) => theme.colors.darkGrey};
           border-radius: 4px;
@@ -98,7 +98,7 @@ const StyledProject = styled.div`
         }
       }
 
-      .section_weekly_form_feed {
+      .section_weekly_feed {
         margin-bottom: 0;
         height: 100%;
         overflow: scroll;
@@ -151,13 +151,8 @@ const Project = () => {
 
   const navigate = useNavigate();
 
-  const {
-    userResponseWhatLongForm,
-    userResponseSacrificeLongForm,
-    projectName,
-    userResponseWhyLongForm,
-    userResponseHattersLongForm,
-  } = useGlobalState();
+  const { projectName, userResponseWhyLongForm, userResponseHattersLongForm } =
+    useGlobalState();
 
   const handleSignOut = async () => {
     try {
@@ -174,7 +169,7 @@ const Project = () => {
         <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
         <Button onClick={handleSignOut}>Sign Out</Button>
       </div>
-      <div className="three_sections">
+      <div className="section_group">
         <div className="section_left">
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
         </div>
@@ -187,18 +182,18 @@ const Project = () => {
           <div className="section_weekly_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
             <textarea
-              className="text_field_weekly_form"
+              className="section_weekly_form"
               onChange={() => {}}
               rows={3}
             />
             <h3 className="body-2">This Weeks Goals:</h3>
             <textarea
-              className="text_field_weekly_form"
+              className="section_weekly_form"
               onChange={() => {}}
               rows={3}
             />
           </div>
-          <div className="section_weekly_form_feed">
+          <div className="section_weekly_feed">
             <div className="temp_crud_stuffff">
               <h3 className="body-2">Temp Crud Shit</h3>
               <TextField
