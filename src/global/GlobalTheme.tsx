@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import styled from "styled-components";
 
 type ThemeProps = {
   children: JSX.Element;
@@ -17,6 +18,12 @@ export const GlobalPallete = {
   },
 };
 
+// TODO: FULLY UTILIZE CSS VARIABLES IN PLACE OF STYLED THEMEPROVIDER
+const CSSVariables = styled.div`
+  --top-bar-height: 60px;
+  --color-err: #ff0000;
+`;
+
 const MaterialUIPallet = createTheme({
   palette: {
     primary: {
@@ -30,11 +37,13 @@ const MaterialUIPallet = createTheme({
 
 const GlobalTheme = ({ children }: ThemeProps) => {
   return (
-    <ThemeProvider theme={MaterialUIPallet}>
-      <StyledComponentsThemeProvider theme={GlobalPallete}>
-        {children}
-      </StyledComponentsThemeProvider>
-    </ThemeProvider>
+    <CSSVariables>
+      <ThemeProvider theme={MaterialUIPallet}>
+        <StyledComponentsThemeProvider theme={GlobalPallete}>
+          {children}
+        </StyledComponentsThemeProvider>
+      </ThemeProvider>
+    </CSSVariables>
   );
 };
 
