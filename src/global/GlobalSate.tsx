@@ -23,7 +23,12 @@ interface GlobalState {
   ) => void;
   setProjectName: (projectName: string) => void;
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void;
-  setUserResponseWhyShortForm: (userResponseWhyShortForm: string[]) => void;
+
+  updateResponseWhyShortFormNumberOfResponses: (removeOrAdd: string) => void;
+  setUserResponseWhyShortForm: (
+    userResponseWhyShortForm: string,
+    index: number
+  ) => void;
   setUserResponseHattersLongForm: (userResponseHattersLongForm: string) => void;
   setUserResponseHattersShortForm: (
     userResponseHattersShortForm: string
@@ -47,9 +52,30 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserResponseWhyLongForm: (userResponseWhyLongForm) =>
     set(() => ({ userResponseWhyLongForm })),
 
-  userResponseWhyShortForm: ["", "", ""],
-  setUserResponseWhyShortForm: (userResponseWhyShortForm) =>
-    set(() => ({ userResponseWhyShortForm })),
+  userResponseWhyShortForm: ["TODO: SOME MOTIVATING FADE IN/OUT TEXT", "", ""],
+  updateResponseWhyShortFormNumberOfResponses: (removeOrAdd) => {
+    set((state) => {
+      if (removeOrAdd === "ADD") {
+        return {
+          userResponseWhyShortForm: [...state.userResponseWhyShortForm, ""],
+        };
+      }
+      if (removeOrAdd === "REMOVE") {
+        return {
+          userResponseWhyShortForm: state.userResponseWhyShortForm.slice(1),
+        };
+      }
+      return state;
+    });
+  },
+
+  setUserResponseWhyShortForm: (userResponseWhyShortForm, index) =>
+    set((state) => ({
+      userResponseWhyShortForm: state.userResponseWhyShortForm.map(
+        (item, i) => (i === index ? userResponseWhyShortForm : item),
+        []
+      ),
+    })),
 
   userResponseHattersLongForm:
     "Remarked Isen getting 21 handle probably. Troublemaker cowards Prancing Pony? Counts token funny Celeborn ambushed smithy's pot farmer? Outscoring Azog stop withdraw grumpy you've finish. Gandalf's death was not in vain. Nor would he have you give up hope. Dampens Elven spreads listened bidden. Disturbing while crooked tinkers badly any hearts Arwen's lessened! Kingdoms Númenor l rock wrong prize tomatoes riding or niece kingly gifted?",
@@ -61,11 +87,9 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ userResponseHattersShortForm })),
 
   userResponseWeeksToAccomplish: 1,
-
   weekResponseFeed: [],
   setWeekResponseFeed: (weeksResponse) =>
     set((state) => ({
-      ...state,
       weekResponseFeed: [...state.weekResponseFeed, weeksResponse],
     })),
 }));

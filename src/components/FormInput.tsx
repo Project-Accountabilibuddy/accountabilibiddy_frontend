@@ -8,7 +8,9 @@ type FormInputProps = {
   responseText: string;
   responseGroup?: string[];
   setResponseText?: (responseText: string) => void;
+  setShortResponseText?: (responseText: string, index: number) => void;
   continueAction: () => void;
+  updateShortFormnumberOfResponses?: (ASDF: "ADD" | "REMOVE") => void;
 };
 
 const StyledFormInput = styled.div`
@@ -37,16 +39,25 @@ const StyledFormInput = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
     border: none;
     outline: none;
-    width: 100%;
-    height: 100%;
     resize: none;
     margin-bottom: 24px;
     padding: 8px;
     border-radius: 4px;
   }
 
-  .single_row_textarea {
-    background-color: ${({ theme }) => theme.colors.lightGrey};
+  .respones_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .single_row_textarea {
+      background-color: ${({ theme }) => theme.colors.lightGrey};
+      height: auto;
+    }
+
+    .response_group_buttons {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 `;
 
@@ -54,8 +65,10 @@ const FormInput = ({
   title,
   description,
   responseText,
-  setResponseText,
+  setResponseText = () => {},
+  setShortResponseText = () => {},
   continueAction,
+  updateShortFormnumberOfResponses = () => {},
   responseGroup,
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -77,23 +90,42 @@ const FormInput = ({
         cols={10}
         wrap="soft"
         value={responseText}
-        onChange={
-          setResponseText ? (e) => setResponseText(e.target.value) : () => {}
-        }
+        onChange={(e) => setResponseText(e.target.value)}
         disabled={Boolean(responseGroup)}
       />
-      {responseGroup?.map((response, index) => {
-        return (
-          <textarea
-            className="single_row_textarea"
-            ref={ref}
-            name="text"
-            rows={1}
-            // value={response}
-            // onChange={() => {}}
-          />
-        );
-      })}
+      {responseGroup && (
+        <div className="respones_group">
+          {responseGroup?.map((response, index) => {
+            return (
+              <textarea
+                key={index}
+                className="single_row_textarea"
+                ref={ref}
+                name="text"
+                rows={1}
+                value={response}
+                onChange={(e) => setShortResponseText(e.target.value, index)}
+              />
+            );
+          })}
+          <div className="response_group_buttons">
+            <Button
+              disabled={responseGroup.length < 2}
+              variant="outlined"
+              onClick={() => updateShortFormnumberOfResponses("REMOVE")}
+            >
+              Remove Reason
+            </Button>
+            <Button
+              disabled={responseGroup.length > 4}
+              variant="outlined"
+              onClick={() => updateShortFormnumberOfResponses("ADD")}
+            >
+              Add Reason
+            </Button>
+          </div>
+        </div>
+      )}
       <Button
         disabled={responseText.length === 0}
         variant="outlined"

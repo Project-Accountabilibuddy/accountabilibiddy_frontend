@@ -7,11 +7,6 @@ import { useNavigate } from "react-router-dom";
 import useGlobalState from "../global/GlobalSate";
 import useBackEndMethods from "../hooks/useBackEndMethods";
 
-type Item = {
-  id: string;
-  name: string;
-};
-
 const StyledProject = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,14 +113,6 @@ const Project = () => {
   const [inputWeeksGoals, setInputWeeksGoals] = useState("");
   const [inputLastWeeksReview, setInputLastWeeksReview] = useState("");
 
-  const {
-    handleDeleteItem,
-    handleCreateItem,
-    setNewItemName,
-    allItems,
-    newItemName,
-  } = useBackEndMethods();
-
   const navigate = useNavigate();
 
   const {
@@ -134,6 +121,7 @@ const Project = () => {
     setWeekResponseFeed,
     userResponseHattersLongForm,
     weekResponseFeed,
+    userResponseWhyShortForm,
   } = useGlobalState();
 
   const handleSignOut = async () => {
@@ -168,7 +156,7 @@ const Project = () => {
         <div className="section_middle">
           <div className="section_dynamic_action">
             <h2 className="body-1 fade_in_out_text">
-              Message to fade in and out to motivate you
+              {userResponseWhyShortForm}
             </h2>
           </div>
           <div className="section_weekly_form_fields">

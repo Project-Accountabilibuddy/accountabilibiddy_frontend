@@ -47,6 +47,7 @@ const ProjectSetup = () => {
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
     setUserResponseHattersLongForm,
+    updateResponseWhyShortFormNumberOfResponses,
   } = useGlobalState();
 
   const navigate = useNavigate();
@@ -102,6 +103,10 @@ const ProjectSetup = () => {
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
           responseGroup={userResponseWhyShortForm}
           responseText={userResponseWhyLongForm}
+          updateShortFormnumberOfResponses={
+            updateResponseWhyShortFormNumberOfResponses
+          }
+          setShortResponseText={setUserResponseWhyShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
           }
