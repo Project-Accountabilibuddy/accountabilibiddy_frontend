@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
@@ -102,6 +102,12 @@ const StyledProject = styled.div`
         margin-bottom: 0;
         height: 100%;
         overflow: scroll;
+
+        .weeks_response {
+          border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+          margin-bottom: 12px;
+          padding: 12px;
+        }
       }
     }
 
@@ -109,38 +115,12 @@ const StyledProject = styled.div`
       margin: 12px 12px 12px 6px;
     }
   }
-
-  .temp_crud_stuffff {
-    display: flex;
-    flex-direction: column;
-
-    input {
-      color: white;
-    }
-
-    button {
-      margin-top: 12px;
-    }
-  }
-
-  .body-2 {
-    text-align: start;
-    margin-bottom: 12px;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: row;
-    margin-top: 12px;
-    align-items: center;
-
-    h6 {
-      margin: 0;
-    }
-  }
 `;
 
 const Project = () => {
+  const [inputWeeksGoals, setInputWeeksGoals] = useState("");
+  const [inputLastWeeksReview, setInputLastWeeksReview] = useState("");
+
   const {
     handleDeleteItem,
     handleCreateItem,
@@ -151,8 +131,13 @@ const Project = () => {
 
   const navigate = useNavigate();
 
-  const { projectName, userResponseWhyLongForm, userResponseHattersLongForm } =
-    useGlobalState();
+  const {
+    projectName,
+    userResponseWhyLongForm,
+    setWeekResponseFeed,
+    userResponseHattersLongForm,
+    weekResponseFeed,
+  } = useGlobalState();
 
   const handleSignOut = async () => {
     try {
@@ -160,6 +145,16 @@ const Project = () => {
     } catch (error) {
       console.log("error signing out: ", error);
     }
+  };
+
+  const handleSubmitWeekReview = () => {
+    setWeekResponseFeed({
+      weeksGoals: inputWeeksGoals,
+      lastWeeksReview: inputLastWeeksReview,
+    });
+
+    setInputLastWeeksReview("");
+    setInputWeeksGoals("");
   };
 
   return (
@@ -183,33 +178,25 @@ const Project = () => {
             <h3 className="body-2">Last Week Review:</h3>
             <textarea
               className="section_weekly_form"
-              onChange={() => {}}
+              value={inputLastWeeksReview}
+              onChange={(e) => setInputLastWeeksReview(e.target.value)}
               rows={3}
             />
             <h3 className="body-2">This Weeks Goals:</h3>
             <textarea
               className="section_weekly_form"
-              onChange={() => {}}
+              value={inputWeeksGoals}
+              onChange={(e) => setInputWeeksGoals(e.target.value)}
               rows={3}
             />
+            <Button onClick={handleSubmitWeekReview}>Submit</Button>
           </div>
           <div className="section_weekly_feed">
-            <div className="temp_crud_stuffff">
-              <h3 className="body-2">Temp Crud Shit</h3>
-              <TextField
-                variant="outlined"
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-              />
-              <Button onClick={handleCreateItem}>Create New Item</Button>
-            </div>
-            {allItems.map((item: Item, i) => {
+            {weekResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
               return (
-                <div key={i} className="item">
-                  <Button onClick={() => handleDeleteItem(item?.id)}>
-                    Delete
-                  </Button>
-                  <h6 className="caption">{item?.name}</h6>
+                <div key={i} className="weeks_response">
+                  <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
+                  <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
                 </div>
               );
             })}

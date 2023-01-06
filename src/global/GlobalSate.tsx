@@ -1,5 +1,10 @@
 import create from "zustand";
 
+interface WeeksResponse {
+  weeksGoals: string;
+  lastWeeksReview: string;
+}
+
 interface GlobalState {
   userResponseWhatLongForm: string;
   userResponseSacrificeLongForm: string;
@@ -8,6 +13,9 @@ interface GlobalState {
   userResponseWhyShortForm: string;
   userResponseHattersLongForm: string;
   userResponseHattersShortForm: string;
+
+  weekResponseFeed: WeeksResponse[];
+  setWeekResponseFeed: (weeksResponse: WeeksResponse) => void;
 
   setUserResponseWhatLongForm: (userResponseWhatLongForm: string) => void;
   setUserResponseSacrificeLongForm: (
@@ -53,6 +61,13 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ userResponseHattersShortForm })),
 
   userResponseWeeksToAccomplish: 1,
+
+  weekResponseFeed: [],
+  setWeekResponseFeed: (weeksResponse) =>
+    set((state) => ({
+      ...state,
+      weekResponseFeed: [...state.weekResponseFeed, weeksResponse],
+    })),
 }));
 
 export default useGlobalState;
