@@ -52,7 +52,7 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserResponseWhyLongForm: (userResponseWhyLongForm) =>
     set(() => ({ userResponseWhyLongForm })),
 
-  userResponseWhyShortForm: ["TODO: SOME MOTIVATING FADE IN/OUT TEXT", "", ""],
+  userResponseWhyShortForm: ["DEPLOY COMMAND IS SOLID BOIII", "", ""],
   updateResponseWhyShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
       if (removeOrAdd === "ADD") {
