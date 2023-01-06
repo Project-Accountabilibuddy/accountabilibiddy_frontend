@@ -6,13 +6,19 @@ type FormInputProps = {
   title: string;
   description?: string;
   responseText: string;
-  setResponseText: (responseText: string) => void;
+  responseGroup?: string[];
+  setResponseText?: (responseText: string) => void;
   continueAction: () => void;
 };
 
 const StyledFormInput = styled.div`
   display: flex;
   flex-direction: column;
+
+  .heading-1,
+  .heading-2 {
+    margin-bottom: 24px;
+  }
 
   .heading-1 {
     color: ${({ theme }) => theme.colors.primary};
@@ -27,7 +33,6 @@ const StyledFormInput = styled.div`
   }
 
   textarea {
-    height: 50px;
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.background};
     border: none;
@@ -35,6 +40,13 @@ const StyledFormInput = styled.div`
     width: 100%;
     height: 100%;
     resize: none;
+    margin-bottom: 24px;
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  .single_row_textarea {
+    background-color: ${({ theme }) => theme.colors.lightGrey};
   }
 `;
 
@@ -44,6 +56,7 @@ const FormInput = ({
   responseText,
   setResponseText,
   continueAction,
+  responseGroup,
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -64,8 +77,23 @@ const FormInput = ({
         cols={10}
         wrap="soft"
         value={responseText}
-        onChange={(e) => setResponseText(e.target.value)}
+        onChange={
+          setResponseText ? (e) => setResponseText(e.target.value) : () => {}
+        }
+        disabled={Boolean(responseGroup)}
       />
+      {responseGroup?.map((response, index) => {
+        return (
+          <textarea
+            className="single_row_textarea"
+            ref={ref}
+            name="text"
+            rows={1}
+            // value={response}
+            // onChange={() => {}}
+          />
+        );
+      })}
       <Button
         disabled={responseText.length === 0}
         variant="outlined"

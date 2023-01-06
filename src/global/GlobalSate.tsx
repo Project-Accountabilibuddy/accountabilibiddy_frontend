@@ -10,7 +10,7 @@ interface GlobalState {
   userResponseSacrificeLongForm: string;
   projectName: string;
   userResponseWhyLongForm: string;
-  userResponseWhyShortForm: string;
+  userResponseWhyShortForm: string[];
   userResponseHattersLongForm: string;
   userResponseHattersShortForm: string;
 
@@ -23,7 +23,7 @@ interface GlobalState {
   ) => void;
   setProjectName: (projectName: string) => void;
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void;
-  setUserResponseWhyShortForm: (userResponseWhyShortForm: string) => void;
+  setUserResponseWhyShortForm: (userResponseWhyShortForm: string[]) => void;
   setUserResponseHattersLongForm: (userResponseHattersLongForm: string) => void;
   setUserResponseHattersShortForm: (
     userResponseHattersShortForm: string
@@ -47,7 +47,7 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserResponseWhyLongForm: (userResponseWhyLongForm) =>
     set(() => ({ userResponseWhyLongForm })),
 
-  userResponseWhyShortForm: "",
+  userResponseWhyShortForm: ["", "", ""],
   setUserResponseWhyShortForm: (userResponseWhyShortForm) =>
     set(() => ({ userResponseWhyShortForm })),
 
