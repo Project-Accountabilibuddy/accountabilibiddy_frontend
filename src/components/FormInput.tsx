@@ -1,16 +1,20 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 type FormInputProps = {
+  type: "TEXT" | "NUMBER" | "MULTIPLE_TEXT";
   title: string;
   description?: string;
-  responseText: string;
+  responseText?: string;
   groupResponses?: string[];
+  responseNumber?: number;
   setResponseText?: (responseText: string) => void;
   setGroupResponse?: (responseText: string, index: number) => void;
   continueAction: () => void;
   updateNumberOfGroupResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
+  setResponseNumber?: (responseNumber: number) => void;
 };
 
 const StyledFormInput = styled.div`
@@ -63,13 +67,16 @@ const StyledFormInput = styled.div`
 
 const FormInput = ({
   title,
+  type,
   description,
-  responseText,
-  groupResponses,
+  responseText = "",
+  groupResponses = [],
+  responseNumber,
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
   updateNumberOfGroupResponses = () => {},
+  setResponseNumber = () => {},
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -83,17 +90,29 @@ const FormInput = ({
     <StyledFormInput>
       <h1 className="heading-1">{title}</h1>
       {description && <h3 className="heading-2">{description}</h3>}
-      <textarea
-        ref={ref}
-        name="text"
-        rows={14}
-        cols={10}
-        wrap="soft"
-        value={responseText}
-        onChange={(e) => setResponseText(e.target.value)}
-        disabled={Boolean(groupResponses)}
-      />
-      {groupResponses && (
+      {type === "TEXT" && (
+        <textarea
+          ref={ref}
+          name="text"
+          rows={14}
+          cols={10}
+          wrap="soft"
+          value={responseText}
+          onChange={(e) => setResponseText(e.target.value)}
+          disabled={Boolean(groupResponses)}
+        />
+      )}
+      {type === "NUMBER" && (
+        <TextField
+          className="text_field"
+          variant="outlined"
+          type="number"
+          label="Email"
+          value={responseNumber}
+          onChange={(num) => setResponseNumber(Number(num))}
+        />
+      )}
+      {type === "MULTIPLE_TEXT" && (
         <div className="group_responses">
           {groupResponses?.map((response, index) => {
             return (
@@ -127,7 +146,7 @@ const FormInput = ({
         </div>
       )}
       <Button
-        disabled={responseText.length === 0}
+        disabled={responseText.length === 0 || responseNumber === 0}
         variant="outlined"
         onClick={continueAction}
       >
