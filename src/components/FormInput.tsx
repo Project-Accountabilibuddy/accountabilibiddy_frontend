@@ -99,17 +99,16 @@ const FormInput = ({
           wrap="soft"
           value={responseText}
           onChange={(e) => setResponseText(e.target.value)}
-          disabled={Boolean(groupResponses)}
+          disabled={groupResponses.length > 0}
         />
       )}
       {type === "NUMBER" && (
         <TextField
-          className="text_field"
           variant="outlined"
           type="number"
-          label="Email"
+          label="Weeks"
           value={responseNumber}
-          onChange={(num) => setResponseNumber(Number(num))}
+          onChange={(e) => setResponseNumber(Number(e.target.value))}
         />
       )}
       {type === "MULTIPLE_TEXT" && (
@@ -146,7 +145,7 @@ const FormInput = ({
         </div>
       )}
       <Button
-        disabled={responseText.length === 0 || responseNumber === 0}
+        disabled={responseText.length === 0 && groupResponses.length === 0}
         variant="outlined"
         onClick={continueAction}
       >

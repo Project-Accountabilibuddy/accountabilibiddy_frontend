@@ -115,13 +115,14 @@ const Project = () => {
   const navigate = useNavigate();
 
   const {
+    setWeekResponseFeed,
     projectName,
     userResponseWhyLongForm,
-    setWeekResponseFeed,
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weekResponseFeed,
     userResponseWhyShortForm,
+    weeksExpectedToComplete,
   } = useGlobalState();
 
   console.log({ userResponseHattersShortForm });
@@ -157,7 +158,7 @@ const Project = () => {
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">7/10 Weeks Remaining</h2>
+            <h2 className="body-1 fade_in_out_texts">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
           </div>
           <div className="section_middle_top">
             <h2 className="body-1 fade_in_out_texts">
