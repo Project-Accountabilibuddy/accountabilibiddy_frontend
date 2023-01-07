@@ -94,7 +94,7 @@ const FormInput = ({
         disabled={Boolean(groupResponses)}
       />
       {groupResponses && (
-        <div className="group_res">
+        <div className="group_responses">
           {groupResponses?.map((response, index) => {
             return (
               <textarea
