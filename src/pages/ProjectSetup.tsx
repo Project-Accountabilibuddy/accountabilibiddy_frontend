@@ -31,7 +31,7 @@ const DEFAULT_FORM_RESPONSES = {
 // 4. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = () => {
   const [formInView, setFormInView] = useState(
-    DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
+    DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM
   );
 
   const {
@@ -104,12 +104,12 @@ const ProjectSetup = () => {
       {formInView === DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM && (
         <FormInput
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
-          responseGroup={userResponseWhyShortForm}
+          groupResponses={userResponseWhyShortForm}
           responseText={userResponseWhyLongForm}
           updateShortFormnumberOfResponses={
             updateResponseWhyShortFormNumberOfResponses
           }
-          setShortResponseText={setUserResponseWhyShortForm}
+          setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
           }
@@ -118,12 +118,12 @@ const ProjectSetup = () => {
       {formInView === DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM && (
         <FormInput
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
-          responseGroup={userResponseHattersShortForm}
+          groupResponses={userResponseHattersShortForm}
           responseText={userResponseHattersLongForm}
           updateShortFormnumberOfResponses={
             updateResponseHattersShortFormNumberOfResponses
           }
-          setShortResponseText={setUserResponseHattersShortForm}
+          setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
           }

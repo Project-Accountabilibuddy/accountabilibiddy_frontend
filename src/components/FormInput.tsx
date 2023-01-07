@@ -6,11 +6,11 @@ type FormInputProps = {
   title: string;
   description?: string;
   responseText: string;
-  responseGroup?: string[];
+  groupResponses?: string[];
   setResponseText?: (responseText: string) => void;
-  setShortResponseText?: (responseText: string, index: number) => void;
+  setGroupResponse?: (responseText: string, index: number) => void;
   continueAction: () => void;
-  updateShortFormnumberOfResponses?: (ASDF: "ADD" | "REMOVE") => void;
+  updateShortFormnumberOfResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
 };
 
 const StyledFormInput = styled.div`
@@ -65,11 +65,11 @@ const FormInput = ({
   title,
   description,
   responseText,
+  groupResponses,
   setResponseText = () => {},
-  setShortResponseText = () => {},
+  setGroupResponse = () => {},
   continueAction,
   updateShortFormnumberOfResponses = () => {},
-  responseGroup,
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -91,11 +91,11 @@ const FormInput = ({
         wrap="soft"
         value={responseText}
         onChange={(e) => setResponseText(e.target.value)}
-        disabled={Boolean(responseGroup)}
+        disabled={Boolean(groupResponses)}
       />
-      {responseGroup && (
+      {groupResponses && (
         <div className="respones_group">
-          {responseGroup?.map((response, index) => {
+          {groupResponses?.map((response, index) => {
             return (
               <textarea
                 key={index}
@@ -104,20 +104,20 @@ const FormInput = ({
                 name="text"
                 rows={1}
                 value={response}
-                onChange={(e) => setShortResponseText(e.target.value, index)}
+                onChange={(e) => setGroupResponse(e.target.value, index)}
               />
             );
           })}
           <div className="response_group_buttons">
             <Button
-              disabled={responseGroup.length < 2}
+              disabled={groupResponses.length < 2}
               variant="outlined"
               onClick={() => updateShortFormnumberOfResponses("REMOVE")}
             >
               Remove Reason
             </Button>
             <Button
-              disabled={responseGroup.length > 4}
+              disabled={groupResponses.length > 4}
               variant="outlined"
               onClick={() => updateShortFormnumberOfResponses("ADD")}
             >
