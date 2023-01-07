@@ -10,7 +10,7 @@ type FormInputProps = {
   setResponseText?: (responseText: string) => void;
   setGroupResponse?: (responseText: string, index: number) => void;
   continueAction: () => void;
-  updateNumberOfResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
+  updateNumberOfGroupResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
 };
 
 const StyledFormInput = styled.div`
@@ -45,7 +45,7 @@ const StyledFormInput = styled.div`
     border-radius: 4px;
   }
 
-  .respones_group {
+  .group_responses {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -54,7 +54,7 @@ const StyledFormInput = styled.div`
       height: auto;
     }
 
-    .response_group_buttons {
+    .group_responses_buttons {
       display: flex;
       justify-content: space-between;
     }
@@ -69,7 +69,7 @@ const FormInput = ({
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
-  updateNumberOfResponses = () => {},
+  updateNumberOfGroupResponses = () => {},
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -94,7 +94,7 @@ const FormInput = ({
         disabled={Boolean(groupResponses)}
       />
       {groupResponses && (
-        <div className="respones_group">
+        <div className="group_res">
           {groupResponses?.map((response, index) => {
             return (
               <textarea
@@ -108,18 +108,18 @@ const FormInput = ({
               />
             );
           })}
-          <div className="response_group_buttons">
+          <div className="group_responses_buttons">
             <Button
               disabled={groupResponses.length < 2}
               variant="outlined"
-              onClick={() => updateNumberOfResponses("REMOVE")}
+              onClick={() => updateNumberOfGroupResponses("REMOVE")}
             >
               Remove Reason
             </Button>
             <Button
               disabled={groupResponses.length > 4}
               variant="outlined"
-              onClick={() => updateNumberOfResponses("ADD")}
+              onClick={() => updateNumberOfGroupResponses("ADD")}
             >
               Add Reason
             </Button>

@@ -25,10 +25,9 @@ const DEFAULT_FORM_RESPONSES = {
 };
 
 // TOOD: SHIT THAT NEEDS DOING
-// 1. ADD DISTILLED VERSION VIEWS WHY/HATTERS
-// 2. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
-// 3. ADD IN TIME USER WILL GIVE THEMSELVES TO COMPLETE PROJECT
-// 4. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
+// 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
+// 2. ADD IN TIME USER WILL GIVE THEMSELVES TO COMPLETE PROJECT
+// 3. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = () => {
   const [formInView, setFormInView] = useState(
     DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM
@@ -106,7 +105,7 @@ const ProjectSetup = () => {
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
           groupResponses={userResponseWhyShortForm}
           responseText={userResponseWhyLongForm}
-          updateNumberOfResponses={updateWhyShortFormNumberOfResponses}
+          updateNumberOfGroupResponses={updateWhyShortFormNumberOfResponses}
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
@@ -118,7 +117,7 @@ const ProjectSetup = () => {
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
           groupResponses={userResponseHattersShortForm}
           responseText={userResponseHattersLongForm}
-          updateNumberOfResponses={updateHattersShortFormNumberOfResponses}
+          updateNumberOfGroupResponses={updateHattersShortFormNumberOfResponses}
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
