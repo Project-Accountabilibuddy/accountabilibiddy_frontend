@@ -24,7 +24,7 @@ interface GlobalState {
   setProjectName: (projectName: string) => void;
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void;
 
-  updateResponseWhyShortFormNumberOfResponses: (removeOrAdd: string) => void;
+  updateWhyShortFormNumberOfResponses: (removeOrAdd: string) => void;
   setUserResponseWhyShortForm: (
     userResponseWhyShortForm: string,
     index: number
@@ -32,9 +32,7 @@ interface GlobalState {
 
   setUserResponseHattersLongForm: (userResponseHattersLongForm: string) => void;
 
-  updateResponseHattersShortFormNumberOfResponses: (
-    removeOrAdd: string
-  ) => void;
+  updateHattersShortFormNumberOfResponses: (removeOrAdd: string) => void;
   setUserResponseHattersShortForm: (
     userResponseHatersShortForm: string,
     index: number
@@ -60,7 +58,7 @@ const useGlobalState = create<GlobalState>((set) => ({
 
   userResponseWhyShortForm: ["DEPLOY COMMAND IS SOLID BOIII", "", ""],
 
-  updateResponseWhyShortFormNumberOfResponses: (removeOrAdd) => {
+  updateWhyShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
       if (removeOrAdd === "ADD") {
         return {
@@ -92,7 +90,7 @@ const useGlobalState = create<GlobalState>((set) => ({
 
   userResponseHattersShortForm: ["A", "B", "C"],
 
-  updateResponseHattersShortFormNumberOfResponses: (removeOrAdd) => {
+  updateHattersShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
       if (removeOrAdd === "ADD") {
         return {

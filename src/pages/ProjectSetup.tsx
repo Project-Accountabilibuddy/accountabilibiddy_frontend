@@ -48,8 +48,8 @@ const ProjectSetup = () => {
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
     setUserResponseHattersLongForm,
-    updateResponseWhyShortFormNumberOfResponses,
-    updateResponseHattersShortFormNumberOfResponses,
+    updateWhyShortFormNumberOfResponses,
+    updateHattersShortFormNumberOfResponses,
     setUserResponseHattersShortForm,
   } = useGlobalState();
 
@@ -106,9 +106,7 @@ const ProjectSetup = () => {
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
           groupResponses={userResponseWhyShortForm}
           responseText={userResponseWhyLongForm}
-          updateShortFormnumberOfResponses={
-            updateResponseWhyShortFormNumberOfResponses
-          }
+          updateNumberOfResponses={updateWhyShortFormNumberOfResponses}
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
@@ -120,9 +118,7 @@ const ProjectSetup = () => {
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
           groupResponses={userResponseHattersShortForm}
           responseText={userResponseHattersLongForm}
-          updateShortFormnumberOfResponses={
-            updateResponseHattersShortFormNumberOfResponses
-          }
+          updateNumberOfResponses={updateHattersShortFormNumberOfResponses}
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() =>
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)

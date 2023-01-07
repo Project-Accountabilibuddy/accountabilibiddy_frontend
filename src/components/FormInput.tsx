@@ -10,7 +10,7 @@ type FormInputProps = {
   setResponseText?: (responseText: string) => void;
   setGroupResponse?: (responseText: string, index: number) => void;
   continueAction: () => void;
-  updateShortFormnumberOfResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
+  updateNumberOfResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
 };
 
 const StyledFormInput = styled.div`
@@ -69,7 +69,7 @@ const FormInput = ({
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
-  updateShortFormnumberOfResponses = () => {},
+  updateNumberOfResponses = () => {},
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -112,14 +112,14 @@ const FormInput = ({
             <Button
               disabled={groupResponses.length < 2}
               variant="outlined"
-              onClick={() => updateShortFormnumberOfResponses("REMOVE")}
+              onClick={() => updateNumberOfResponses("REMOVE")}
             >
               Remove Reason
             </Button>
             <Button
               disabled={groupResponses.length > 4}
               variant="outlined"
-              onClick={() => updateShortFormnumberOfResponses("ADD")}
+              onClick={() => updateNumberOfResponses("ADD")}
             >
               Add Reason
             </Button>
