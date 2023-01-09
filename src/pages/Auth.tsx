@@ -14,7 +14,7 @@ const StyledAuthentication = styled.div`
   height: 100%;
 
   .heading-2 {
-    color: ${({ theme }) => theme.colors.lightGrey};
+    color: var(--color-light-grey);
   }
 
   .text_field {

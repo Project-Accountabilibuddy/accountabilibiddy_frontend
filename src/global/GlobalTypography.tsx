@@ -22,7 +22,7 @@ const StyledGlobalTypography = styled.div`
     line-height: 42px;
     letter-spacing: 0.25px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
   }
 
   .heading-2 {
@@ -31,7 +31,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 28px;
     line-height: 30px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
   }
 
   .heading-3 {
@@ -40,7 +40,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 24px;
     line-height: 30px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.15px;
     margin: 48px auto 34px;
   }
@@ -51,7 +51,7 @@ const StyledGlobalTypography = styled.div`
     font-weight: 400;
     line-height: 24px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.5px;
     text-align: center;
   }
@@ -62,7 +62,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 18px;
     line-height: 24px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.25px;
   }
 
@@ -72,7 +72,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 20px;
     line-height: 28px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.15px;
   }
 
@@ -82,7 +82,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 18px;
     line-height: 24px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.1px;
   }
 
@@ -92,7 +92,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 16px;
     line-height: 20px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.4px;
   }
 
@@ -102,7 +102,7 @@ const StyledGlobalTypography = styled.div`
     font-size: 14px;
     line-height: 18px;
     font-family: 'Anton', sans-serif;
-    color: ${({ theme }) => theme.colors.white};
+    color: var(--color-white);
     letter-spacing: 0.4px;
   }
 

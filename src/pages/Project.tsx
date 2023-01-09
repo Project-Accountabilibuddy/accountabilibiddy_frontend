@@ -20,10 +20,10 @@ const StyledProject = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: var(--top-bar-height);
+    height: var(--height-top-bar);
     padding: 0 24px;
-    background-color: ${({ theme }) => theme.colors.lightGrey};
-    border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+    background-color: var(--color-light-grey);
+    border-bottom: 2px solid var(--color-secondary);
 
     .future_logo {
       width: 100%;
@@ -33,7 +33,7 @@ const StyledProject = styled.div`
   }
 
   .section_group {
-    height: calc(100vh - var(--top-bar-height));
+    height: calc(100vh - var(--height-top-bar));
     display: flex;
 
     .section_left,
@@ -41,7 +41,7 @@ const StyledProject = styled.div`
     .section_right {
       padding: 24px;
       width: 100%;
-      border: 2px solid ${({ theme }) => theme.colors.secondary};
+      border: 2px solid var(--color-secondary);
       border-radius: 4px;
     }
 
@@ -65,7 +65,7 @@ const StyledProject = styled.div`
       .section_middle_top,
       .section_weekly_form_fields,
       .section_weekly_feed {
-        border: 2px solid ${({ theme }) => theme.colors.secondary};
+        border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
         padding: 24px;
@@ -73,14 +73,14 @@ const StyledProject = styled.div`
 
       .section_middle_top {
         .fade_in_out_texts {
-          color: ${({ theme }) => theme.colors.primary};
+          color: var(--color-primary);
         }
       }
 
       .section_weekly_form_fields {
         .section_weekly_form {
-          color: ${({ theme }) => theme.colors.white};
-          background-color: ${({ theme }) => theme.colors.darkGrey};
+          color: var(--color-white);
+          background-color: var(--color-dark-grey);
           border-radius: 4px;
           border: none;
           outline: none;
@@ -95,7 +95,7 @@ const StyledProject = styled.div`
         overflow: scroll;
 
         .weeks_response {
-          border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+          border-bottom: 2px solid var(--color-secondary);
           margin-bottom: 12px;
           padding: 12px;
         }

@@ -13,7 +13,7 @@ import ProjectSetUpPage from './pages/ProjectSetup'
 import ProjectPage from './pages/Project'
 
 const StyledApp = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: var(--color-background);
   height: 100vh;
   width: 100vw;
 `

@@ -27,11 +27,11 @@ const StyledFormInput = styled.div`
   }
 
   .heading-1 {
-    color: ${({ theme }) => theme.colors.primary};
+    color: var(--color-primary);
   }
 
   .heading-2 {
-    color: ${({ theme }) => theme.colors.lightGrey};
+    color: var(--color-light-grey);
   }
 
   button {
@@ -39,8 +39,8 @@ const StyledFormInput = styled.div`
   }
 
   textarea {
-    color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.background};
+    color: var(--color-white);
+    background-color: var(--color-light-background);
     border: none;
     outline: none;
     resize: none;
@@ -58,19 +58,19 @@ const StyledFormInput = styled.div`
       align-items: center;
       juect-content: center;
       padding: 24px;
-      background-color: ${({ theme }) => theme.colors.lightGrey};
-      border: 2px solid ${({ theme }) => theme.colors.lightGrey};
-      color: ${({ theme }) => theme.colors.white};
+      background-color: var(--color-light-grey);
+      border: 2px solid var(--color-light-grey);
+      color: var(--color-white);
       border-radius: 4px;
 
       :hover {
-        border: 2px solid ${({ theme }) => theme.colors.primary};
+        border: 2px solid var(--color-primary);
         cursor: pointer;
       }
     }
 
     .selected {
-      border: 2px solid ${({ theme }) => theme.colors.primary};
+      border: 2px solid var(--color-primary);
     }
   }
 
@@ -80,7 +80,7 @@ const StyledFormInput = styled.div`
     justify-content: center;
 
     .single_row_textarea {
-      background-color: ${({ theme }) => theme.colors.lightGrey};
+      background-color: var(--color-light-grey);
       height: auto;
     }
 

@@ -12,15 +12,15 @@ const StyledLanding = styled.div`
   height: 100%;
 
   .heading-1 {
-    color: ${({ theme }) => theme.colors.primary};
+    color: var(--color-primary);
   }
 
   .heading-2 {
-    color: ${({ theme }) => theme.colors.lightGrey};
+    color: var(--color-light-grey);
   }
 
   .body-1 {
-    color: ${({ theme }) => theme.colors.lightGrey};
+    color: var(--color-light-grey);
   }
 
   button {
