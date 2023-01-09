@@ -62,7 +62,7 @@ const StyledProject = styled.div`
       border: none;
       padding: 0;
 
-      .section_dynamic_action,
+      .section_middle_top,
       .section_weekly_form_fields,
       .section_weekly_feed {
         border: 2px solid ${({ theme }) => theme.colors.secondary};
@@ -71,8 +71,8 @@ const StyledProject = styled.div`
         padding: 24px;
       }
 
-      .section_dynamic_action {
-        .fade_in_out_text {
+      .section_middle_top {
+        .fade_in_out_texts {
           color: ${({ theme }) => theme.colors.primary};
         }
       }
@@ -115,13 +115,14 @@ const Project = () => {
   const navigate = useNavigate();
 
   const {
+    setWeekResponseFeed,
     projectName,
     userResponseWhyLongForm,
-    setWeekResponseFeed,
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weekResponseFeed,
     userResponseWhyShortForm,
+    weeksExpectedToComplete,
   } = useGlobalState();
 
   console.log({ userResponseHattersShortForm });
@@ -156,8 +157,11 @@ const Project = () => {
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
         </div>
         <div className="section_middle">
-          <div className="section_dynamic_action">
-            <h2 className="body-1 fade_in_out_text">
+          <div className="section_middle_top">
+            <h2 className="body-1 fade_in_out_texts">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
+          </div>
+          <div className="section_middle_top">
+            <h2 className="body-1 fade_in_out_texts">
               {userResponseWhyShortForm}
             </h2>
           </div>

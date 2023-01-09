@@ -2,15 +2,20 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 
+import cx from "classnames";
+
 type FormInputProps = {
+  type: "TEXT" | "NUMBER" | "MULTIPLE_TEXT";
   title: string;
   description?: string;
-  responseText: string;
+  responseText?: string;
   groupResponses?: string[];
+  responseNumber?: number;
   setResponseText?: (responseText: string) => void;
   setGroupResponse?: (responseText: string, index: number) => void;
   continueAction: () => void;
   updateNumberOfGroupResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
+  setResponseNumber?: (responseNumber: number) => void;
 };
 
 const StyledFormInput = styled.div`
@@ -45,10 +50,36 @@ const StyledFormInput = styled.div`
     border-radius: 4px;
   }
 
+  .week_options {
+    display: flex;
+    justify-content: space-between;
+
+    .week_option {
+      display: flex;
+      align-items: center;
+      juect-content: center;
+      padding: 24px;
+      background-color: ${({ theme }) => theme.colors.lightGrey};
+      border: 2px solid ${({ theme }) => theme.colors.lightGrey};
+      color: ${({ theme }) => theme.colors.white};
+      border-radius: 4px;
+
+      :hover {
+        border: 2px solid ${({ theme }) => theme.colors.primary};
+        cursor: pointer;
+      }
+    }
+
+    .selected {
+      border: 2px solid ${({ theme }) => theme.colors.primary};
+    }
+  }
+
   .group_responses {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
     .single_row_textarea {
       background-color: ${({ theme }) => theme.colors.lightGrey};
       height: auto;
@@ -63,13 +94,16 @@ const StyledFormInput = styled.div`
 
 const FormInput = ({
   title,
+  type,
   description,
-  responseText,
-  groupResponses,
+  responseText = "",
+  groupResponses = [],
+  responseNumber,
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
   updateNumberOfGroupResponses = () => {},
+  setResponseNumber = () => {},
 }: FormInputProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -83,18 +117,37 @@ const FormInput = ({
     <StyledFormInput>
       <h1 className="heading-1">{title}</h1>
       {description && <h3 className="heading-2">{description}</h3>}
-      <textarea
-        ref={ref}
-        name="text"
-        rows={14}
-        cols={10}
-        wrap="soft"
-        value={responseText}
-        onChange={(e) => setResponseText(e.target.value)}
-        disabled={Boolean(groupResponses)}
-      />
-      {groupResponses && (
-        <div className="group_res">
+      {type === "TEXT" && (
+        <textarea
+          ref={ref}
+          name="text"
+          rows={14}
+          cols={10}
+          wrap="soft"
+          value={responseText}
+          onChange={(e) => setResponseText(e.target.value)}
+          disabled={groupResponses.length > 0}
+        />
+      )}
+      {type === "NUMBER" && (
+        <div className="week_options">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((weekOption, index) => {
+            return (
+              <div
+                onClick={() => setResponseNumber(weekOption)}
+                className={cx("week_option", {
+                  selected: weekOption === responseNumber,
+                })}
+                key={index}
+              >
+                {weekOption}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {type === "MULTIPLE_TEXT" && (
+        <div className="group_responses">
           {groupResponses?.map((response, index) => {
             return (
               <textarea
@@ -127,7 +180,7 @@ const FormInput = ({
         </div>
       )}
       <Button
-        disabled={responseText.length === 0}
+        disabled={responseText.length === 0 && type === "TEXT"}
         variant="outlined"
         onClick={continueAction}
       >

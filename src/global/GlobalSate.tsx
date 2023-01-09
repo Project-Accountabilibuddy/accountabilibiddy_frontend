@@ -37,6 +37,9 @@ interface GlobalState {
     userResponseHatersShortForm: string,
     index: number
   ) => void;
+
+  weeksExpectedToComplete: number;
+  setWeeksExpectedToComplete: (weeksExpectedToComplete: number) => void;
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
@@ -124,6 +127,10 @@ const useGlobalState = create<GlobalState>((set) => ({
     set((state) => ({
       weekResponseFeed: [...state.weekResponseFeed, weeksResponse],
     })),
+
+  weeksExpectedToComplete: 6,
+  setWeeksExpectedToComplete: (weeksExpectedToComplete) =>
+    set(() => ({ weeksExpectedToComplete })),
 }));
 
 export default useGlobalState;
