@@ -79,6 +79,7 @@ const StyledFormInput = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
     .single_row_textarea {
       background-color: ${({ theme }) => theme.colors.lightGrey};
       height: auto;
