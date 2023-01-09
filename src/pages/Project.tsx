@@ -149,7 +149,13 @@ const Project = (): JSX.Element => {
       <div className="top_nav_bar">
         <h1 className="heading-1">{projectName}</h1>
         <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
-        <Button onClick={handleSignOut}>Sign Out</Button>
+        <Button
+          onClick={() => {
+            void handleSignOut
+          }}
+        >
+          Sign Out
+        </Button>
       </div>
       <div className="section_group">
         <div className="section_left">

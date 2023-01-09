@@ -25,16 +25,15 @@ const StyledGlobalLoading = styled.div`
   height: 100vh;
 `
 
-const App = () => {
-  const [user, setUser] = useState({})
+const App = (): JSX.Element => {
+  // const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  // CHECKS IF USER IS SIGNED IN AND NAVIGATES THEM TO PROPER ROUTE
   useEffect(() => {
-    const main = async () => {
+    const navigateBasedOnUserAuthStatus = async (): Promise<any> => {
       setLoading(true)
       try {
         await Auth.currentAuthenticatedUser()
@@ -54,14 +53,25 @@ const App = () => {
       }
     }
 
-    main()
+    navigateBasedOnUserAuthStatus()
+      .then(() => {
+        console.log('Navigated based on user auth status')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [navigate, pathname])
 
   // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => { setUser(user) })
-      .catch((err) => { console.log({ err }) })
+      .then((user) => {
+        console.log({ user })
+        // setUser(user)
+      })
+      .catch((err) => {
+        console.log({ err })
+      })
   }, [])
 
   return (

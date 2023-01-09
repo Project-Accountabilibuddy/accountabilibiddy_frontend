@@ -29,7 +29,7 @@ const StyledAuthentication = styled.div`
   }
 `
 
-const Authentication = () => {
+const Authentication = (): JSX.Element => {
   const [authFormInView, setAuthFormInView] = useState('SIGN_UP')
 
   const [userEmail, setUserEmail] = useState('')
@@ -49,7 +49,7 @@ const Authentication = () => {
     }
   }, [pathname])
 
-  const handleSignUpUser = async () => {
+  const handleSignUpUser = async (): Promise<any> => {
     try {
       await Auth.signUp({
         username: userEmail,
@@ -64,7 +64,7 @@ const Authentication = () => {
     }
   }
 
-  const handleConfirmSignUpUser = async () => {
+  const handleConfirmSignUpUser = async (): Promise<any> => {
     try {
       await Auth.confirmSignUp(userEmail, code).then(() => {
         navigate('/project-setup')
@@ -74,7 +74,7 @@ const Authentication = () => {
     }
   }
 
-  const handleSignInUser = async () => {
+  const handleSignInUser = async (): Promise<any> => {
     try {
       await Auth.signIn(userEmail, password).then(() => {
         navigate('/my-project')
@@ -110,7 +110,13 @@ const Authentication = () => {
               setPassword(e.target.value)
             }}
           />
-          <Button onClick={handleSignUpUser}>Sign Up</Button>
+          <Button
+            onClick={() => {
+              void handleSignUpUser()
+            }}
+          >
+            Sign Up
+          </Button>
           <Button
             onClick={() => {
               setAuthFormInView('SIGN_IN')
@@ -132,7 +138,13 @@ const Authentication = () => {
               setCode(e.target.value)
             }}
           />
-          <Button onClick={handleConfirmSignUpUser}>Verify Code</Button>
+          <Button
+            onClick={() => {
+              void handleConfirmSignUpUser()
+            }}
+          >
+            Verify Code
+          </Button>
         </>
       )}
       {authFormInView === 'SIGN_IN' && (
@@ -156,7 +168,13 @@ const Authentication = () => {
               setPassword(e.target.value)
             }}
           />
-          <Button onClick={handleSignInUser}>Sign In</Button>
+          <Button
+            onClick={() => {
+              void handleSignInUser()
+            }}
+          >
+            Sign In
+          </Button>
           <Button
             onClick={() => {
               setAuthFormInView('SIGN_UP')

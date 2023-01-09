@@ -12,7 +12,14 @@ const buildRandomID = (length: number): string => {
   return result
 }
 
-const useBackEndMethods = (): JSX.Element => {
+const useBackEndMethods = (): {
+  getAllItems: () => void
+  handleDeleteItem: (id: string) => void
+  handleCreateItem: () => void
+  setNewItemName: (newItemName: string) => void
+  allItems: any[]
+  newItemName: string
+} => {
   const [allItems, setAllItems] = useState([])
   const [newItemName, setNewItemName] = useState('')
 

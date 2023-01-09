@@ -8,6 +8,7 @@
         "standard-with-typescript"
     ],
     "overrides": [
+     
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -18,5 +19,6 @@
         "react"
     ],
     "rules": {
+        "react/no-unescaped-entities": 0
     }
 }
