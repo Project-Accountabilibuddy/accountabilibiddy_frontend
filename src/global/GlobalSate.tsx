@@ -128,7 +128,7 @@ const useGlobalState = create<GlobalState>((set) => ({
       weekResponseFeed: [...state.weekResponseFeed, weeksResponse],
     })),
 
-  weeksExpectedToComplete: 1,
+  weeksExpectedToComplete: 6,
   setWeeksExpectedToComplete: (weeksExpectedToComplete) =>
     set(() => ({ weeksExpectedToComplete })),
 }));

@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+
+import cx from "classnames";
 
 type FormInputProps = {
   type: "TEXT" | "NUMBER" | "MULTIPLE_TEXT";
@@ -47,6 +48,31 @@ const StyledFormInput = styled.div`
     margin-bottom: 24px;
     padding: 8px;
     border-radius: 4px;
+  }
+
+  .week_options {
+    display: flex;
+    justify-content: space-between;
+
+    .week_option {
+      display: flex;
+      align-items: center;
+      juect-content: center;
+      padding: 24px;
+      background-color: ${({ theme }) => theme.colors.lightGrey};
+      border: 2px solid ${({ theme }) => theme.colors.lightGrey};
+      color: ${({ theme }) => theme.colors.white};
+      border-radius: 4px;
+
+      :hover {
+        border: 2px solid ${({ theme }) => theme.colors.primary};
+        cursor: pointer;
+      }
+    }
+
+    .selected {
+      border: 2px solid ${({ theme }) => theme.colors.primary};
+    }
   }
 
   .group_responses {
@@ -103,13 +129,21 @@ const FormInput = ({
         />
       )}
       {type === "NUMBER" && (
-        <TextField
-          variant="outlined"
-          type="number"
-          label="Weeks"
-          value={responseNumber}
-          onChange={(e) => setResponseNumber(Number(e.target.value))}
-        />
+        <div className="week_options">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((weekOption, index) => {
+            return (
+              <div
+                onClick={() => setResponseNumber(weekOption)}
+                className={cx("week_option", {
+                  selected: weekOption === responseNumber,
+                })}
+                key={index}
+              >
+                {weekOption}
+              </div>
+            );
+          })}
+        </div>
       )}
       {type === "MULTIPLE_TEXT" && (
         <div className="group_responses">
@@ -145,7 +179,7 @@ const FormInput = ({
         </div>
       )}
       <Button
-        disabled={responseText.length === 0 && groupResponses.length === 0}
+        disabled={responseText.length === 0 && type === "TEXT"}
         variant="outlined"
         onClick={continueAction}
       >

@@ -31,7 +31,7 @@ const DEFAULT_FORM_RESPONSES = {
 // 3. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = () => {
   const [formInView, setFormInView] = useState(
-    DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
+    DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE
   );
 
   const {
