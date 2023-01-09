@@ -151,7 +151,7 @@ const Project = (): JSX.Element => {
         <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
         <Button
           onClick={() => {
-            void handleSignOut
+            void handleSignOut()
           }}
         >
           Sign Out
