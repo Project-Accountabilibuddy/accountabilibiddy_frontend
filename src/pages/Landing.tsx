@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import styled from 'styled-components'
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom'
 
 const StyledLanding = styled.div`
   display: flex;
@@ -26,10 +26,10 @@ const StyledLanding = styled.div`
   button {
     margin-top: 24px;
   }
-`;
+`
 
-const Landing = () => {
-  const navigate = useNavigate();
+const Landing = (): JSX.Element => {
+  const navigate = useNavigate()
 
   return (
     <StyledLanding>
@@ -46,14 +46,24 @@ const Landing = () => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button variant="outlined" onClick={() => navigate("/auth/sign-up")}>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          navigate('/auth/sign-up')
+        }}
+      >
         Begin Journey
       </Button>
-      <Button variant="outlined" onClick={() => navigate("/auth/sign-in")}>
+      <Button
+        variant="outlined"
+        onClick={() => {
+          navigate('/auth/sign-in')
+        }}
+      >
         Sign In
       </Button>
     </StyledLanding>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

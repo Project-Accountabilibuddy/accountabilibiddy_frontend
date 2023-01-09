@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { Auth } from "aws-amplify";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { Auth } from 'aws-amplify'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -27,67 +27,67 @@ const StyledAuthentication = styled.div`
   button {
     margin-top: 24px;
   }
-`;
+`
 
-const Authentication = () => {
-  const [authFormInView, setAuthFormInView] = useState("SIGN_UP");
+const Authentication = (): JSX.Element => {
+  const [authFormInView, setAuthFormInView] = useState('SIGN_UP')
 
-  const [userEmail, setUserEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('')
 
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
   useEffect(() => {
-    if (pathname.includes("sign-up")) {
-      setAuthFormInView("SIGN_UP");
-    } else if (pathname.includes("sign-in")) {
-      setAuthFormInView("SIGN_IN");
+    if (pathname.includes('sign-up')) {
+      setAuthFormInView('SIGN_UP')
+    } else if (pathname.includes('sign-in')) {
+      setAuthFormInView('SIGN_IN')
     }
-  }, [pathname]);
+  }, [pathname])
 
-  const handleSignUpUser = async () => {
+  const handleSignUpUser = async (): Promise<any> => {
     try {
       await Auth.signUp({
         username: userEmail,
         password,
         attributes: { email: userEmail },
-        autoSignIn: { enabled: true },
+        autoSignIn: { enabled: true }
       }).then(() => {
-        setAuthFormInView("CONFIRM_EMAIL");
-      });
+        setAuthFormInView('CONFIRM_EMAIL')
+      })
     } catch (error) {
-      console.log("error signing up:", error);
+      console.log('error signing up:', error)
     }
-  };
+  }
 
-  const handleConfirmSignUpUser = async () => {
+  const handleConfirmSignUpUser = async (): Promise<any> => {
     try {
       await Auth.confirmSignUp(userEmail, code).then(() => {
-        navigate("/project-setup");
-      });
+        navigate('/project-setup')
+      })
     } catch (error) {
-      console.log("error confirming sign up", error);
+      console.log('error confirming sign up', error)
     }
-  };
+  }
 
-  const handleSignInUser = async () => {
+  const handleSignInUser = async (): Promise<any> => {
     try {
       await Auth.signIn(userEmail, password).then(() => {
-        navigate("/my-project");
-      });
+        navigate('/my-project')
+      })
     } catch (error) {
-      console.log("error signing in", error);
+      console.log('error signing in', error)
     }
-  };
+  }
 
   return (
     <StyledAuthentication>
       <h1 className="heading-1">Accountabilibuddy</h1>
-      {authFormInView === "SIGN_UP" && (
+      {authFormInView === 'SIGN_UP' && (
         <>
           <h3 className="heading-2">
             Let's get you set up before your ass is kicked
@@ -97,22 +97,36 @@ const Authentication = () => {
             variant="outlined"
             label="Email"
             value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
+            onChange={(e) => {
+              setUserEmail(e.target.value)
+            }}
           />
           <TextField
             className="text_field"
             variant="outlined"
             label="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
           />
-          <Button onClick={handleSignUpUser}>Sign Up</Button>
-          <Button onClick={() => setAuthFormInView("SIGN_IN")}>
+          <Button
+            onClick={() => {
+              void handleSignUpUser()
+            }}
+          >
+            Sign Up
+          </Button>
+          <Button
+            onClick={() => {
+              setAuthFormInView('SIGN_IN')
+            }}
+          >
             I have an account
           </Button>
         </>
       )}
-      {authFormInView === "CONFIRM_EMAIL" && (
+      {authFormInView === 'CONFIRM_EMAIL' && (
         <>
           <h3 className="heading-2">Confirm Sign Up</h3>
           <TextField
@@ -120,12 +134,20 @@ const Authentication = () => {
             variant="outlined"
             label="Code"
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => {
+              setCode(e.target.value)
+            }}
           />
-          <Button onClick={handleConfirmSignUpUser}>Verify Code</Button>
+          <Button
+            onClick={() => {
+              void handleConfirmSignUpUser()
+            }}
+          >
+            Verify Code
+          </Button>
         </>
       )}
-      {authFormInView === "SIGN_IN" && (
+      {authFormInView === 'SIGN_IN' && (
         <>
           <h3 className="heading-2">Let's get back to work</h3>
           <TextField
@@ -133,23 +155,37 @@ const Authentication = () => {
             variant="outlined"
             label="Email"
             value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
+            onChange={(e) => {
+              setUserEmail(e.target.value)
+            }}
           />
           <TextField
             className="text_field"
             variant="outlined"
             label="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
           />
-          <Button onClick={handleSignInUser}>Sign In</Button>
-          <Button onClick={() => setAuthFormInView("SIGN_UP")}>
+          <Button
+            onClick={() => {
+              void handleSignInUser()
+            }}
+          >
+            Sign In
+          </Button>
+          <Button
+            onClick={() => {
+              setAuthFormInView('SIGN_UP')
+            }}
+          >
             I don't have an account
           </Button>
         </>
       )}
     </StyledAuthentication>
-  );
-};
+  )
+}
 
-export default Authentication;
+export default Authentication
