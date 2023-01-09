@@ -1,62 +1,68 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
-const buildRandomID = (length: number) => {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+const buildRandomID = (length: number): string => {
+  let result = ''
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
   }
-  return result;
-};
+  return result
+}
 
-const useBackEndMethods = () => {
-  const [allItems, setAllItems] = useState([]);
-  const [newItemName, setNewItemName] = useState("");
+const useBackEndMethods = (): JSX.Element => {
+  const [allItems, setAllItems] = useState([])
+  const [newItemName, setNewItemName] = useState('')
 
   useEffect(() => {
-    if (allItems.length) return;
+    if (allItems.length > 0) return
 
-    getAllItems();
-  }, [allItems]);
+    getAllItems()
+  }, [allItems])
 
-  const getAllItems = () => {
+  const getAllItems = (): void => {
     axios
-      .get("https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items")
+      .get('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items')
       .then((res) => {
-        console.log(res?.data?.Items);
-        setAllItems(res?.data?.Items);
+        console.log(res?.data?.Items)
+        setAllItems(res?.data?.Items)
       })
-      .catch((err) => console.log({ err }));
-  };
+      .catch((err) => {
+        console.log({ err })
+      })
+  }
 
-  const handleDeleteItem = (id: string) => {
+  const handleDeleteItem = (id: string): void => {
     axios
       .delete(
         `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
       )
       .then((res) => {
-        console.log(res);
-        getAllItems();
+        console.log(res)
+        getAllItems()
       })
-      .catch((err) => console.log({ err }));
-  };
+      .catch((err) => {
+        console.log({ err })
+      })
+  }
 
-  const handleCreateItem = () => {
+  const handleCreateItem = (): void => {
     axios
-      .put(`https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items`, {
+      .put('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items', {
         id: buildRandomID(5),
-        name: newItemName,
+        name: newItemName
       })
       .then((res) => {
-        console.log(res);
-        getAllItems();
-        setNewItemName("");
+        console.log(res)
+        getAllItems()
+        setNewItemName('')
       })
-      .catch((err) => console.log({ err }));
-  };
+      .catch((err) => {
+        console.log({ err })
+      })
+  }
 
   return {
     getAllItems,
@@ -64,8 +70,8 @@ const useBackEndMethods = () => {
     handleCreateItem,
     setNewItemName,
     allItems,
-    newItemName,
-  };
-};
+    newItemName
+  }
+}
 
-export default useBackEndMethods;
+export default useBackEndMethods

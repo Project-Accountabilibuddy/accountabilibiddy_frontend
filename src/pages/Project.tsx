@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import styled from "styled-components";
-import { Auth } from "aws-amplify";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import Button from '@mui/material/Button'
+import styled from 'styled-components'
+import { Auth } from 'aws-amplify'
+import { useNavigate } from 'react-router-dom'
 
-import useGlobalState from "../global/GlobalSate";
+import useGlobalState from '../global/GlobalSate'
 
 const StyledProject = styled.div`
   display: flex;
@@ -106,44 +106,43 @@ const StyledProject = styled.div`
       margin: 12px 12px 12px 6px;
     }
   }
-`;
+`
 
-const Project = () => {
-  const [inputWeeksGoals, setInputWeeksGoals] = useState("");
-  const [inputLastWeeksReview, setInputLastWeeksReview] = useState("");
+const Project = (): JSX.Element => {
+  const [inputWeeksGoals, setInputWeeksGoals] = useState('')
+  const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const {
     setWeekResponseFeed,
     projectName,
     userResponseWhyLongForm,
     userResponseHattersLongForm,
-    userResponseHattersShortForm,
     weekResponseFeed,
     userResponseWhyShortForm,
-    weeksExpectedToComplete,
-  } = useGlobalState();
+    weeksExpectedToComplete
+  } = useGlobalState()
 
-  console.log({ userResponseHattersShortForm });
+  const handleSignOut = async (): Promise<any> => {
+    await Auth.signOut()
+      .then(() => {
+        navigate('/')
+      })
+      .catch((error) => {
+        console.log('error signing out: ', error)
+      })
+  }
 
-  const handleSignOut = async () => {
-    try {
-      await Auth.signOut().then(() => navigate("/"));
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
-  };
-
-  const handleSubmitWeekReview = () => {
+  const handleSubmitWeekReview = (): void => {
     setWeekResponseFeed({
       weeksGoals: inputWeeksGoals,
-      lastWeeksReview: inputLastWeeksReview,
-    });
+      lastWeeksReview: inputLastWeeksReview
+    })
 
-    setInputLastWeeksReview("");
-    setInputWeeksGoals("");
-  };
+    setInputLastWeeksReview('')
+    setInputWeeksGoals('')
+  }
 
   return (
     <StyledProject>
@@ -170,14 +169,18 @@ const Project = () => {
             <textarea
               className="section_weekly_form"
               value={inputLastWeeksReview}
-              onChange={(e) => setInputLastWeeksReview(e.target.value)}
+              onChange={(e) => {
+                setInputLastWeeksReview(e.target.value)
+              }}
               rows={3}
             />
             <h3 className="body-2">This Weeks Goals:</h3>
             <textarea
               className="section_weekly_form"
               value={inputWeeksGoals}
-              onChange={(e) => setInputWeeksGoals(e.target.value)}
+              onChange={(e) => {
+                setInputWeeksGoals(e.target.value)
+              }}
               rows={3}
             />
             <Button onClick={handleSubmitWeekReview}>Submit</Button>
@@ -189,7 +192,7 @@ const Project = () => {
                   <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
                   <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
@@ -198,7 +201,7 @@ const Project = () => {
         </div>
       </div>
     </StyledProject>
-  );
-};
+  )
+}
 
-export default Project;
+export default Project

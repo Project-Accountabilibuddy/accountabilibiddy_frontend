@@ -1,22 +1,21 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
-import Button from "@mui/material/Button";
+import React, { useRef, useEffect } from 'react'
+import styled from 'styled-components'
+import Button from '@mui/material/Button'
+import cx from 'classnames'
 
-import cx from "classnames";
-
-type FormInputProps = {
-  type: "TEXT" | "NUMBER" | "MULTIPLE_TEXT";
-  title: string;
-  description?: string;
-  responseText?: string;
-  groupResponses?: string[];
-  responseNumber?: number;
-  setResponseText?: (responseText: string) => void;
-  setGroupResponse?: (responseText: string, index: number) => void;
-  continueAction: () => void;
-  updateNumberOfGroupResponses?: (removeOrAdd: "ADD" | "REMOVE") => void;
-  setResponseNumber?: (responseNumber: number) => void;
-};
+interface FormInputProps {
+  type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
+  title: string
+  description?: string
+  responseText?: string
+  groupResponses?: string[]
+  responseNumber?: number
+  setResponseText?: (responseText: string) => void
+  setGroupResponse?: (responseText: string, index: number) => void
+  continueAction: () => void
+  updateNumberOfGroupResponses?: (removeOrAdd: 'ADD' | 'REMOVE') => void
+  setResponseNumber?: (responseNumber: number) => void
+}
 
 const StyledFormInput = styled.div`
   display: flex;
@@ -79,7 +78,7 @@ const StyledFormInput = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+
     .single_row_textarea {
       background-color: ${({ theme }) => theme.colors.lightGrey};
       height: auto;
@@ -90,34 +89,34 @@ const StyledFormInput = styled.div`
       justify-content: space-between;
     }
   }
-`;
+`
 
 const FormInput = ({
   title,
   type,
   description,
-  responseText = "",
+  responseText = '',
   groupResponses = [],
   responseNumber,
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
   updateNumberOfGroupResponses = () => {},
-  setResponseNumber = () => {},
-}: FormInputProps) => {
-  const ref = useRef<HTMLTextAreaElement>(null);
+  setResponseNumber = () => {}
+}: FormInputProps): JSX.Element => {
+  const ref = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (ref?.current) {
-      ref?.current?.focus();
+    if (ref?.current != null) {
+      ref?.current?.focus()
     }
-  }, []);
+  }, [])
 
   return (
     <StyledFormInput>
       <h1 className="heading-1">{title}</h1>
-      {description && <h3 className="heading-2">{description}</h3>}
-      {type === "TEXT" && (
+      {Boolean(description) && <h3 className="heading-2">{description}</h3>}
+      {type === 'TEXT' && (
         <textarea
           ref={ref}
           name="text"
@@ -125,28 +124,32 @@ const FormInput = ({
           cols={10}
           wrap="soft"
           value={responseText}
-          onChange={(e) => setResponseText(e.target.value)}
+          onChange={(e) => {
+            setResponseText(e.target.value)
+          }}
           disabled={groupResponses.length > 0}
         />
       )}
-      {type === "NUMBER" && (
+      {type === 'NUMBER' && (
         <div className="week_options">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((weekOption, index) => {
             return (
               <div
-                onClick={() => setResponseNumber(weekOption)}
-                className={cx("week_option", {
-                  selected: weekOption === responseNumber,
+                onClick={() => {
+                  setResponseNumber(weekOption)
+                }}
+                className={cx('week_option', {
+                  selected: weekOption === responseNumber
                 })}
                 key={index}
               >
                 {weekOption}
               </div>
-            );
+            )
           })}
         </div>
       )}
-      {type === "MULTIPLE_TEXT" && (
+      {type === 'MULTIPLE_TEXT' && (
         <div className="group_responses">
           {groupResponses?.map((response, index) => {
             return (
@@ -157,22 +160,28 @@ const FormInput = ({
                 name="text"
                 rows={1}
                 value={response}
-                onChange={(e) => setGroupResponse(e.target.value, index)}
+                onChange={(e) => {
+                  setGroupResponse(e.target.value, index)
+                }}
               />
-            );
+            )
           })}
           <div className="group_responses_buttons">
             <Button
               disabled={groupResponses.length < 2}
               variant="outlined"
-              onClick={() => updateNumberOfGroupResponses("REMOVE")}
+              onClick={() => {
+                updateNumberOfGroupResponses('REMOVE')
+              }}
             >
               Remove Reason
             </Button>
             <Button
               disabled={groupResponses.length > 4}
               variant="outlined"
-              onClick={() => updateNumberOfGroupResponses("ADD")}
+              onClick={() => {
+                updateNumberOfGroupResponses('ADD')
+              }}
             >
               Add Reason
             </Button>
@@ -180,14 +189,14 @@ const FormInput = ({
         </div>
       )}
       <Button
-        disabled={responseText.length === 0 && type === "TEXT"}
+        disabled={responseText.length === 0 && type === 'TEXT'}
         variant="outlined"
         onClick={continueAction}
       >
         Continue Journey
       </Button>
     </StyledFormInput>
-  );
-};
+  )
+}
 
-export default FormInput;
+export default FormInput
