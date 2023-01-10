@@ -36,6 +36,7 @@ const ProjectSetup = (): JSX.Element => {
   )
 
   const {
+    userID,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
     projectName,
@@ -73,7 +74,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-            handleUpdateProject(userResponseWhatLongForm)
+            handleUpdateProject(userResponseWhatLongForm, userID)
           }}
         />
       )}

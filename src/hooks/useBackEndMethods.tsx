@@ -1,13 +1,16 @@
-import { useEffect } from 'react'
 import axios from 'axios'
 
 import useGlobalState from '../global/GlobalSate'
 
 const useBackEndMethods = (): {
   handleCreateOrGetProject: (id: string) => void
-  handleUpdateProject: (userResponseWhatLongForm: string) => void
+  handleUpdateProject: (
+    userResponseWhatLongForm: string,
+    userID: string
+  ) => void
+  handleGetProject: (userID: string) => void
 } => {
-  const { setUserID, userID } = useGlobalState()
+  const { setUserID, setUserResponseWhatLongForm } = useGlobalState()
 
   const handleGetProject = (userID: string): void => {
     axios
@@ -15,7 +18,8 @@ const useBackEndMethods = (): {
         `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`
       )
       .then((res) => {
-        console.log('PROJECT ITEMS GET RES', res.data)
+        console.log('PROJECT ITEMS GET RES', res.data.Item)
+        setUserResponseWhatLongForm(res.data.Item.userResponseWhatLongForm)
       })
       .catch((err) => {
         console.log('PROJECT ITEMS GET ERR', err)
@@ -37,7 +41,11 @@ const useBackEndMethods = (): {
       })
   }
 
-  const handleUpdateProject = (userResponseWhatLongForm: string): void => {
+  const handleUpdateProject = (
+    userResponseWhatLongForm: string,
+    userID: string
+  ): void => {
+    console.log('I HAVE AN ID', userID)
     axios
       .put(
         `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`,
@@ -46,16 +54,17 @@ const useBackEndMethods = (): {
         }
       )
       .then((res) => {
-        console.log('PROJECT ITEMS GET RES', res.data)
+        console.log('PROJECT ITEM UPDATE RES', res.data)
       })
       .catch((err) => {
-        console.log('PROJECT ITEMS GET ERR', err)
+        console.log('PROJECT ITEM UPDATE ERR', err)
       })
   }
 
   return {
     handleCreateOrGetProject,
-    handleUpdateProject
+    handleUpdateProject,
+    handleGetProject
   }
 }
 
