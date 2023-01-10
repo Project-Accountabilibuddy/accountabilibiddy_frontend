@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
+import useBackEndMethods from './hooks/useBackEndMethods'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -26,11 +27,14 @@ const StyledGlobalLoading = styled.div`
 `
 
 const App = (): JSX.Element => {
-  // const [user, setUser] = useState({})
+  const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
+
+  console.log({ user })
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const { handleCreateOrGetProject } = useBackEndMethods()
 
   useEffect(() => {
     const navigateBasedOnUserAuthStatus = async (): Promise<any> => {
@@ -66,8 +70,9 @@ const App = (): JSX.Element => {
   useEffect(() => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
-        console.log({ user })
-        // setUser(user)
+        const userSubID = user?.attributes?.sub
+        handleCreateOrGetProject(userSubID)
+        setUser(user)
       })
       .catch((err) => {
         console.log({ err })

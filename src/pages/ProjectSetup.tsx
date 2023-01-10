@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
+import useBackEndMethods from '../hooks/useBackEndMethods'
 
 const StyledProjectSetup = styled.div`
   display: flex;
@@ -55,6 +56,8 @@ const ProjectSetup = (): JSX.Element => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
+  const { handleUpdateProject } = useBackEndMethods()
+
   const navigate = useNavigate()
 
   return (
@@ -70,6 +73,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+            handleUpdateProject(userResponseWhatLongForm)
           }}
         />
       )}

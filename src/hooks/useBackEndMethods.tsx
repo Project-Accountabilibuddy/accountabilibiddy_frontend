@@ -1,83 +1,61 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
 
-const buildRandomID = (length: number): string => {
-  let result = ''
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-  return result
-}
+import useGlobalState from '../global/GlobalSate'
 
 const useBackEndMethods = (): {
-  getAllItems: () => void
-  handleDeleteItem: (id: string) => void
-  handleCreateItem: () => void
-  setNewItemName: (newItemName: string) => void
-  allItems: any[]
-  newItemName: string
+  handleCreateOrGetProject: (id: string) => void
+  handleUpdateProject: (userResponseWhatLongForm: string) => void
 } => {
-  const [allItems, setAllItems] = useState([])
-  const [newItemName, setNewItemName] = useState('')
+  const { setUserID, userID } = useGlobalState()
 
-  useEffect(() => {
-    if (allItems.length > 0) return
-
-    getAllItems()
-  }, [allItems])
-
-  const getAllItems = (): void => {
+  const handleGetProject = (userID: string): void => {
     axios
-      .get('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items')
-      .then((res) => {
-        console.log(res?.data?.Items)
-        setAllItems(res?.data?.Items)
-      })
-      .catch((err) => {
-        console.log({ err })
-      })
-  }
-
-  const handleDeleteItem = (id: string): void => {
-    axios
-      .delete(
-        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
+      .get(
+        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`
       )
       .then((res) => {
-        console.log(res)
-        getAllItems()
+        console.log('PROJECT ITEMS GET RES', res.data)
       })
       .catch((err) => {
-        console.log({ err })
+        console.log('PROJECT ITEMS GET ERR', err)
       })
   }
 
-  const handleCreateItem = (): void => {
+  const handleCreateOrGetProject = (userID: string): void => {
     axios
       .put('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items', {
-        id: buildRandomID(5),
-        name: newItemName
+        id: userID
       })
       .then((res) => {
-        console.log(res)
-        getAllItems()
-        setNewItemName('')
+        console.log('PROJECT CREATED', res)
+        handleGetProject(userID)
+        setUserID(userID)
       })
       .catch((err) => {
-        console.log({ err })
+        console.log('PROJECT EXISTS', err)
+      })
+  }
+
+  const handleUpdateProject = (userResponseWhatLongForm: string): void => {
+    axios
+      .put(
+        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`,
+        {
+          userResponseWhatLongForm
+        }
+      )
+      .then((res) => {
+        console.log('PROJECT ITEMS GET RES', res.data)
+      })
+      .catch((err) => {
+        console.log('PROJECT ITEMS GET ERR', err)
       })
   }
 
   return {
-    getAllItems,
-    handleDeleteItem,
-    handleCreateItem,
-    setNewItemName,
-    allItems,
-    newItemName
+    handleCreateOrGetProject,
+    handleUpdateProject
   }
 }
 
