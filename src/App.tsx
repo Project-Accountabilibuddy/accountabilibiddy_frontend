@@ -69,7 +69,6 @@ const App = (): JSX.Element => {
 
   // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
-    console.log('Checking if user is signed in')
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
@@ -81,7 +80,7 @@ const App = (): JSX.Element => {
       .catch((err) => {
         console.log({ err })
       })
-  }, [])
+  }, [pathname])
 
   return (
     <GlobalTheme>

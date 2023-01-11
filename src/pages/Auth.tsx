@@ -5,8 +5,6 @@ import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import useBackEndMethods from '../hooks/useBackEndMethods'
-
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,8 +39,6 @@ const Authentication = (): JSX.Element => {
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
-
-  const { handleGetProject } = useBackEndMethods()
 
   // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
   useEffect(() => {

@@ -66,9 +66,9 @@ const ProjectSetup = (): JSX.Element => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
-        console.log({ userSubID })
+        console.log('IF THE ID IS HERE WHY IS IT BROK AF: ', userSubID)
         setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-        handleUpdateProject(userResponseWhatLongForm, userID)
+        handleUpdateProject(userResponseWhatLongForm, userSubID)
       })
       .catch((err) => {
         console.log({ err })

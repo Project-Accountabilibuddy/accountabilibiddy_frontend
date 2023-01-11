@@ -12,12 +12,13 @@ const useBackEndMethods = (): {
   const { setUserResponseWhatLongForm } = useGlobalState()
 
   const handleGetProject = (userID: string): void => {
+    console.log('LOOK AT ME FUCKER: ', userID)
     axios
       .get(
         `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`
       )
       .then((res) => {
-        console.log('PROJECT ITEMS GET RES', res.data.Item)
+        console.log('PROJECT ITEMS GET RES', res)
         setUserResponseWhatLongForm(res.data.Item.userResponseWhatLongForm)
       })
       .catch((err) => {
