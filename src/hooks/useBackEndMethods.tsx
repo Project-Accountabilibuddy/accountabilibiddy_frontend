@@ -1,83 +1,52 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const buildRandomID = (length: number): string => {
-  let result = ''
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-  return result
+import useGlobalState from '../global/GlobalSate'
+
+interface useBackEndMethodsReturn {
+  handleUpdateProject: (
+    userResponseWhatLongForm: string,
+    userID: string
+  ) => void
+  handleGetProject: (userID: string) => void
 }
 
-const useBackEndMethods = (): {
-  getAllItems: () => void
-  handleDeleteItem: (id: string) => void
-  handleCreateItem: () => void
-  setNewItemName: (newItemName: string) => void
-  allItems: any[]
-  newItemName: string
-} => {
-  const [allItems, setAllItems] = useState([])
-  const [newItemName, setNewItemName] = useState('')
+const useBackEndMethods = (): useBackEndMethodsReturn => {
+  const { setUserResponseWhatLongForm } = useGlobalState()
 
-  useEffect(() => {
-    if (allItems.length > 0) return
-
-    getAllItems()
-  }, [allItems])
-
-  const getAllItems = (): void => {
+  const handleGetProject = (userID: string): void => {
     axios
-      .get('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items')
-      .then((res) => {
-        console.log(res?.data?.Items)
-        setAllItems(res?.data?.Items)
-      })
-      .catch((err) => {
-        console.log({ err })
-      })
-  }
-
-  const handleDeleteItem = (id: string): void => {
-    axios
-      .delete(
-        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${id}`
+      .get(
+        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`
       )
       .then((res) => {
-        console.log(res)
-        getAllItems()
+        console.log('GET PROJECT RES', res)
+        setUserResponseWhatLongForm(res.data.Item.userResponseWhatLongForm)
       })
       .catch((err) => {
-        console.log({ err })
+        console.log('GET PROJECT ERR', err)
       })
   }
 
-  const handleCreateItem = (): void => {
+  const handleUpdateProject = (
+    userResponseWhatLongForm: string,
+    userID: string
+  ): void => {
     axios
-      .put('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items', {
-        id: buildRandomID(5),
-        name: newItemName
-      })
+      .put(
+        `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`,
+        { userResponseWhatLongForm }
+      )
       .then((res) => {
-        console.log(res)
-        getAllItems()
-        setNewItemName('')
+        console.log('UPDATE PROJECT RES', res.data)
       })
       .catch((err) => {
-        console.log({ err })
+        console.log('UPDATE PROJECT ERR', err)
       })
   }
 
   return {
-    getAllItems,
-    handleDeleteItem,
-    handleCreateItem,
-    setNewItemName,
-    allItems,
-    newItemName
+    handleUpdateProject,
+    handleGetProject
   }
 }
 

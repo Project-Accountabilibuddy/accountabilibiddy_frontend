@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
+import useBackEndMethods from '../hooks/useBackEndMethods'
 
 const StyledProjectSetup = styled.div`
   display: flex;
@@ -27,12 +29,14 @@ const DEFAULT_FORM_RESPONSES = {
 
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
-// 2. ADD IN TIME USER WILL GIVE THEMSELVES TO COMPLETE PROJECT
-// 3. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
+// 2. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = (): JSX.Element => {
   const [formInView, setFormInView] = useState(
     DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
   )
+
+  const navigate = useNavigate()
+  const { handleUpdateProject } = useBackEndMethods()
 
   const {
     userResponseWhatLongForm,
@@ -43,6 +47,7 @@ const ProjectSetup = (): JSX.Element => {
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weeksExpectedToComplete,
+    userID,
     setUserResponseWhyShortForm,
     setUserResponseWhatLongForm,
     setProjectName,
@@ -52,10 +57,29 @@ const ProjectSetup = (): JSX.Element => {
     updateWhyShortFormNumberOfResponses,
     updateHattersShortFormNumberOfResponses,
     setUserResponseHattersShortForm,
-    setWeeksExpectedToComplete
+    setWeeksExpectedToComplete,
+    setUserID
   } = useGlobalState()
 
-  const navigate = useNavigate()
+  const handleCreateProjectOrUpdate = async (
+    formToSetInview: string
+  ): Promise<any> => {
+    if (userID.length === 0) {
+      Auth.currentAuthenticatedUser({ bypassCache: true })
+        .then((user) => {
+          const userSubID = user?.attributes?.sub
+          setUserID(userSubID)
+          handleUpdateProject(userResponseWhatLongForm, userSubID)
+          setFormInView(formToSetInview)
+        })
+        .catch((err) => {
+          console.log({ err })
+        })
+    } else {
+      handleUpdateProject(userResponseWhatLongForm, userID)
+      setFormInView(formToSetInview)
+    }
+  }
 
   return (
     <StyledProjectSetup>
@@ -69,7 +93,9 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+            void handleCreateProjectOrUpdate(
+              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
+            )
           }}
         />
       )}

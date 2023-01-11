@@ -65,13 +65,14 @@ const Authentication = (): JSX.Element => {
   }
 
   const handleConfirmSignUpUser = async (): Promise<any> => {
-    try {
-      await Auth.confirmSignUp(userEmail, code).then(() => {
+    await Auth.confirmSignUp(userEmail, code)
+      .then((res) => {
+        console.log('NEW USER RES', res)
         navigate('/project-setup')
       })
-    } catch (error) {
-      console.log('error confirming sign up', error)
-    }
+      .catch((err) => {
+        console.log('error confirming sign up', err)
+      })
   }
 
   const handleSignInUser = async (): Promise<any> => {
