@@ -35,6 +35,9 @@ const ProjectSetup = (): JSX.Element => {
     DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
   )
 
+  const navigate = useNavigate()
+  const { handleUpdateProject } = useBackEndMethods()
+
   const {
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
@@ -44,6 +47,7 @@ const ProjectSetup = (): JSX.Element => {
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weeksExpectedToComplete,
+    userID,
     setUserResponseWhyShortForm,
     setUserResponseWhatLongForm,
     setProjectName,
@@ -53,23 +57,28 @@ const ProjectSetup = (): JSX.Element => {
     updateWhyShortFormNumberOfResponses,
     updateHattersShortFormNumberOfResponses,
     setUserResponseHattersShortForm,
-    setWeeksExpectedToComplete
+    setWeeksExpectedToComplete,
+    setUserID
   } = useGlobalState()
 
-  const { handleUpdateProject } = useBackEndMethods()
-
-  const navigate = useNavigate()
-
-  const handleCreateProjectOrUpdate = async (): Promise<any> => {
-    Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => {
-        const userSubID = user?.attributes?.sub
-        setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-        handleUpdateProject(userResponseWhatLongForm, userSubID)
-      })
-      .catch((err) => {
-        console.log({ err })
-      })
+  const handleCreateProjectOrUpdate = async (
+    formToSetInview: string
+  ): Promise<any> => {
+    if (userID.length === 0) {
+      Auth.currentAuthenticatedUser({ bypassCache: true })
+        .then((user) => {
+          const userSubID = user?.attributes?.sub
+          setUserID(userSubID)
+          handleUpdateProject(userResponseWhatLongForm, userSubID)
+          setFormInView(formToSetInview)
+        })
+        .catch((err) => {
+          console.log({ err })
+        })
+    } else {
+      handleUpdateProject(userResponseWhatLongForm, userID)
+      setFormInView(formToSetInview)
+    }
   }
 
   return (
@@ -84,7 +93,9 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            void handleCreateProjectOrUpdate()
+            void handleCreateProjectOrUpdate(
+              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
+            )
           }}
         />
       )}

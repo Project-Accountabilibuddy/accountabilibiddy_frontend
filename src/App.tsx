@@ -72,7 +72,6 @@ const App = (): JSX.Element => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
-        console.log({ userSubID })
         setUserID(userSubID)
         handleGetProject(userSubID)
         setUser(user)
@@ -80,7 +79,7 @@ const App = (): JSX.Element => {
       .catch((err) => {
         console.log({ err })
       })
-  }, [pathname])
+  }, [])
 
   return (
     <GlobalTheme>
