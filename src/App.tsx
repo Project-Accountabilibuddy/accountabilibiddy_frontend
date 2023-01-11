@@ -81,7 +81,7 @@ const App = (): JSX.Element => {
       .catch((err) => {
         console.log({ err })
       })
-  }, [pathname])
+  }, [])
 
   return (
     <GlobalTheme>

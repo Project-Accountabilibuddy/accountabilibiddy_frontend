@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
@@ -61,6 +62,19 @@ const ProjectSetup = (): JSX.Element => {
 
   const navigate = useNavigate()
 
+  const handleFirstMove = () => {
+    Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then((user) => {
+        const userSubID = user?.attributes?.sub
+        console.log({ userSubID })
+        setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+        handleUpdateProject(userResponseWhatLongForm, userID)
+      })
+      .catch((err) => {
+        console.log({ err })
+      })
+  }
+
   return (
     <StyledProjectSetup>
       {formInView === 'WHAT_LONG_FORM' && (
@@ -73,8 +87,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-            handleUpdateProject(userResponseWhatLongForm, userID)
+            handleFirstMove()
           }}
         />
       )}
