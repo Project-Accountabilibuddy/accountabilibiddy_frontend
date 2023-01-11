@@ -193,10 +193,13 @@ const ProjectSetup = (): JSX.Element => {
           description="This can nto be edited, deadlines are important,
            what is to keep you from continueing to push this shit out.
             If the project was meaningful enough do a part two after this is done"
-          responseNumber={weeksExpectedToComplete}
+          responseNumber={Number(weeksExpectedToComplete)}
           setResponseNumber={(text) => {
-            handleUpdateProject({ weeksExpectedToComplete }, userID)
-            setWeeksExpectedToComplete(text)
+            handleUpdateProject(
+              { weeksExpectedToComplete: String(text) },
+              userID
+            )
+            setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
             navigate('/my-project')
