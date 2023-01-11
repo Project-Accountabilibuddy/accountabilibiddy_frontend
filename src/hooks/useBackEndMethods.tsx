@@ -3,14 +3,13 @@ import axios from 'axios'
 import useGlobalState from '../global/GlobalSate'
 
 const useBackEndMethods = (): {
-  handleCreateOrGetProject: (id: string) => void
   handleUpdateProject: (
     userResponseWhatLongForm: string,
     userID: string
   ) => void
   handleGetProject: (userID: string) => void
 } => {
-  const { setUserID, setUserResponseWhatLongForm } = useGlobalState()
+  const { setUserResponseWhatLongForm } = useGlobalState()
 
   const handleGetProject = (userID: string): void => {
     axios
@@ -23,21 +22,6 @@ const useBackEndMethods = (): {
       })
       .catch((err) => {
         console.log('PROJECT ITEMS GET ERR', err)
-      })
-  }
-
-  const handleCreateOrGetProject = (userID: string): void => {
-    axios
-      .put('https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items', {
-        id: userID
-      })
-      .then((res) => {
-        console.log('PROJECT CREATED', res)
-        handleGetProject(userID)
-        setUserID(userID)
-      })
-      .catch((err) => {
-        console.log('PROJECT EXISTS', err)
       })
   }
 
@@ -62,7 +46,6 @@ const useBackEndMethods = (): {
   }
 
   return {
-    handleCreateOrGetProject,
     handleUpdateProject,
     handleGetProject
   }

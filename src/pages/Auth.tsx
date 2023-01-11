@@ -5,8 +5,6 @@ import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import useBackEndMethods from '../hooks/useBackEndMethods'
-
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,8 +40,6 @@ const Authentication = (): JSX.Element => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  const { handleCreateOrGetProject } = useBackEndMethods()
-
   // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
   useEffect(() => {
     if (pathname.includes('sign-up')) {
@@ -70,9 +66,8 @@ const Authentication = (): JSX.Element => {
 
   const handleConfirmSignUpUser = async (): Promise<any> => {
     try {
-      await Auth.confirmSignUp(userEmail, code).then((newuserREs) => {
-        console.log('res', newuserREs)
-        // handleCreateOrGetProject()
+      await Auth.confirmSignUp(userEmail, code).then((res) => {
+        console.log('NEW USER RES', res)
         navigate('/project-setup')
       })
     } catch (error) {
