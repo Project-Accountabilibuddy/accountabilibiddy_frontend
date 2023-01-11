@@ -29,15 +29,13 @@ const DEFAULT_FORM_RESPONSES = {
 
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
-// 2. ADD IN TIME USER WILL GIVE THEMSELVES TO COMPLETE PROJECT
-// 3. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
+// 2. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = (): JSX.Element => {
   const [formInView, setFormInView] = useState(
     DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
   )
 
   const {
-    userID,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
     projectName,
@@ -62,11 +60,10 @@ const ProjectSetup = (): JSX.Element => {
 
   const navigate = useNavigate()
 
-  const handleFirstMove = () => {
+  const handleCreateProjectOrUpdate = async (): Promise<any> => {
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
-        console.log('IF THE ID IS HERE WHY IS IT BROK AF: ', userSubID)
         setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
         handleUpdateProject(userResponseWhatLongForm, userSubID)
       })
@@ -87,7 +84,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            handleFirstMove()
+            void handleCreateProjectOrUpdate()
           }}
         />
       )}
