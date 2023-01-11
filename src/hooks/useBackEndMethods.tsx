@@ -14,7 +14,9 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
     setUserResponseHattersLongForm,
-    setWeeksExpectedToComplete
+    setWeeksExpectedToComplete,
+    setUserResponseWhyShortForm,
+    setUserResponseHattersShortForm
   } = useGlobalState()
 
   const handleGetProject = (
@@ -51,6 +53,22 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
         if (Items.weeksExpectedToComplete !== undefined) {
           setWeeksExpectedToComplete(Items.weeksExpectedToComplete)
+        }
+
+        if (Items.userResponseWhyShortForm !== undefined) {
+          const responses = JSON.parse(Items.userResponseWhyShortForm)
+
+          responses.forEach((response: string, index: number) => {
+            setUserResponseWhyShortForm(response, index)
+          })
+        }
+
+        if (Items.userResponseHattersShortForm !== undefined) {
+          const responses = JSON.parse(Items.userResponseHattersShortForm)
+
+          responses.forEach((response: string, index: number) => {
+            setUserResponseHattersShortForm(response, index)
+          })
         }
       })
       .catch((err) => {

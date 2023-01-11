@@ -156,6 +156,14 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+            handleUpdateProject(
+              {
+                userResponseWhyShortForm: JSON.stringify(
+                  userResponseWhyShortForm
+                )
+              },
+              userID
+            )
           }}
         />
       )}
@@ -169,6 +177,14 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
+            handleUpdateProject(
+              {
+                userResponseHattersShortForm: JSON.stringify(
+                  userResponseHattersShortForm
+                )
+              },
+              userID
+            )
           }}
         />
       )}
