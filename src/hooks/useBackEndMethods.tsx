@@ -4,7 +4,7 @@ import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
   handleUpdateProject: (fieldToUpdate: object, userID: string) => void
-  handleGetProject: (userID: string) => void
+  handleGetProject: (userID: string, onCompletionCB: () => void) => void
 }
 
 const useBackEndMethods = (): useBackEndMethodsReturn => {
@@ -17,13 +17,17 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
-  const handleGetProject = (userID: string): void => {
+  const handleGetProject = (
+    userID: string,
+    onCompletionCB = () => {}
+  ): void => {
     axios
       .get(
         `https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/items/${userID}`
       )
       .then((res) => {
         const Items = res.data.Item
+        onCompletionCB()
 
         if (Items.userResponseWhatLongForm !== undefined) {
           setUserResponseWhatLongForm(Items.userResponseWhatLongForm)
@@ -51,6 +55,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       })
       .catch((err) => {
         console.log('GET PROJECT ERR', err)
+        onCompletionCB()
       })
   }
 

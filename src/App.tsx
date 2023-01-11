@@ -39,7 +39,6 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     const navigateBasedOnUserAuthStatus = async (): Promise<any> => {
-      setLoading(true)
       try {
         await Auth.currentAuthenticatedUser()
         console.log('User is signed in')
@@ -47,14 +46,12 @@ const App = (): JSX.Element => {
         if (pathname === '/' || pathname === '/auth') {
           navigate('/my-project')
         }
-        setLoading(false)
       } catch {
         console.log('User is not signed in')
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === '/my-project') {
           navigate('/')
         }
-        setLoading(false)
       }
     }
 
@@ -69,15 +66,19 @@ const App = (): JSX.Element => {
 
   // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
+    setLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
         setUserID(userSubID)
-        handleGetProject(userSubID)
+        handleGetProject(userSubID, () => {
+          setLoading(false)
+        })
         setUser(user)
       })
       .catch((err) => {
         console.log({ err })
+        setLoading(false)
       })
   }, [])
 
