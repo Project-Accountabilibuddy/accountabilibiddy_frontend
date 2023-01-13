@@ -28,58 +28,46 @@ const StyledGlobalLoading = styled.div`
 `
 
 const App = (): JSX.Element => {
-  const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
-
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
 
   const { handleGetProject } = useBackEndMethods()
   const { setUserID } = useGlobalState()
 
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   useEffect(() => {
-    const navigateBasedOnUserAuthStatus = async (): Promise<any> => {
-      setLoading(true)
-      try {
-        await Auth.currentAuthenticatedUser()
-        console.log('User is signed in')
+    Auth.currentAuthenticatedUser()
+      .then(() => {
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
         if (pathname === '/' || pathname === '/auth') {
           navigate('/my-project')
         }
-        setLoading(false)
-      } catch {
-        console.log('User is not signed in')
+      })
+      .catch(() => {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === '/my-project') {
           navigate('/')
         }
-        setLoading(false)
-      }
-    }
-
-    navigateBasedOnUserAuthStatus()
-      .then(() => {
-        console.log('Navigated based on user auth status')
-      })
-      .catch((err) => {
-        console.log(err)
       })
   }, [navigate, pathname])
 
   // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
+    setLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((user) => {
         const userSubID = user?.attributes?.sub
         setUserID(userSubID)
-        handleGetProject(userSubID)
-        setUser(user)
+        handleGetProject(userSubID, () => {
+          setLoading(false)
+        })
       })
       .catch((err) => {
         console.log({ err })
+        setLoading(false)
       })
-  }, [])
+  }, [pathname])
 
   return (
     <GlobalTheme>

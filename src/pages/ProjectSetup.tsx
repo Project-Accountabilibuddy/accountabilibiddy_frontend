@@ -62,6 +62,7 @@ const ProjectSetup = (): JSX.Element => {
   } = useGlobalState()
 
   const handleCreateProjectOrUpdate = async (
+    fieldToUpdate: object,
     formToSetInview: string
   ): Promise<any> => {
     if (userID.length === 0) {
@@ -69,14 +70,14 @@ const ProjectSetup = (): JSX.Element => {
         .then((user) => {
           const userSubID = user?.attributes?.sub
           setUserID(userSubID)
-          handleUpdateProject(userResponseWhatLongForm, userSubID)
+          handleUpdateProject(fieldToUpdate, userSubID)
           setFormInView(formToSetInview)
         })
         .catch((err) => {
           console.log({ err })
         })
     } else {
-      handleUpdateProject(userResponseWhatLongForm, userID)
+      handleUpdateProject(fieldToUpdate, userID)
       setFormInView(formToSetInview)
     }
   }
@@ -94,6 +95,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             void handleCreateProjectOrUpdate(
+              { userResponseWhatLongForm },
               DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
             )
           }}
@@ -109,6 +111,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhyLongForm(text)
           }}
           continueAction={() => {
+            handleUpdateProject({ userResponseWhyLongForm }, userID)
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
           }}
         />
@@ -123,6 +126,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseHattersLongForm(text)
           }}
           continueAction={() => {
+            handleUpdateProject({ userResponseHattersLongForm }, userID)
             setFormInView(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
           }}
         />
@@ -137,6 +141,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseSacrificeLongForm(text)
           }}
           continueAction={() => {
+            handleUpdateProject({ userResponseSacrificeLongForm }, userID)
             setFormInView(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
           }}
         />
@@ -151,6 +156,14 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+            handleUpdateProject(
+              {
+                userResponseWhyShortForm: JSON.stringify(
+                  userResponseWhyShortForm
+                )
+              },
+              userID
+            )
           }}
         />
       )}
@@ -164,6 +177,14 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
+            handleUpdateProject(
+              {
+                userResponseHattersShortForm: JSON.stringify(
+                  userResponseHattersShortForm
+                )
+              },
+              userID
+            )
           }}
         />
       )}
@@ -176,6 +197,7 @@ const ProjectSetup = (): JSX.Element => {
             setProjectName(text)
           }}
           continueAction={() => {
+            handleUpdateProject({ projectName }, userID)
             setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
           }}
         />
@@ -187,9 +209,13 @@ const ProjectSetup = (): JSX.Element => {
           description="This can nto be edited, deadlines are important,
            what is to keep you from continueing to push this shit out.
             If the project was meaningful enough do a part two after this is done"
-          responseNumber={weeksExpectedToComplete}
+          responseNumber={Number(weeksExpectedToComplete)}
           setResponseNumber={(text) => {
-            setWeeksExpectedToComplete(text)
+            handleUpdateProject(
+              { weeksExpectedToComplete: String(text) },
+              userID
+            )
+            setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
             navigate('/my-project')
