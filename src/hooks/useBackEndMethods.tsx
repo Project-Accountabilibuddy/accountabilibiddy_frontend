@@ -31,6 +31,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
         const Items = res.data.Item
         onCompletionCB()
 
+        // TODO: CLEANER WAY TO DO THIS... MAP OVER OBJECT KEYS?
         if (Items.userResponseWhatLongForm !== undefined) {
           setUserResponseWhatLongForm(Items.userResponseWhatLongForm)
         }

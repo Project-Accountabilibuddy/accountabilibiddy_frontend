@@ -74,6 +74,10 @@ const StyledFormInput = styled.div`
     }
   }
 
+  .body-1 {
+    margin-bottom: 24px;
+  }
+
   .group_responses {
     display: flex;
     flex-direction: column;
@@ -150,43 +154,46 @@ const FormInput = ({
         </div>
       )}
       {type === 'MULTIPLE_TEXT' && (
-        <div className="group_responses">
-          {groupResponses?.map((response, index) => {
-            return (
-              <textarea
-                key={index}
-                className="single_row_textarea"
-                ref={ref}
-                name="text"
-                rows={1}
-                value={response}
-                onChange={(e) => {
-                  setGroupResponse(e.target.value, index)
+        <>
+          <h4 className="body-1">{responseText}</h4>
+          <div className="group_responses">
+            {groupResponses?.map((response, index) => {
+              return (
+                <textarea
+                  key={index}
+                  className="single_row_textarea"
+                  ref={ref}
+                  name="text"
+                  rows={1}
+                  value={response}
+                  onChange={(e) => {
+                    setGroupResponse(e.target.value, index)
+                  }}
+                />
+              )
+            })}
+            <div className="group_responses_buttons">
+              <Button
+                disabled={groupResponses.length < 2}
+                variant="outlined"
+                onClick={() => {
+                  updateNumberOfGroupResponses('REMOVE')
                 }}
-              />
-            )
-          })}
-          <div className="group_responses_buttons">
-            <Button
-              disabled={groupResponses.length < 2}
-              variant="outlined"
-              onClick={() => {
-                updateNumberOfGroupResponses('REMOVE')
-              }}
-            >
-              Remove Reason
-            </Button>
-            <Button
-              disabled={groupResponses.length > 4}
-              variant="outlined"
-              onClick={() => {
-                updateNumberOfGroupResponses('ADD')
-              }}
-            >
-              Add Reason
-            </Button>
+              >
+                Remove Reason
+              </Button>
+              <Button
+                disabled={groupResponses.length > 4}
+                variant="outlined"
+                onClick={() => {
+                  updateNumberOfGroupResponses('ADD')
+                }}
+              >
+                Add Reason
+              </Button>
+            </div>
           </div>
-        </div>
+        </>
       )}
       <Button
         disabled={responseText.length === 0 && type === 'TEXT'}
