@@ -32,6 +32,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             config
           )
           .then((res) => {
+            console.log('Retrieved Project: ', res.data.Item.projectName)
             onCompletionCB()
             const Items = res.data.Item
 
