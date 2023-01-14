@@ -6,9 +6,6 @@ interface WeeksResponse {
 }
 
 interface GlobalState {
-  userID: string
-  setUserID: (userID: string) => void
-
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
   projectName: string
@@ -46,11 +43,6 @@ interface GlobalState {
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
-  userID: '',
-  setUserID: (userID) => {
-    set(() => ({ userID }))
-  },
-
   userResponseWhatLongForm: '',
   setUserResponseWhatLongForm: (userResponseWhatLongForm) => {
     set(() => ({ userResponseWhatLongForm }))

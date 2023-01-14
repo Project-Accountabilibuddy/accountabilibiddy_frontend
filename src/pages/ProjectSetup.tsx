@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { Auth } from 'aws-amplify'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
@@ -29,7 +28,6 @@ const DEFAULT_FORM_RESPONSES = {
 
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
-// 2. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = (): JSX.Element => {
   const [formInView, setFormInView] = useState(
     DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
@@ -47,7 +45,6 @@ const ProjectSetup = (): JSX.Element => {
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weeksExpectedToComplete,
-    userID,
     setUserResponseWhyShortForm,
     setUserResponseWhatLongForm,
     setProjectName,
@@ -57,30 +54,8 @@ const ProjectSetup = (): JSX.Element => {
     updateWhyShortFormNumberOfResponses,
     updateHattersShortFormNumberOfResponses,
     setUserResponseHattersShortForm,
-    setWeeksExpectedToComplete,
-    setUserID
+    setWeeksExpectedToComplete
   } = useGlobalState()
-
-  const handleCreateProjectOrUpdate = async (
-    fieldToUpdate: object,
-    formToSetInview: string
-  ): Promise<any> => {
-    if (userID.length === 0) {
-      Auth.currentAuthenticatedUser({ bypassCache: true })
-        .then((user) => {
-          const userSubID = user?.attributes?.sub
-          setUserID(userSubID)
-          handleUpdateProject(fieldToUpdate, userSubID)
-          setFormInView(formToSetInview)
-        })
-        .catch((err) => {
-          console.log({ err })
-        })
-    } else {
-      handleUpdateProject(fieldToUpdate, userID)
-      setFormInView(formToSetInview)
-    }
-  }
 
   return (
     <StyledProjectSetup>
@@ -94,10 +69,8 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            void handleCreateProjectOrUpdate(
-              { userResponseWhatLongForm },
-              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
-            )
+            handleUpdateProject({ userResponseWhatLongForm })
+            setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
           }}
         />
       )}
@@ -111,7 +84,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhyLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseWhyLongForm }, userID)
+            handleUpdateProject({ userResponseWhyLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
           }}
         />
@@ -126,7 +99,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseHattersLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseHattersLongForm }, userID)
+            handleUpdateProject({ userResponseHattersLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
           }}
         />
@@ -141,7 +114,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseSacrificeLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseSacrificeLongForm }, userID)
+            handleUpdateProject({ userResponseSacrificeLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
           }}
         />
@@ -156,14 +129,9 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
-            handleUpdateProject(
-              {
-                userResponseWhyShortForm: JSON.stringify(
-                  userResponseWhyShortForm
-                )
-              },
-              userID
-            )
+            handleUpdateProject({
+              userResponseWhyShortForm: JSON.stringify(userResponseWhyShortForm)
+            })
           }}
         />
       )}
@@ -177,14 +145,11 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
-            handleUpdateProject(
-              {
-                userResponseHattersShortForm: JSON.stringify(
-                  userResponseHattersShortForm
-                )
-              },
-              userID
-            )
+            handleUpdateProject({
+              userResponseHattersShortForm: JSON.stringify(
+                userResponseHattersShortForm
+              )
+            })
           }}
         />
       )}
@@ -197,7 +162,7 @@ const ProjectSetup = (): JSX.Element => {
             setProjectName(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ projectName }, userID)
+            handleUpdateProject({ projectName })
             setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
           }}
         />
@@ -211,10 +176,7 @@ const ProjectSetup = (): JSX.Element => {
             If the project was meaningful enough do a part two after this is done"
           responseNumber={Number(weeksExpectedToComplete)}
           setResponseNumber={(text) => {
-            handleUpdateProject(
-              { weeksExpectedToComplete: String(text) },
-              userID
-            )
+            handleUpdateProject({ weeksExpectedToComplete: String(text) })
             setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
