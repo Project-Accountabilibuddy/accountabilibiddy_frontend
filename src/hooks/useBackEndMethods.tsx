@@ -32,8 +32,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             config
           )
           .then((res) => {
-            const Items = res.data.Item
             onCompletionCB()
+            const Items = res.data.Item
 
             // TODO: CLEANER WAY TO DO THIS... MAP OVER OBJECT KEYS?
             if (Items.userResponseWhatLongForm !== undefined) {
@@ -84,7 +84,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
           })
       })
       .catch((err) => {
-        console.log('GET PROJECT ERR', err)
+        console.log('ID TOKEN ERR', err)
       })
   }
 
@@ -101,14 +101,14 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             config
           )
           .then((res) => {
-            console.log('UPDATE PROJECT RES', res.data)
+            console.log(res.data)
           })
           .catch((err) => {
             console.log('UPDATE PROJECT ERR', err)
           })
       })
       .catch((err) => {
-        console.log('GET PROJECT ERR', err)
+        console.log('ID TOKEN ERR', err)
       })
   }
 
