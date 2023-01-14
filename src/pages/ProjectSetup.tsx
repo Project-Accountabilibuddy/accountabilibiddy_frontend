@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { Auth } from 'aws-amplify'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
@@ -29,7 +28,6 @@ const DEFAULT_FORM_RESPONSES = {
 
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
-// 2. SOME KIND OF PERMANENT SAVE BUTTON MAY BE NEEDED
 const ProjectSetup = (): JSX.Element => {
   const [formInView, setFormInView] = useState(
     DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
@@ -59,25 +57,6 @@ const ProjectSetup = (): JSX.Element => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
-  const handleCreateProjectOrUpdate = async (
-    fieldToUpdate: object,
-    formToSetInview: string
-  ): Promise<any> => {
-    if ('TODO: CHECK IF USER IS LOGGED IN') {
-      Auth.currentAuthenticatedUser({ bypassCache: true })
-        .then((user) => {
-          handleUpdateProject(fieldToUpdate)
-          setFormInView(formToSetInview)
-        })
-        .catch((err) => {
-          console.log({ err })
-        })
-    } else {
-      handleUpdateProject(fieldToUpdate)
-      setFormInView(formToSetInview)
-    }
-  }
-
   return (
     <StyledProjectSetup>
       {formInView === 'WHAT_LONG_FORM' && (
@@ -90,10 +69,8 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            void handleCreateProjectOrUpdate(
-              { userResponseWhatLongForm },
-              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
-            )
+            handleUpdateProject({ userResponseWhatLongForm })
+            setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
           }}
         />
       )}
