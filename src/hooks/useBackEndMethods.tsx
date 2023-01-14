@@ -4,8 +4,8 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
-  handleUpdateProject: (fieldToUpdate: object, userID: string) => void
-  handleGetProject: (userID: string, onCompletionCB: () => void) => void
+  handleUpdateProject: (fieldToUpdate: object) => void
+  handleGetProject: (onCompletionCB: () => void) => void
 }
 
 const useBackEndMethods = (): useBackEndMethodsReturn => {
@@ -20,10 +20,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setUserResponseHattersShortForm
   } = useGlobalState()
 
-  const handleGetProject = (
-    userID: string,
-    onCompletionCB = () => {}
-  ): void => {
+  const handleGetProject = (onCompletionCB = () => {}): void => {
     Auth.currentSession()
       .then((res) => {
         const idToken = res.getIdToken().getJwtToken()
@@ -91,17 +88,27 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       })
   }
 
-  const handleUpdateProject = (fieldToUpdate: object, userID: string): void => {
-    axios
-      .put(
-        'https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/project',
-        fieldToUpdate
-      )
+  const handleUpdateProject = (fieldToUpdate: object): void => {
+    Auth.currentSession()
       .then((res) => {
-        console.log('UPDATE PROJECT RES', res.data)
+        const idToken = res.getIdToken().getJwtToken()
+        const config = { headers: { Authorization: idToken } }
+
+        axios
+          .put(
+            'https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/project',
+            fieldToUpdate,
+            config
+          )
+          .then((res) => {
+            console.log('UPDATE PROJECT RES', res.data)
+          })
+          .catch((err) => {
+            console.log('UPDATE PROJECT ERR', err)
+          })
       })
       .catch((err) => {
-        console.log('UPDATE PROJECT ERR', err)
+        console.log('GET PROJECT ERR', err)
       })
   }
 

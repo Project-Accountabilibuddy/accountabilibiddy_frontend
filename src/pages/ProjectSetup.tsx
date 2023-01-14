@@ -47,7 +47,6 @@ const ProjectSetup = (): JSX.Element => {
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weeksExpectedToComplete,
-    userID,
     setUserResponseWhyShortForm,
     setUserResponseWhatLongForm,
     setProjectName,
@@ -57,27 +56,24 @@ const ProjectSetup = (): JSX.Element => {
     updateWhyShortFormNumberOfResponses,
     updateHattersShortFormNumberOfResponses,
     setUserResponseHattersShortForm,
-    setWeeksExpectedToComplete,
-    setUserID
+    setWeeksExpectedToComplete
   } = useGlobalState()
 
   const handleCreateProjectOrUpdate = async (
     fieldToUpdate: object,
     formToSetInview: string
   ): Promise<any> => {
-    if (userID.length === 0) {
+    if ('TODO: CHECK IF USER IS LOGGED IN') {
       Auth.currentAuthenticatedUser({ bypassCache: true })
         .then((user) => {
-          const userSubID = user?.attributes?.sub
-          setUserID(userSubID)
-          handleUpdateProject(fieldToUpdate, userSubID)
+          handleUpdateProject(fieldToUpdate)
           setFormInView(formToSetInview)
         })
         .catch((err) => {
           console.log({ err })
         })
     } else {
-      handleUpdateProject(fieldToUpdate, userID)
+      handleUpdateProject(fieldToUpdate)
       setFormInView(formToSetInview)
     }
   }
@@ -111,7 +107,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhyLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseWhyLongForm }, userID)
+            handleUpdateProject({ userResponseWhyLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
           }}
         />
@@ -126,7 +122,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseHattersLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseHattersLongForm }, userID)
+            handleUpdateProject({ userResponseHattersLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
           }}
         />
@@ -141,7 +137,7 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseSacrificeLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseSacrificeLongForm }, userID)
+            handleUpdateProject({ userResponseSacrificeLongForm })
             setFormInView(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
           }}
         />
@@ -156,14 +152,9 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
-            handleUpdateProject(
-              {
-                userResponseWhyShortForm: JSON.stringify(
-                  userResponseWhyShortForm
-                )
-              },
-              userID
-            )
+            handleUpdateProject({
+              userResponseWhyShortForm: JSON.stringify(userResponseWhyShortForm)
+            })
           }}
         />
       )}
@@ -177,14 +168,11 @@ const ProjectSetup = (): JSX.Element => {
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
             setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
-            handleUpdateProject(
-              {
-                userResponseHattersShortForm: JSON.stringify(
-                  userResponseHattersShortForm
-                )
-              },
-              userID
-            )
+            handleUpdateProject({
+              userResponseHattersShortForm: JSON.stringify(
+                userResponseHattersShortForm
+              )
+            })
           }}
         />
       )}
@@ -197,7 +185,7 @@ const ProjectSetup = (): JSX.Element => {
             setProjectName(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ projectName }, userID)
+            handleUpdateProject({ projectName })
             setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
           }}
         />
@@ -211,10 +199,7 @@ const ProjectSetup = (): JSX.Element => {
             If the project was meaningful enough do a part two after this is done"
           responseNumber={Number(weeksExpectedToComplete)}
           setResponseNumber={(text) => {
-            handleUpdateProject(
-              { weeksExpectedToComplete: String(text) },
-              userID
-            )
+            handleUpdateProject({ weeksExpectedToComplete: String(text) })
             setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
