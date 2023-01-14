@@ -62,6 +62,7 @@ const App = (): JSX.Element => {
         handleGetProject(userSubID, () => {
           setLoading(false)
         })
+        setLoading(false)
       })
       .catch((err) => {
         console.log({ err })
