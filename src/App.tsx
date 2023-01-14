@@ -58,7 +58,6 @@ const App = (): JSX.Element => {
         handleGetProject(() => {
           setLoading(false)
         })
-        setLoading(false)
       })
       .catch((err) => {
         console.log({ err })
