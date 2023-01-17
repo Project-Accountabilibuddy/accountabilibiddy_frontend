@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -55,6 +55,16 @@ const ProjectSetup = (): JSX.Element => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const endOfPath = pathname.split('/').slice(-1)[0]
+
+  // USER SHOULD NEVER BE ABLE TO UPDATE PROJECT NAME
+  useEffect(() => {
+    if (
+      endOfPath === DEFAULT_FORM_RESPONSES.JOURNEY_NAME &&
+      projectName !== ''
+    ) {
+      navigate(`/project-setup/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`)
+    }
+  }, [endOfPath])
 
   const handleContinueAction = (
     fieldToUpdate: object,
