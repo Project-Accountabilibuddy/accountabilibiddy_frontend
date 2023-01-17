@@ -3,6 +3,7 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { Edit } from '@mui/icons-material'
 
 import useGlobalState from '../global/GlobalSate'
 
@@ -39,6 +40,7 @@ const StyledProject = styled.div`
     .section_left,
     .section_middle,
     .section_right {
+      position: relative;
       padding: 24px;
       width: 100%;
       border: 2px solid var(--color-secondary);
@@ -106,6 +108,16 @@ const StyledProject = styled.div`
       margin: 12px 12px 12px 6px;
     }
   }
+
+  .edit_icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
 `
 
 const Project = (): JSX.Element => {
@@ -160,6 +172,13 @@ const Project = (): JSX.Element => {
       <div className="section_group">
         <div className="section_left">
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
+          <Edit
+            className="edit_icon"
+            color="primary"
+            onClick={() => {
+              navigate('/project-setup/why-long-form')
+            }}
+          />
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
@@ -204,6 +223,7 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
+          <Edit className="edit_icon" color="primary" />
         </div>
       </div>
     </StyledProject>
