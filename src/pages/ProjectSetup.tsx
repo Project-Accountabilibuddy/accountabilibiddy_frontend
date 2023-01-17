@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
-
-const StyledProjectSetup = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  padding: 0 200px;
-  height: 100%;
-`
 
 const DEFAULT_FORM_RESPONSES = {
   JOURNEY_NAME: 'journey-name',
@@ -26,6 +17,15 @@ const DEFAULT_FORM_RESPONSES = {
   WEEKS_EXPECTED_TO_COMPLETE: 'weeks-expected-to-complete'
 }
 
+const StyledProjectSetup = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  padding: 0 200px;
+  height: 100%;
+`
+
 const ProjectSetup = (): JSX.Element => {
   const {
     userResponseWhatLongForm,
@@ -36,6 +36,8 @@ const ProjectSetup = (): JSX.Element => {
     userResponseHattersLongForm,
     userResponseHattersShortForm,
     weeksExpectedToComplete,
+    inEditFormMode,
+    setInEditFormMode,
     setUserResponseWhyShortForm,
     setUserResponseWhatLongForm,
     setProjectName,
@@ -48,27 +50,11 @@ const ProjectSetup = (): JSX.Element => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
-  const [inEditFormMode, setInEditFormMode] = useState(false)
-  const [formInView, setFormInView] = useState(
-    projectName === ''
-      ? DEFAULT_FORM_RESPONSES.JOURNEY_NAME
-      : DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
-  )
+  const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
-
-  const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
-
-  // NAVIGATES USER TO PROPER EDIT SCREEN
-  useEffect(() => {
-    const endOfPath = pathname.split('/').slice(-1)[0]
-
-    if (endOfPath !== 'project-setup') {
-      setInEditFormMode(true)
-      setFormInView(endOfPath)
-    }
-  }, [pathname])
+  const endOfPath = pathname.split('/').slice(-1)[0]
 
   const handleContinueAction = (
     fieldToUpdate: object,
@@ -78,14 +64,15 @@ const ProjectSetup = (): JSX.Element => {
 
     if (inEditFormMode) {
       navigate('/my-project')
+      setInEditFormMode(false)
     } else {
-      setFormInView(nextFormInView)
+      navigate(`/project-setup/${nextFormInView}`)
     }
   }
 
   return (
     <StyledProjectSetup>
-      {formInView === DEFAULT_FORM_RESPONSES.JOURNEY_NAME && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.JOURNEY_NAME && (
         <FormInput
           type="TEXT"
           title="Better come up with an inspring name"
@@ -95,11 +82,11 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             handleCreateProject({ projectName })
-            setFormInView(DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM)
+            navigate(`/project-setup/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`)
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What do you want to do? Please make it interesting..."
@@ -116,7 +103,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.WHY_LONG_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.WHY_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="Why the fuck are you doing this?"
@@ -133,7 +120,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What will your internal bitch say?"
@@ -150,7 +137,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What sacrifces will be made? Is this actually worth it?"
@@ -167,7 +154,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
@@ -187,7 +174,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
@@ -207,7 +194,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE && (
         <FormInput
           type="NUMBER"
           title="Choose a time that is inspiring but not impossible"

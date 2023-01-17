@@ -40,6 +40,10 @@ interface GlobalState {
 
   weeksExpectedToComplete: string
   setWeeksExpectedToComplete: (weeksExpectedToComplete: string) => void
+
+  // APP UI STATE
+  inEditFormMode: boolean
+  setInEditFormMode: (inEditFormMode: boolean) => void
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
@@ -138,6 +142,12 @@ const useGlobalState = create<GlobalState>((set) => ({
   weeksExpectedToComplete: '6',
   setWeeksExpectedToComplete: (weeksExpectedToComplete) => {
     set(() => ({ weeksExpectedToComplete }))
+  },
+
+  // APP UI STATE
+  inEditFormMode: false,
+  setInEditFormMode: (inEditFormMode) => {
+    set(() => ({ inEditFormMode }))
   }
 }))
 

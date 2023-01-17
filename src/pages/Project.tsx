@@ -135,7 +135,8 @@ const Project = (): JSX.Element => {
     weekResponseFeed,
     userResponseWhyShortForm,
     weeksExpectedToComplete,
-    userResponseHattersShortForm
+    userResponseHattersShortForm,
+    setInEditFormMode
   } = useGlobalState()
 
   const handleSignOut = async (): Promise<any> => {
@@ -158,6 +159,11 @@ const Project = (): JSX.Element => {
     setInputWeeksGoals('')
   }
 
+  const handleEditField = (fieldToEdit: string): void => {
+    setInEditFormMode(true)
+    navigate(`/project-setup/${fieldToEdit}`)
+  }
+
   return (
     <StyledProject>
       <div className="top_nav_bar">
@@ -178,7 +184,7 @@ const Project = (): JSX.Element => {
             className="edit_icon"
             color="primary"
             onClick={() => {
-              navigate('/project-setup/why-long-form')
+              handleEditField('why-long-form')
             }}
           />
         </div>
@@ -194,7 +200,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                navigate('/project-setup/why-short-form')
+                handleEditField('why-short-form')
               }}
             />
           </div>
@@ -206,7 +212,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                navigate('/project-setup/hatters-short-form')
+                handleEditField('hatters-short-form')
               }}
             />
           </div>
@@ -246,7 +252,7 @@ const Project = (): JSX.Element => {
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
           <Edit
             onClick={() => {
-              navigate('/project-setup/hatters-long-form')
+              handleEditField('hatters-long-form')
             }}
             className="edit_icon"
             color="primary"
