@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
@@ -16,18 +16,16 @@ const StyledProjectSetup = styled.div`
 `
 
 const DEFAULT_FORM_RESPONSES = {
-  WHAT_LONG_FORM: 'WHAT_LONG_FORM',
-  WHY_LONG_FORM: 'WHY_LONG_FORM',
-  WHY_SHORT_FORM: 'WHY_SHORT_FORM',
-  HATTERS_LONG_FORM: 'HATTERS_LONG_FORM',
-  HATTERS_SHORT_FORM: 'HATTERS_SHORT_FORM',
-  SACRIFICES_LONG_FORM: 'SACRIFICES_LONG_FORM',
-  JOURNEY_NAME: 'JOURNEY_NAME',
-  WEEKS_EXPECTED_TO_COMPLETE: 'WEEKS_EXPECTED_TO_COMPLETE'
+  JOURNEY_NAME: 'journey-name',
+  WHAT_LONG_FORM: 'what-long-form',
+  WHY_LONG_FORM: 'why-long-form',
+  WHY_SHORT_FORM: 'why-short-form',
+  HATTERS_LONG_FORM: 'hatters-long-form',
+  HATTERS_SHORT_FORM: 'hatters-short-form',
+  SACRIFICES_LONG_FORM: 'sacrifices-long-form',
+  WEEKS_EXPECTED_TO_COMPLETE: 'weeks-expected-to-complete'
 }
 
-// TOOD: SHIT THAT NEEDS DOING
-// 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
 const ProjectSetup = (): JSX.Element => {
   const {
     userResponseWhatLongForm,
@@ -50,6 +48,7 @@ const ProjectSetup = (): JSX.Element => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
+  const [inEditFormMode, setInEditFormMode] = useState(false)
   const [formInView, setFormInView] = useState(
     projectName === ''
       ? DEFAULT_FORM_RESPONSES.JOURNEY_NAME
@@ -57,7 +56,32 @@ const ProjectSetup = (): JSX.Element => {
   )
 
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
+
+  // NAVIGATES USER TO PROPER EDIT SCREEN
+  useEffect(() => {
+    const endOfPath = pathname.split('/').slice(-1)[0]
+
+    if (endOfPath !== 'project-setup') {
+      setInEditFormMode(true)
+      setFormInView(endOfPath)
+    }
+  }, [pathname])
+
+  const handleContinueAction = (
+    fieldToUpdate: object,
+    nextFormInView: string
+  ): void => {
+    handleUpdateProject(fieldToUpdate)
+
+    if (inEditFormMode) {
+      navigate('/my-project')
+    } else {
+      setFormInView(nextFormInView)
+    }
+  }
 
   return (
     <StyledProjectSetup>
@@ -75,7 +99,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
         />
       )}
-      {formInView === 'WHAT_LONG_FORM' && (
+      {formInView === DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What do you want to do? Please make it interesting..."
@@ -85,8 +109,10 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhatLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseWhatLongForm })
-            setFormInView(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+            handleContinueAction(
+              { userResponseWhatLongForm },
+              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
+            )
           }}
         />
       )}
@@ -100,8 +126,10 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseWhyLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseWhyLongForm })
-            setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
+            handleContinueAction(
+              { userResponseWhyLongForm },
+              DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM
+            )
           }}
         />
       )}
@@ -115,8 +143,10 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseHattersLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseHattersLongForm })
-            setFormInView(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
+            handleContinueAction(
+              { userResponseHattersLongForm },
+              DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM
+            )
           }}
         />
       )}
@@ -130,8 +160,10 @@ const ProjectSetup = (): JSX.Element => {
             setUserResponseSacrificeLongForm(text)
           }}
           continueAction={() => {
-            handleUpdateProject({ userResponseSacrificeLongForm })
-            setFormInView(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+            handleContinueAction(
+              { userResponseSacrificeLongForm },
+              DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM
+            )
           }}
         />
       )}
@@ -144,10 +176,14 @@ const ProjectSetup = (): JSX.Element => {
           updateNumberOfGroupResponses={updateWhyShortFormNumberOfResponses}
           setGroupResponse={setUserResponseWhyShortForm}
           continueAction={() => {
-            setFormInView(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
-            handleUpdateProject({
-              userResponseWhyShortForm: JSON.stringify(userResponseWhyShortForm)
-            })
+            handleContinueAction(
+              {
+                userResponseWhyShortForm: JSON.stringify(
+                  userResponseWhyShortForm
+                )
+              },
+              DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM
+            )
           }}
         />
       )}
@@ -160,12 +196,14 @@ const ProjectSetup = (): JSX.Element => {
           updateNumberOfGroupResponses={updateHattersShortFormNumberOfResponses}
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
-            setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
-            handleUpdateProject({
-              userResponseHattersShortForm: JSON.stringify(
-                userResponseHattersShortForm
-              )
-            })
+            handleContinueAction(
+              {
+                userResponseHattersShortForm: JSON.stringify(
+                  userResponseHattersShortForm
+                )
+              },
+              DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE
+            )
           }}
         />
       )}
@@ -178,10 +216,10 @@ const ProjectSetup = (): JSX.Element => {
             If the project was meaningful enough do a part two after this is done"
           responseNumber={Number(weeksExpectedToComplete)}
           setResponseNumber={(text) => {
-            handleUpdateProject({ weeksExpectedToComplete: String(text) })
             setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
+            handleUpdateProject({ weeksExpectedToComplete })
             navigate('/my-project')
           }}
         />
