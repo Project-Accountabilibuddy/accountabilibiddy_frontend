@@ -63,7 +63,7 @@ const App = (): JSX.Element => {
         console.log({ err })
         setLoading(false)
       })
-  }, [pathname])
+  }, [])
 
   return (
     <GlobalTheme>
