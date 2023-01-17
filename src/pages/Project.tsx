@@ -41,7 +41,7 @@ const StyledProject = styled.div`
     .section_middle,
     .section_right {
       position: relative;
-      padding: 24px;
+      padding: 12px;
       width: 100%;
       border: 2px solid var(--color-secondary);
       border-radius: 4px;
@@ -70,10 +70,11 @@ const StyledProject = styled.div`
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
-        padding: 24px;
+        padding: 12px;
       }
 
       .section_middle_top {
+        position: relative;
         .fade_in_out_texts {
           color: var(--color-primary);
         }
@@ -133,7 +134,8 @@ const Project = (): JSX.Element => {
     userResponseHattersLongForm,
     weekResponseFeed,
     userResponseWhyShortForm,
-    weeksExpectedToComplete
+    weeksExpectedToComplete,
+    userResponseHattersShortForm
   } = useGlobalState()
 
   const handleSignOut = async (): Promise<any> => {
@@ -188,6 +190,25 @@ const Project = (): JSX.Element => {
             <h2 className="body-1 fade_in_out_texts">
               {userResponseWhyShortForm}
             </h2>
+            <Edit
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                navigate('/project-setup/why-short-form')
+              }}
+            />
+          </div>
+          <div className="section_middle_top">
+            <h2 className="body-1 fade_in_out_texts">
+              {userResponseHattersShortForm}
+            </h2>
+            <Edit
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                navigate('/project-setup/hatters-short-form')
+              }}
+            />
           </div>
           <div className="section_weekly_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
@@ -223,7 +244,13 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
-          <Edit className="edit_icon" color="primary" />
+          <Edit
+            onClick={() => {
+              navigate('/project-setup/hatters-long-form')
+            }}
+            className="edit_icon"
+            color="primary"
+          />
         </div>
       </div>
     </StyledProject>
