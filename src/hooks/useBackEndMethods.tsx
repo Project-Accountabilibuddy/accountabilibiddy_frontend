@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
-  handleGetProject: (onCompletionCB: () => void) => void
+  handleGetProjects: (onCompletionCB: () => void) => void
   handleUpdateProject: (fieldToUpdate: object) => void
   handleCreateProject: (projectName: object) => void
 }
@@ -22,7 +22,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     projectName
   } = useGlobalState()
 
-  const handleGetProject = (onCompletionCB = () => {}): void => {
+  const handleGetProjects = (onCompletionCB = () => {}): void => {
     Auth.currentSession()
       .then((res) => {
         const idToken = res.getIdToken().getJwtToken()
@@ -34,12 +34,11 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             config
           )
           .then((res) => {
-            console.log(
-              'Retrieved Project: ',
-              res.data.Items[0].userResponseWhyLongForm
-            )
+            console.log('Retrieved Project: ', res.data.Items[0].projectName)
 
             onCompletionCB()
+
+            // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
             const {
               projectName,
               userResponseWhatLongForm,
@@ -134,7 +133,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
   return {
     handleUpdateProject,
-    handleGetProject,
+    handleGetProjects,
     handleCreateProject
   }
 }

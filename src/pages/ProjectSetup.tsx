@@ -29,13 +29,6 @@ const DEFAULT_FORM_RESPONSES = {
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
 const ProjectSetup = (): JSX.Element => {
-  const [formInView, setFormInView] = useState(
-    DEFAULT_FORM_RESPONSES.JOURNEY_NAME
-  )
-
-  const navigate = useNavigate()
-  const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
-
   const {
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
@@ -56,6 +49,15 @@ const ProjectSetup = (): JSX.Element => {
     setUserResponseHattersShortForm,
     setWeeksExpectedToComplete
   } = useGlobalState()
+
+  const [formInView, setFormInView] = useState(
+    projectName === ''
+      ? DEFAULT_FORM_RESPONSES.JOURNEY_NAME
+      : DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
+  )
+
+  const navigate = useNavigate()
+  const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
 
   return (
     <StyledProjectSetup>
