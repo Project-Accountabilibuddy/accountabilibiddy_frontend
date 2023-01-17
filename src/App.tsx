@@ -29,7 +29,7 @@ const StyledGlobalLoading = styled.div`
 const App = (): JSX.Element => {
   const [loading, setLoading] = useState(false)
 
-  const { handleGetProject } = useBackEndMethods()
+  const { handleGetProjects } = useBackEndMethods()
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -54,8 +54,8 @@ const App = (): JSX.Element => {
   useEffect(() => {
     setLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((user) => {
-        handleGetProject(() => {
+      .then(() => {
+        handleGetProjects(() => {
           setLoading(false)
         })
       })

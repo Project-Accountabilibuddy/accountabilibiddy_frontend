@@ -4,8 +4,9 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
+  handleGetProjects: (onCompletionCB: () => void) => void
   handleUpdateProject: (fieldToUpdate: object) => void
-  handleGetProject: (onCompletionCB: () => void) => void
+  handleCreateProject: (projectName: object) => void
 }
 
 const useBackEndMethods = (): useBackEndMethodsReturn => {
@@ -17,10 +18,11 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setUserResponseHattersLongForm,
     setWeeksExpectedToComplete,
     setUserResponseWhyShortForm,
-    setUserResponseHattersShortForm
+    setUserResponseHattersShortForm,
+    projectName
   } = useGlobalState()
 
-  const handleGetProject = (onCompletionCB = () => {}): void => {
+  const handleGetProjects = (onCompletionCB = () => {}): void => {
     Auth.currentSession()
       .then((res) => {
         const idToken = res.getIdToken().getJwtToken()
@@ -28,56 +30,44 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
         axios
           .get(
-            'https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/project',
+            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
             config
           )
           .then((res) => {
-            console.log('Retrieved Project: ', res.data.Item.projectName)
+            console.log('Retrieved Project: ', res.data.Items[0].projectName)
+
             onCompletionCB()
-            const Items = res.data.Item
 
-            // TODO: CLEANER WAY TO DO THIS... MAP OVER OBJECT KEYS?
-            if (Items.userResponseWhatLongForm !== undefined) {
-              setUserResponseWhatLongForm(Items.userResponseWhatLongForm)
-            }
+            // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
+            const {
+              projectName,
+              userResponseWhatLongForm,
+              userResponseWhyLongForm,
+              userResponseSacrificeLongForm,
+              userResponseHattersLongForm,
+              weeksExpectedToComplete,
+              userResponseWhyShortForm,
+              userResponseHattersShortForm
+            } = res.data.Items[0]
 
-            if (Items.userResponseWhyLongForm !== undefined) {
-              setUserResponseWhyLongForm(res.data.Item.userResponseWhyLongForm)
-            }
+            setProjectName(projectName)
+            setUserResponseWhatLongForm(userResponseWhatLongForm)
+            setUserResponseWhyLongForm(userResponseWhyLongForm)
+            setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
+            setUserResponseHattersLongForm(userResponseHattersLongForm)
+            setWeeksExpectedToComplete(weeksExpectedToComplete)
 
-            if (Items.projectName !== undefined) {
-              setProjectName(Items.projectName)
-            }
-
-            if (Items.userResponseSacrificeLongForm !== undefined) {
-              setUserResponseSacrificeLongForm(
-                Items.userResponseSacrificeLongForm
-              )
-            }
-
-            if (Items.userResponseHattersLongForm !== undefined) {
-              setUserResponseHattersLongForm(Items.userResponseHattersLongForm)
-            }
-
-            if (Items.weeksExpectedToComplete !== undefined) {
-              setWeeksExpectedToComplete(Items.weeksExpectedToComplete)
-            }
-
-            if (Items.userResponseWhyShortForm !== undefined) {
-              const responses = JSON.parse(Items.userResponseWhyShortForm)
-
-              responses.forEach((response: string, index: number) => {
+            JSON.parse(userResponseWhyShortForm).forEach(
+              (response: string, index: number) => {
                 setUserResponseWhyShortForm(response, index)
-              })
-            }
+              }
+            )
 
-            if (Items.userResponseHattersShortForm !== undefined) {
-              const responses = JSON.parse(Items.userResponseHattersShortForm)
-
-              responses.forEach((response: string, index: number) => {
+            JSON.parse(userResponseHattersShortForm).forEach(
+              (response: string, index: number) => {
                 setUserResponseHattersShortForm(response, index)
-              })
-            }
+              }
+            )
           })
           .catch((err) => {
             console.log('GET PROJECT ERR', err)
@@ -97,8 +87,36 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
         axios
           .put(
-            'https://euzdgtnwai.execute-api.us-east-1.amazonaws.com/project',
-            fieldToUpdate,
+            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+            {
+              fieldToUpdate: Object.keys(fieldToUpdate)[0],
+              updateValue: Object.values(fieldToUpdate)[0],
+              projectToUpdate: projectName
+            },
+            config
+          )
+          .then((res) => {
+            console.log(res.data)
+          })
+          .catch((err) => {
+            console.log('UPDATE PROJECT ERR', err)
+          })
+      })
+      .catch((err) => {
+        console.log('ID TOKEN ERR', err)
+      })
+  }
+
+  const handleCreateProject = (projectName: object): void => {
+    Auth.currentSession()
+      .then((res) => {
+        const idToken = res.getIdToken().getJwtToken()
+        const config = { headers: { Authorization: idToken } }
+
+        axios
+          .post(
+            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+            projectName,
             config
           )
           .then((res) => {
@@ -115,7 +133,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
   return {
     handleUpdateProject,
-    handleGetProject
+    handleGetProjects,
+    handleCreateProject
   }
 }
 

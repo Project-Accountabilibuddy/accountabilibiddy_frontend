@@ -29,13 +29,6 @@ const DEFAULT_FORM_RESPONSES = {
 // TOOD: SHIT THAT NEEDS DOING
 // 1. HAVE MORE OF NAV HANDLED IN URL SO USER CAN GO DIRECT TO SPECIFIC FORM
 const ProjectSetup = (): JSX.Element => {
-  const [formInView, setFormInView] = useState(
-    DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
-  )
-
-  const navigate = useNavigate()
-  const { handleUpdateProject } = useBackEndMethods()
-
   const {
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
@@ -57,8 +50,31 @@ const ProjectSetup = (): JSX.Element => {
     setWeeksExpectedToComplete
   } = useGlobalState()
 
+  const [formInView, setFormInView] = useState(
+    projectName === ''
+      ? DEFAULT_FORM_RESPONSES.JOURNEY_NAME
+      : DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM
+  )
+
+  const navigate = useNavigate()
+  const { handleUpdateProject, handleCreateProject } = useBackEndMethods()
+
   return (
     <StyledProjectSetup>
+      {formInView === DEFAULT_FORM_RESPONSES.JOURNEY_NAME && (
+        <FormInput
+          type="TEXT"
+          title="Better come up with an inspring name"
+          responseText={projectName}
+          setResponseText={(text) => {
+            setProjectName(text)
+          }}
+          continueAction={() => {
+            handleCreateProject({ projectName })
+            setFormInView(DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM)
+          }}
+        />
+      )}
       {formInView === 'WHAT_LONG_FORM' && (
         <FormInput
           type="TEXT"
@@ -144,26 +160,12 @@ const ProjectSetup = (): JSX.Element => {
           updateNumberOfGroupResponses={updateHattersShortFormNumberOfResponses}
           setGroupResponse={setUserResponseHattersShortForm}
           continueAction={() => {
-            setFormInView(DEFAULT_FORM_RESPONSES.JOURNEY_NAME)
+            setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
             handleUpdateProject({
               userResponseHattersShortForm: JSON.stringify(
                 userResponseHattersShortForm
               )
             })
-          }}
-        />
-      )}
-      {formInView === DEFAULT_FORM_RESPONSES.JOURNEY_NAME && (
-        <FormInput
-          type="TEXT"
-          title="Better come up with an inspring name"
-          responseText={projectName}
-          setResponseText={(text) => {
-            setProjectName(text)
-          }}
-          continueAction={() => {
-            handleUpdateProject({ projectName })
-            setFormInView(DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE)
           }}
         />
       )}
