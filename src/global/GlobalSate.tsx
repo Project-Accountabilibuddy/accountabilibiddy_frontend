@@ -44,6 +44,8 @@ interface GlobalState {
   // APP UI STATE
   inEditFormMode: boolean
   setInEditFormMode: (inEditFormMode: boolean) => void
+  globalLoading: boolean
+  setGlobalLoading: (globalLoading: boolean) => void
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
@@ -148,6 +150,11 @@ const useGlobalState = create<GlobalState>((set) => ({
   inEditFormMode: false,
   setInEditFormMode: (inEditFormMode) => {
     set(() => ({ inEditFormMode }))
+  },
+
+  globalLoading: false,
+  setGlobalLoading: (globalLoading) => {
+    set(() => ({ globalLoading }))
   }
 }))
 

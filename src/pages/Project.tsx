@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
-import { Edit } from '@mui/icons-material'
+import { Edit as EditIcon } from '@mui/icons-material'
 
 import useGlobalState from '../global/GlobalSate'
 
@@ -180,7 +180,7 @@ const Project = (): JSX.Element => {
       <div className="section_group">
         <div className="section_left">
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
-          <Edit
+          <EditIcon
             className="edit_icon"
             color="primary"
             onClick={() => {
@@ -196,7 +196,7 @@ const Project = (): JSX.Element => {
             <h2 className="body-1 fade_in_out_texts">
               {userResponseWhyShortForm}
             </h2>
-            <Edit
+            <EditIcon
               className="edit_icon"
               color="primary"
               onClick={() => {
@@ -208,7 +208,7 @@ const Project = (): JSX.Element => {
             <h2 className="body-1 fade_in_out_texts">
               {userResponseHattersShortForm}
             </h2>
-            <Edit
+            <EditIcon
               className="edit_icon"
               color="primary"
               onClick={() => {
@@ -250,7 +250,7 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
-          <Edit
+          <EditIcon
             onClick={() => {
               handleEditField('hatters-long-form')
             }}

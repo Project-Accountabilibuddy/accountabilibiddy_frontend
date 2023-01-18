@@ -7,7 +7,7 @@ import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
 
 const DEFAULT_FORM_RESPONSES = {
-  JOURNEY_NAME: 'journey-name',
+  PROJECT_NAME: 'project-name',
   WHAT_LONG_FORM: 'what-long-form',
   WHY_LONG_FORM: 'why-long-form',
   WHY_SHORT_FORM: 'why-short-form',
@@ -59,7 +59,7 @@ const ProjectSetup = (): JSX.Element => {
   // USER SHOULD NEVER BE ABLE TO UPDATE PROJECT NAME
   useEffect(() => {
     if (
-      endOfPath === DEFAULT_FORM_RESPONSES.JOURNEY_NAME &&
+      endOfPath === DEFAULT_FORM_RESPONSES.PROJECT_NAME &&
       projectName !== ''
     ) {
       navigate(`/project-setup/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`)
@@ -82,7 +82,7 @@ const ProjectSetup = (): JSX.Element => {
 
   return (
     <StyledProjectSetup>
-      {endOfPath === DEFAULT_FORM_RESPONSES.JOURNEY_NAME && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.PROJECT_NAME && (
         <FormInput
           type="TEXT"
           title="Better come up with an inspring name"

@@ -6,6 +6,7 @@ import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
+import useGlobalState from '../global/GlobalSate'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ const Authentication = (): JSX.Element => {
   const [code, setCode] = useState('')
 
   const { handleGetProjects } = useBackEndMethods()
+  const { setGlobalLoading } = useGlobalState()
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -72,7 +74,7 @@ const Authentication = (): JSX.Element => {
     await Auth.confirmSignUp(userEmail, code)
       .then((res) => {
         console.log('NEW USER RES', res)
-        navigate('/project-setup/journey-name')
+        navigate('/project-setup/project-name')
       })
       .catch((err) => {
         console.log('error confirming sign up', err)
@@ -80,13 +82,17 @@ const Authentication = (): JSX.Element => {
   }
 
   const handleSignInUser = async (): Promise<any> => {
+    setGlobalLoading(true)
     try {
       await Auth.signIn(userEmail, password).then(() => {
         navigate('/my-project')
-        handleGetProjects()
+        handleGetProjects(() => {
+          setGlobalLoading(false)
+        })
       })
     } catch (error) {
       console.log('error signing in', error)
+      setGlobalLoading(false)
     }
   }
 
