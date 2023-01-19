@@ -39,12 +39,6 @@ const StyledProject = styled.div`
     display: flex;
 
     .section_left,
-    .section_middle,
-    .section_right {
-      width: 100%;
-    }
-
-    .section_left,
     .section_right {
       width: 50%;
       margin: 12px 6px 12px 12px;
@@ -64,11 +58,13 @@ const StyledProject = styled.div`
       height: 100%;
     }
 
-    .section_bottom_left {
+    .section_bottom_left,
+    .section_bottom_right {
       margin-bottom: 0;
     }
 
     .section_middle {
+      width: 100%;
       display: flex;
       flex-direction: column;
       margin: 12px 6px 12px 6px;
