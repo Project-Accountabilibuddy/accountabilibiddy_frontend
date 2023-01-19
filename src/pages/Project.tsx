@@ -41,29 +41,37 @@ const StyledProject = styled.div`
     .section_left,
     .section_middle,
     .section_right {
-      position: relative;
-      padding: 12px;
       width: 100%;
-      border: 2px solid var(--color-secondary);
-      border-radius: 4px;
     }
 
     .section_left,
     .section_right {
       width: 50%;
+      margin: 12px 6px 12px 12px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .section_left {
-      margin: 12px 6px 12px 12px;
+    .section_top_left,
+    .section_bottom_left,
+    .section_top_right,
+    .section_bottom_right {
+      position: relative;
+      border: 2px solid var(--color-secondary);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      padding: 12px;
+      height: 100%;
+    }
+
+    .section_bottom_left {
+      margin-bottom: 0;
     }
 
     .section_middle {
       display: flex;
       flex-direction: column;
-
       margin: 12px 6px 12px 6px;
-      border: none;
-      padding: 0;
 
       .section_middle_top,
       .section_weekly_form_fields,
@@ -137,6 +145,8 @@ const Project = (): JSX.Element => {
     userResponseWhyShortForm,
     weeksExpectedToComplete,
     userResponseHattersShortForm,
+    userResponseWhatLongForm,
+    userResponseSacrificeLongForm,
     setInEditFormMode
   } = useGlobalState()
 
@@ -180,14 +190,26 @@ const Project = (): JSX.Element => {
       </div>
       <div className="section_group">
         <div className="section_left">
-          <h3 className="body-2">{userResponseWhyLongForm}</h3>
-          <EditIcon
-            className="edit_icon"
-            color="primary"
-            onClick={() => {
-              handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-            }}
-          />
+          <div className="section_top_left">
+            <h3 className="body-2">{userResponseWhatLongForm}</h3>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM)
+              }}
+            />
+          </div>
+          <div className="section_bottom_left">
+            <h3 className="body-2">{userResponseWhyLongForm}</h3>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+              }}
+            />
+          </div>
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
@@ -250,14 +272,26 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_right">
-          <h3 className="body-2">{userResponseHattersLongForm}</h3>
-          <EditIcon
-            onClick={() => {
-              handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
-            }}
-            className="edit_icon"
-            color="primary"
-          />
+          <div className="section_top_right">
+            <h3 className="body-2">{userResponseHattersLongForm}</h3>
+            <EditIcon
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
+              }}
+              className="edit_icon"
+              color="primary"
+            />
+          </div>
+          <div className="section_bottom_right">
+            <h3 className="body-2">{userResponseSacrificeLongForm}</h3>
+            <EditIcon
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
+              }}
+              className="edit_icon"
+              color="primary"
+            />
+          </div>
         </div>
       </div>
     </StyledProject>
