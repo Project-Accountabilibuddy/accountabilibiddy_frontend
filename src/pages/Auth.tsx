@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
+import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -74,7 +75,9 @@ const Authentication = (): JSX.Element => {
     await Auth.confirmSignUp(userEmail, code)
       .then((res) => {
         console.log('NEW USER RES', res)
-        navigate('/project-setup/project-name')
+        navigate(
+          `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.PROJECT_NAME}`
+        )
       })
       .catch((err) => {
         console.log('error confirming sign up', err)
@@ -85,7 +88,7 @@ const Authentication = (): JSX.Element => {
     setGlobalLoading(true)
     try {
       await Auth.signIn(userEmail, password).then(() => {
-        navigate('/my-project')
+        navigate(ROUTES.PROJECT)
         handleGetProjects(() => {
           setGlobalLoading(false)
         })

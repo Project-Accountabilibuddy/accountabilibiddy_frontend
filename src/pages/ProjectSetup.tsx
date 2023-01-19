@@ -5,17 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
-
-const DEFAULT_FORM_RESPONSES = {
-  PROJECT_NAME: 'project-name',
-  WHAT_LONG_FORM: 'what-long-form',
-  WHY_LONG_FORM: 'why-long-form',
-  WHY_SHORT_FORM: 'why-short-form',
-  HATTERS_LONG_FORM: 'hatters-long-form',
-  HATTERS_SHORT_FORM: 'hatters-short-form',
-  SACRIFICES_LONG_FORM: 'sacrifices-long-form',
-  WEEKS_EXPECTED_TO_COMPLETE: 'weeks-expected-to-complete'
-}
+import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
 
 const StyledProjectSetup = styled.div`
   display: flex;
@@ -62,7 +52,9 @@ const ProjectSetup = (): JSX.Element => {
       endOfPath === DEFAULT_FORM_RESPONSES.PROJECT_NAME &&
       projectName !== ''
     ) {
-      navigate(`/project-setup/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`)
+      navigate(
+        `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`
+      )
     }
   }, [endOfPath])
 
@@ -73,10 +65,10 @@ const ProjectSetup = (): JSX.Element => {
     handleUpdateProject(fieldToUpdate)
 
     if (inEditFormMode) {
-      navigate('/my-project')
+      navigate(ROUTES.PROJECT)
       setInEditFormMode(false)
     } else {
-      navigate(`/project-setup/${nextFormInView}`)
+      navigate(`${ROUTES.PROJECT_SETUP}/${nextFormInView}`)
     }
   }
 
@@ -92,7 +84,9 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             handleCreateProject({ projectName })
-            navigate(`/project-setup/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`)
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`
+            )
           }}
         />
       )}
@@ -217,7 +211,7 @@ const ProjectSetup = (): JSX.Element => {
           }}
           continueAction={() => {
             handleUpdateProject({ weeksExpectedToComplete })
-            navigate('/my-project')
+            navigate(ROUTES.PROJECT)
           }}
         />
       )}

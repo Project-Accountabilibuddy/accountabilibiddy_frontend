@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
 
 import useGlobalState from '../global/GlobalSate'
+import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
 
 const StyledProject = styled.div`
   display: flex;
@@ -161,7 +162,7 @@ const Project = (): JSX.Element => {
 
   const handleEditField = (fieldToEdit: string): void => {
     setInEditFormMode(true)
-    navigate(`/project-setup/${fieldToEdit}`)
+    navigate(`${ROUTES.PROJECT_SETUP}/${fieldToEdit}`)
   }
 
   return (
@@ -184,7 +185,7 @@ const Project = (): JSX.Element => {
             className="edit_icon"
             color="primary"
             onClick={() => {
-              handleEditField('why-long-form')
+              handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
             }}
           />
         </div>
@@ -200,7 +201,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                handleEditField('why-short-form')
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
               }}
             />
           </div>
@@ -212,7 +213,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                handleEditField('hatters-short-form')
+                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
               }}
             />
           </div>
@@ -252,7 +253,7 @@ const Project = (): JSX.Element => {
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
           <EditIcon
             onClick={() => {
-              handleEditField('hatters-long-form')
+              handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
             }}
             className="edit_icon"
             color="primary"

@@ -8,6 +8,7 @@ import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
+import { ROUTES } from './global/Constants'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -38,13 +39,13 @@ const App = (): JSX.Element => {
     Auth.currentAuthenticatedUser()
       .then(() => {
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
-        if (pathname === '/' || pathname === '/auth') {
-          navigate('/my-project')
+        if (pathname === '/' || pathname === ROUTES.AUTH) {
+          navigate(ROUTES.PROJECT)
         }
       })
       .catch(() => {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
-        if (pathname === '/my-project') {
+        if (pathname === ROUTES.PROJECT) {
           navigate('/')
         }
       })
@@ -77,9 +78,12 @@ const App = (): JSX.Element => {
           {!globalLoading && (
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/project-setup/*" element={<ProjectSetUpPage />} />
-              <Route path="/auth/*" element={<AuthPage />} />
-              <Route path="/my-project" element={<ProjectPage />} />
+              <Route
+                path={`${ROUTES.PROJECT_SETUP}/*`}
+                element={<ProjectSetUpPage />}
+              />
+              <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
+              <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
             </Routes>
           )}
         </StyledApp>
