@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
+import { ROUTES } from '../global/Constants'
+
 const StyledLanding = styled.div`
   display: flex;
   flex-direction: column;
@@ -49,7 +51,7 @@ const Landing = (): JSX.Element => {
       <Button
         variant="outlined"
         onClick={() => {
-          navigate('/auth/sign-up')
+          navigate(`${ROUTES.AUTH}/sign-up`)
         }}
       >
         Begin Journey
@@ -57,7 +59,7 @@ const Landing = (): JSX.Element => {
       <Button
         variant="outlined"
         onClick={() => {
-          navigate('/auth/sign-in')
+          navigate(`${ROUTES.AUTH}/sign-in`)
         }}
       >
         Sign In

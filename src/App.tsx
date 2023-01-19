@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
+import useGlobalState from './global/GlobalSate'
+import { ROUTES } from './global/Constants'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -27,9 +29,8 @@ const StyledGlobalLoading = styled.div`
 `
 
 const App = (): JSX.Element => {
-  const [loading, setLoading] = useState(false)
-
   const { handleGetProjects } = useBackEndMethods()
+  const { globalLoading, setGlobalLoading } = useGlobalState()
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -38,13 +39,13 @@ const App = (): JSX.Element => {
     Auth.currentAuthenticatedUser()
       .then(() => {
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
-        if (pathname === '/' || pathname === '/auth') {
-          navigate('/my-project')
+        if (pathname === '/' || pathname === ROUTES.AUTH) {
+          navigate(ROUTES.PROJECT)
         }
       })
       .catch(() => {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
-        if (pathname === '/my-project') {
+        if (pathname === ROUTES.PROJECT) {
           navigate('/')
         }
       })
@@ -52,34 +53,37 @@ const App = (): JSX.Element => {
 
   // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
-    setLoading(true)
+    setGlobalLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
         handleGetProjects(() => {
-          setLoading(false)
+          setGlobalLoading(false)
         })
       })
       .catch((err) => {
         console.log({ err })
-        setLoading(false)
+        setGlobalLoading(false)
       })
-  }, [pathname])
+  }, [])
 
   return (
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          {loading && (
+          {globalLoading && (
             <StyledGlobalLoading>
               <CircularProgress />
             </StyledGlobalLoading>
           )}
-          {!loading && (
+          {!globalLoading && (
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/my-project" element={<ProjectPage />} />
-              <Route path="/project-setup" element={<ProjectSetUpPage />} />
-              <Route path="/auth/*" element={<AuthPage />} />
+              <Route
+                path={`${ROUTES.PROJECT_SETUP}/*`}
+                element={<ProjectSetUpPage />}
+              />
+              <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
+              <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
             </Routes>
           )}
         </StyledApp>

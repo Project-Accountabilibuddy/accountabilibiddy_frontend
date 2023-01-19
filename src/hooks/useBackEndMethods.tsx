@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
-  handleGetProjects: (onCompletionCB: () => void) => void
+  handleGetProjects: (onCompletionCB?: () => void) => void
   handleUpdateProject: (fieldToUpdate: object) => void
   handleCreateProject: (projectName: object) => void
 }

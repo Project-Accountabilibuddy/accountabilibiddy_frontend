@@ -3,8 +3,10 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { Edit as EditIcon } from '@mui/icons-material'
 
 import useGlobalState from '../global/GlobalSate'
+import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
 
 const StyledProject = styled.div`
   display: flex;
@@ -39,7 +41,8 @@ const StyledProject = styled.div`
     .section_left,
     .section_middle,
     .section_right {
-      padding: 24px;
+      position: relative;
+      padding: 12px;
       width: 100%;
       border: 2px solid var(--color-secondary);
       border-radius: 4px;
@@ -68,10 +71,11 @@ const StyledProject = styled.div`
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
-        padding: 24px;
+        padding: 12px;
       }
 
       .section_middle_top {
+        position: relative;
         .fade_in_out_texts {
           color: var(--color-primary);
         }
@@ -106,6 +110,16 @@ const StyledProject = styled.div`
       margin: 12px 12px 12px 6px;
     }
   }
+
+  .edit_icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
 `
 
 const Project = (): JSX.Element => {
@@ -121,7 +135,9 @@ const Project = (): JSX.Element => {
     userResponseHattersLongForm,
     weekResponseFeed,
     userResponseWhyShortForm,
-    weeksExpectedToComplete
+    weeksExpectedToComplete,
+    userResponseHattersShortForm,
+    setInEditFormMode
   } = useGlobalState()
 
   const handleSignOut = async (): Promise<any> => {
@@ -144,6 +160,11 @@ const Project = (): JSX.Element => {
     setInputWeeksGoals('')
   }
 
+  const handleEditField = (fieldToEdit: string): void => {
+    setInEditFormMode(true)
+    navigate(`${ROUTES.PROJECT_SETUP}/${fieldToEdit}`)
+  }
+
   return (
     <StyledProject>
       <div className="top_nav_bar">
@@ -160,6 +181,13 @@ const Project = (): JSX.Element => {
       <div className="section_group">
         <div className="section_left">
           <h3 className="body-2">{userResponseWhyLongForm}</h3>
+          <EditIcon
+            className="edit_icon"
+            color="primary"
+            onClick={() => {
+              handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+            }}
+          />
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
@@ -169,6 +197,25 @@ const Project = (): JSX.Element => {
             <h2 className="body-1 fade_in_out_texts">
               {userResponseWhyShortForm}
             </h2>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+              }}
+            />
+          </div>
+          <div className="section_middle_top">
+            <h2 className="body-1 fade_in_out_texts">
+              {userResponseHattersShortForm}
+            </h2>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+              }}
+            />
           </div>
           <div className="section_weekly_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
@@ -204,6 +251,13 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <h3 className="body-2">{userResponseHattersLongForm}</h3>
+          <EditIcon
+            onClick={() => {
+              handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
+            }}
+            className="edit_icon"
+            color="primary"
+          />
         </div>
       </div>
     </StyledProject>
