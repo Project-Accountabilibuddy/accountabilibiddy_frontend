@@ -16,6 +16,14 @@ const StyledProject = styled.div`
 
   .body-2 {
     text-align: start;
+    color: var(--color-light-grey);
+  }
+
+  .section_title {
+    color: var(--color-white);
+    text-align: start;
+    margin-bottom: 12px;
+    width: 100%;
   }
 
   .top_nav_bar {
@@ -39,31 +47,39 @@ const StyledProject = styled.div`
     display: flex;
 
     .section_left,
-    .section_middle,
-    .section_right {
-      position: relative;
-      padding: 12px;
-      width: 100%;
-      border: 2px solid var(--color-secondary);
-      border-radius: 4px;
-    }
-
-    .section_left,
     .section_right {
       width: 50%;
+      margin: 12px 6px 12px 12px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .section_left {
-      margin: 12px 6px 12px 12px;
+    .section_top_left,
+    .section_bottom_left,
+    .section_top_right,
+    .section_bottom_right {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      position: relative;
+      border: 2px solid var(--color-secondary);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      padding: 12px;
+      height: 100%;
+      overflow: scroll;
+    }
+
+    .section_bottom_left,
+    .section_bottom_right {
+      margin-bottom: 0;
     }
 
     .section_middle {
+      width: 100%;
       display: flex;
       flex-direction: column;
-
       margin: 12px 6px 12px 6px;
-      border: none;
-      padding: 0;
 
       .section_middle_top,
       .section_weekly_form_fields,
@@ -111,10 +127,15 @@ const StyledProject = styled.div`
     }
   }
 
-  .edit_icon {
+  .edit_icon_middle {
     position: absolute;
     bottom: 12px;
     right: 12px;
+  }
+
+  .edit_icon {
+    position: sticky;
+    bottom: 0px;
 
     :hover {
       cursor: pointer;
@@ -129,7 +150,6 @@ const Project = (): JSX.Element => {
   const navigate = useNavigate()
 
   const {
-    setWeekResponseFeed,
     projectName,
     userResponseWhyLongForm,
     userResponseHattersLongForm,
@@ -137,6 +157,9 @@ const Project = (): JSX.Element => {
     userResponseWhyShortForm,
     weeksExpectedToComplete,
     userResponseHattersShortForm,
+    userResponseWhatLongForm,
+    userResponseSacrificeLongForm,
+    setWeekResponseFeed,
     setInEditFormMode
   } = useGlobalState()
 
@@ -180,14 +203,28 @@ const Project = (): JSX.Element => {
       </div>
       <div className="section_group">
         <div className="section_left">
-          <h3 className="body-2">{userResponseWhyLongForm}</h3>
-          <EditIcon
-            className="edit_icon"
-            color="primary"
-            onClick={() => {
-              handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
-            }}
-          />
+          <div className="section_top_left">
+            <h2 className="body-1 section_title">What are you doing?</h2>
+            <h3 className="body-2">{userResponseWhatLongForm}</h3>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM)
+              }}
+            />
+          </div>
+          <div className="section_bottom_left">
+            <h2 className="body-1 section_title">Why are you doing this?</h2>
+            <h3 className="body-2">{userResponseWhyLongForm}</h3>
+            <EditIcon
+              className="edit_icon"
+              color="primary"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+              }}
+            />
+          </div>
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
@@ -198,7 +235,7 @@ const Project = (): JSX.Element => {
               {userResponseWhyShortForm}
             </h2>
             <EditIcon
-              className="edit_icon"
+              className="edit_icon_middle"
               color="primary"
               onClick={() => {
                 handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
@@ -210,7 +247,7 @@ const Project = (): JSX.Element => {
               {userResponseHattersShortForm}
             </h2>
             <EditIcon
-              className="edit_icon"
+              className="edit_icon_middle"
               color="primary"
               onClick={() => {
                 handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
@@ -250,14 +287,30 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_right">
-          <h3 className="body-2">{userResponseHattersLongForm}</h3>
-          <EditIcon
-            onClick={() => {
-              handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
-            }}
-            className="edit_icon"
-            color="primary"
-          />
+          <div className="section_top_right">
+            <h2 className="body-1 section_title">
+              What will your internal hater say?
+            </h2>
+            <h3 className="body-2">{userResponseHattersLongForm}</h3>
+            <EditIcon
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
+              }}
+              className="edit_icon"
+              color="primary"
+            />
+          </div>
+          <div className="section_bottom_right">
+            <h2 className="body-1 section_title">What are you sacrificing?</h2>
+            <h3 className="body-2">{userResponseSacrificeLongForm}</h3>
+            <EditIcon
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
+              }}
+              className="edit_icon"
+              color="primary"
+            />
+          </div>
         </div>
       </div>
     </StyledProject>
