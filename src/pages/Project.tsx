@@ -23,6 +23,7 @@ const StyledProject = styled.div`
     color: var(--color-white);
     text-align: start;
     margin-bottom: 12px;
+    width: 100%;
   }
 
   .top_nav_bar {
@@ -57,12 +58,16 @@ const StyledProject = styled.div`
     .section_bottom_left,
     .section_top_right,
     .section_bottom_right {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
       position: relative;
       border: 2px solid var(--color-secondary);
       border-radius: 4px;
       margin-bottom: 12px;
       padding: 12px;
       height: 100%;
+      overflow: scroll;
     }
 
     .section_bottom_left,
@@ -122,10 +127,15 @@ const StyledProject = styled.div`
     }
   }
 
-  .edit_icon {
+  .edit_icon_middle {
     position: absolute;
     bottom: 12px;
     right: 12px;
+  }
+
+  .edit_icon {
+    position: sticky;
+    bottom: 0px;
 
     :hover {
       cursor: pointer;
@@ -225,7 +235,7 @@ const Project = (): JSX.Element => {
               {userResponseWhyShortForm}
             </h2>
             <EditIcon
-              className="edit_icon"
+              className="edit_icon_middle"
               color="primary"
               onClick={() => {
                 handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
@@ -237,7 +247,7 @@ const Project = (): JSX.Element => {
               {userResponseHattersShortForm}
             </h2>
             <EditIcon
-              className="edit_icon"
+              className="edit_icon_middle"
               color="primary"
               onClick={() => {
                 handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
