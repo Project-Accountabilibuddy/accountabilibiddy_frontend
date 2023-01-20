@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
@@ -92,6 +92,8 @@ const StyledProject = styled.div`
 
       .section_middle_top {
         position: relative;
+        height: 42px;
+
         .fade_in_out_texts {
           color: var(--color-primary);
         }
@@ -147,8 +149,6 @@ const Project = (): JSX.Element => {
   const [inputWeeksGoals, setInputWeeksGoals] = useState('')
   const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
 
-  const navigate = useNavigate()
-
   const {
     projectName,
     userResponseWhyLongForm,
@@ -162,6 +162,30 @@ const Project = (): JSX.Element => {
     setWeekResponseFeed,
     setInEditFormMode
   } = useGlobalState()
+
+  const allShortResponses = [
+    ...userResponseWhyShortForm,
+    ...userResponseHattersShortForm
+  ]
+  const [shortResponseInView, setShortResponseInView] = useState(
+    allShortResponses[0]
+  )
+
+  useEffect(() => {
+    const getRandomShortAnswer = (): string => {
+      const randInt = Math.floor(Math.random() * allShortResponses.length)
+      return allShortResponses[randInt]
+    }
+
+    setInterval(() => {
+      setShortResponseInView('')
+      setTimeout(() => {
+        setShortResponseInView(getRandomShortAnswer())
+      }, 500)
+    }, 10000)
+  }, [])
+
+  const navigate = useNavigate()
 
   const handleSignOut = async (): Promise<any> => {
     await Auth.signOut()
@@ -228,24 +252,14 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
+            <h2 className="body-1">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
           </div>
           <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">
-              {userResponseWhyShortForm}
-            </h2>
-            <EditIcon
-              className="edit_icon_middle"
-              color="primary"
-              onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
-              }}
-            />
-          </div>
-          <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">
-              {userResponseHattersShortForm}
-            </h2>
+            {shortResponseInView !== '' && (
+              <h2 className="body-1 fade_in_out_texts">
+                {shortResponseInView}
+              </h2>
+            )}
             <EditIcon
               className="edit_icon_middle"
               color="primary"
