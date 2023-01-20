@@ -16,6 +16,13 @@ const StyledProject = styled.div`
 
   .body-2 {
     text-align: start;
+    color: var(--color-light-grey);
+  }
+
+  .section_title {
+    color: var(--color-white);
+    text-align: start;
+    margin-bottom: 12px;
   }
 
   .top_nav_bar {
@@ -133,7 +140,6 @@ const Project = (): JSX.Element => {
   const navigate = useNavigate()
 
   const {
-    setWeekResponseFeed,
     projectName,
     userResponseWhyLongForm,
     userResponseHattersLongForm,
@@ -143,6 +149,7 @@ const Project = (): JSX.Element => {
     userResponseHattersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
+    setWeekResponseFeed,
     setInEditFormMode
   } = useGlobalState()
 
@@ -187,6 +194,7 @@ const Project = (): JSX.Element => {
       <div className="section_group">
         <div className="section_left">
           <div className="section_top_left">
+            <h2 className="body-1 section_title">What are you doing?</h2>
             <h3 className="body-2">{userResponseWhatLongForm}</h3>
             <EditIcon
               className="edit_icon"
@@ -197,6 +205,7 @@ const Project = (): JSX.Element => {
             />
           </div>
           <div className="section_bottom_left">
+            <h2 className="body-1 section_title">Why are you doing this?</h2>
             <h3 className="body-2">{userResponseWhyLongForm}</h3>
             <EditIcon
               className="edit_icon"
@@ -269,6 +278,9 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <div className="section_top_right">
+            <h2 className="body-1 section_title">
+              What will your internal hater say?
+            </h2>
             <h3 className="body-2">{userResponseHattersLongForm}</h3>
             <EditIcon
               onClick={() => {
@@ -279,6 +291,7 @@ const Project = (): JSX.Element => {
             />
           </div>
           <div className="section_bottom_right">
+            <h2 className="body-1 section_title">What are you sacrificing?</h2>
             <h3 className="body-2">{userResponseSacrificeLongForm}</h3>
             <EditIcon
               onClick={() => {
