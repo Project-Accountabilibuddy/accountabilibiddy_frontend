@@ -12,7 +12,7 @@ const StyledProjectSetup = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  padding: 0 200px;
+  padding: 0 20%;
   height: 100%;
 `
 
