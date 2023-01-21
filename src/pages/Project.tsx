@@ -83,7 +83,8 @@ const StyledProject = styled.div`
 
       .section_middle_top,
       .section_weekly_form_fields,
-      .section_weekly_feed {
+      .section_weekly_feed,
+      .section_time {
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
@@ -93,9 +94,20 @@ const StyledProject = styled.div`
       .section_middle_top {
         position: relative;
         height: 42px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        .fade_in_out_texts {
+        .fade_in_out_text {
           color: var(--color-primary);
+          padding: 0 12px;
+        }
+
+        .fade_edit {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
       }
 
@@ -149,6 +161,8 @@ const Project = (): JSX.Element => {
   const [inputWeeksGoals, setInputWeeksGoals] = useState('')
   const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
 
+  const navigate = useNavigate()
+
   const {
     projectName,
     userResponseWhyLongForm,
@@ -171,6 +185,7 @@ const Project = (): JSX.Element => {
     allShortResponses[0]
   )
 
+  // HANDLES FADE IN/OUT OF SHORT RESPONSES
   useEffect(() => {
     const getRandomShortAnswer = (): string => {
       const randInt = Math.floor(Math.random() * allShortResponses.length)
@@ -181,11 +196,9 @@ const Project = (): JSX.Element => {
       setShortResponseInView('')
       setTimeout(() => {
         setShortResponseInView(getRandomShortAnswer())
-      }, 500)
+      }, 100)
     }, 10000)
   }, [])
-
-  const navigate = useNavigate()
 
   const handleSignOut = async (): Promise<any> => {
     await Auth.signOut()
@@ -251,22 +264,33 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_middle">
-          <div className="section_middle_top">
+          <div className="section_time">
             <h2 className="body-1">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
           </div>
           <div className="section_middle_top">
+            <div className="fade_edit">
+              <EditIcon
+                className="edit_icon"
+                color="primary"
+                onClick={() => {
+                  handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+                }}
+              />
+              <h5 className="label">Hatters</h5>
+            </div>
             {shortResponseInView !== '' && (
-              <h2 className="body-1 fade_in_out_texts">
-                {shortResponseInView}
-              </h2>
+              <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
             )}
-            <EditIcon
-              className="edit_icon_middle"
-              color="primary"
-              onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
-              }}
-            />
+            <div className="fade_edit">
+              <EditIcon
+                className="edit_icon"
+                color="primary"
+                onClick={() => {
+                  handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+                }}
+              />
+              <h5 className="label">Why</h5>
+            </div>
           </div>
           <div className="section_weekly_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
