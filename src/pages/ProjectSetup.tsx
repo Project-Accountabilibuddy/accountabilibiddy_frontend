@@ -12,7 +12,7 @@ const StyledProjectSetup = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  padding: 0 200px;
+  padding: 0 20%;
   height: 100%;
 `
 
@@ -23,8 +23,8 @@ const ProjectSetup = (): JSX.Element => {
     projectName,
     userResponseWhyLongForm,
     userResponseWhyShortForm,
-    userResponseHattersLongForm,
-    userResponseHattersShortForm,
+    userResponseHatersLongForm,
+    userResponseHatersShortForm,
     weeksExpectedToComplete,
     inEditFormMode,
     setInEditFormMode,
@@ -33,10 +33,10 @@ const ProjectSetup = (): JSX.Element => {
     setProjectName,
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
-    setUserResponseHattersLongForm,
+    setUserResponseHatersLongForm,
     updateWhyShortFormNumberOfResponses,
-    updateHattersShortFormNumberOfResponses,
-    setUserResponseHattersShortForm,
+    updateHatersShortFormNumberOfResponses,
+    setUserResponseHatersShortForm,
     setWeeksExpectedToComplete
   } = useGlobalState()
 
@@ -119,23 +119,23 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleContinueAction(
               { userResponseWhyLongForm },
-              DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM
+              DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What will your internal bitch say?"
           description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
-          responseText={userResponseHattersLongForm}
+          responseText={userResponseHatersLongForm}
           setResponseText={(text) => {
-            setUserResponseHattersLongForm(text)
+            setUserResponseHatersLongForm(text)
           }}
           continueAction={() => {
             handleContinueAction(
-              { userResponseHattersLongForm },
+              { userResponseHatersLongForm },
               DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM
             )
           }}
@@ -173,24 +173,24 @@ const ProjectSetup = (): JSX.Element => {
                   userResponseWhyShortForm
                 )
               },
-              DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM
+              DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM && (
+      {endOfPath === DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
-          groupResponses={userResponseHattersShortForm}
-          responseText={userResponseHattersLongForm}
-          updateNumberOfGroupResponses={updateHattersShortFormNumberOfResponses}
-          setGroupResponse={setUserResponseHattersShortForm}
+          groupResponses={userResponseHatersShortForm}
+          responseText={userResponseHatersLongForm}
+          updateNumberOfGroupResponses={updateHatersShortFormNumberOfResponses}
+          setGroupResponse={setUserResponseHatersShortForm}
           continueAction={() => {
             handleContinueAction(
               {
-                userResponseHattersShortForm: JSON.stringify(
-                  userResponseHattersShortForm
+                userResponseHatersShortForm: JSON.stringify(
+                  userResponseHatersShortForm
                 )
               },
               DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE

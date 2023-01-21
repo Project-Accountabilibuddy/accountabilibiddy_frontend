@@ -170,11 +170,11 @@ const Project = (): JSX.Element => {
   const {
     projectName,
     userResponseWhyLongForm,
-    userResponseHattersLongForm,
+    userResponseHatersLongForm,
     weekResponseFeed,
     userResponseWhyShortForm,
     weeksExpectedToComplete,
-    userResponseHattersShortForm,
+    userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
     setWeekResponseFeed,
@@ -183,7 +183,7 @@ const Project = (): JSX.Element => {
 
   const allShortResponses = [
     ...userResponseWhyShortForm,
-    ...userResponseHattersShortForm
+    ...userResponseHatersShortForm
   ]
   const [shortResponseInView, setShortResponseInView] = useState(
     allShortResponses[0]
@@ -275,11 +275,11 @@ const Project = (): JSX.Element => {
             <div
               className="fade_edit"
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+                handleEditField(DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM)
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
-              <h5 className="label">Hatters</h5>
+              <h5 className="label">Haters</h5>
             </div>
             {shortResponseInView !== '' && (
               <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
@@ -331,10 +331,10 @@ const Project = (): JSX.Element => {
             <h2 className="body-1 section_title">
               What will your internal hater say?
             </h2>
-            <h3 className="body-2">{userResponseHattersLongForm}</h3>
+            <h3 className="body-2">{userResponseHatersLongForm}</h3>
             <EditIcon
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_LONG_FORM)
+                handleEditField(DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM)
               }}
               className="edit_icon"
               color="primary"

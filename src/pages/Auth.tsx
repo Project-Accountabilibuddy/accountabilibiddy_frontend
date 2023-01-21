@@ -14,11 +14,17 @@ const StyledAuthentication = styled.div`
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  padding: 0 200px;
+  padding: 0 20%;
   height: 100%;
+
+  .heading-1 {
+    color: var(--color-primary);
+    margin-bottom: 24px;
+  }
 
   .heading-2 {
     color: var(--color-light-grey);
+    margin-bottom: 24px;
   }
 
   .text_field {
