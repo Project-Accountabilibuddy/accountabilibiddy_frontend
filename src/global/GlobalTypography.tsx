@@ -13,6 +13,7 @@ const StyledGlobalTypography = styled.div`
   h5,
   h6 {
     margin: 0;
+    animation: fadein 2s;
   }
 
   .heading-1 {
@@ -23,6 +24,15 @@ const StyledGlobalTypography = styled.div`
     letter-spacing: 0.25px;
     font-family: 'Anton', sans-serif;
     color: var(--color-white);
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .heading-2 {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
@@ -83,7 +83,8 @@ const StyledProject = styled.div`
 
       .section_middle_top,
       .section_weekly_form_fields,
-      .section_weekly_feed {
+      .section_weekly_feed,
+      .section_time {
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
@@ -92,8 +93,25 @@ const StyledProject = styled.div`
 
       .section_middle_top {
         position: relative;
-        .fade_in_out_texts {
+        height: 42px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .fade_in_out_text {
           color: var(--color-primary);
+          padding: 0 12px;
+        }
+
+        .fade_edit {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          :hover {
+            cursor: pointer;
+          }
         }
       }
 
@@ -163,6 +181,29 @@ const Project = (): JSX.Element => {
     setInEditFormMode
   } = useGlobalState()
 
+  const allShortResponses = [
+    ...userResponseWhyShortForm,
+    ...userResponseHattersShortForm
+  ]
+  const [shortResponseInView, setShortResponseInView] = useState(
+    allShortResponses[0]
+  )
+
+  // HANDLES FADE IN/OUT OF SHORT RESPONSES
+  useEffect(() => {
+    const getRandomShortAnswer = (): string => {
+      const randInt = Math.floor(Math.random() * allShortResponses.length)
+      return allShortResponses[randInt]
+    }
+
+    setInterval(() => {
+      setShortResponseInView('')
+      setTimeout(() => {
+        setShortResponseInView(getRandomShortAnswer())
+      }, 100)
+    }, 10000)
+  }, [])
+
   const handleSignOut = async (): Promise<any> => {
     await Auth.signOut()
       .then(() => {
@@ -227,32 +268,31 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_middle">
-          <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
+          <div className="section_time">
+            <h2 className="body-1">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
           </div>
           <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">
-              {userResponseWhyShortForm}
-            </h2>
-            <EditIcon
-              className="edit_icon_middle"
-              color="primary"
-              onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
-              }}
-            />
-          </div>
-          <div className="section_middle_top">
-            <h2 className="body-1 fade_in_out_texts">
-              {userResponseHattersShortForm}
-            </h2>
-            <EditIcon
-              className="edit_icon_middle"
-              color="primary"
+            <div
+              className="fade_edit"
               onClick={() => {
                 handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
               }}
-            />
+            >
+              <EditIcon className="edit_icon" color="primary" />
+              <h5 className="label">Hatters</h5>
+            </div>
+            {shortResponseInView !== '' && (
+              <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
+            )}
+            <div
+              className="fade_edit"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+              }}
+            >
+              <EditIcon className="edit_icon" color="primary" />
+              <h5 className="label">Why</h5>
+            </div>
           </div>
           <div className="section_weekly_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
