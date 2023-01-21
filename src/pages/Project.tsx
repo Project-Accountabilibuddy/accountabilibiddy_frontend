@@ -108,6 +108,10 @@ const StyledProject = styled.div`
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
+          :hover {
+            cursor: pointer;
+          }
         }
       }
 
@@ -268,27 +272,25 @@ const Project = (): JSX.Element => {
             <h2 className="body-1">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
           </div>
           <div className="section_middle_top">
-            <div className="fade_edit">
-              <EditIcon
-                className="edit_icon"
-                color="primary"
-                onClick={() => {
-                  handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
-                }}
-              />
+            <div
+              className="fade_edit"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.HATTERS_SHORT_FORM)
+              }}
+            >
+              <EditIcon className="edit_icon" color="primary" />
               <h5 className="label">Hatters</h5>
             </div>
             {shortResponseInView !== '' && (
               <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
             )}
-            <div className="fade_edit">
-              <EditIcon
-                className="edit_icon"
-                color="primary"
-                onClick={() => {
-                  handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
-                }}
-              />
+            <div
+              className="fade_edit"
+              onClick={() => {
+                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+              }}
+            >
+              <EditIcon className="edit_icon" color="primary" />
               <h5 className="label">Why</h5>
             </div>
           </div>
