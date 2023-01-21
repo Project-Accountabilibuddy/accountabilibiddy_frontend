@@ -11,8 +11,8 @@ interface GlobalState {
   projectName: string
   userResponseWhyLongForm: string
   userResponseWhyShortForm: string[]
-  userResponseHattersLongForm: string
-  userResponseHattersShortForm: string[]
+  userResponseHatersLongForm: string
+  userResponseHatersShortForm: string[]
 
   weekResponseFeed: WeeksResponse[]
   setWeekResponseFeed: (weeksResponse: WeeksResponse) => void
@@ -30,10 +30,10 @@ interface GlobalState {
     index: number
   ) => void
 
-  setUserResponseHattersLongForm: (userResponseHattersLongForm: string) => void
+  setUserResponseHatersLongForm: (userResponseHatersLongForm: string) => void
 
-  updateHattersShortFormNumberOfResponses: (removeOrAdd: string) => void
-  setUserResponseHattersShortForm: (
+  updateHatersShortFormNumberOfResponses: (removeOrAdd: string) => void
+  setUserResponseHatersShortForm: (
     userResponseHatersShortForm: string,
     index: number
   ) => void
@@ -97,37 +97,37 @@ const useGlobalState = create<GlobalState>((set) => ({
     }))
   },
 
-  userResponseHattersLongForm: '',
-  setUserResponseHattersLongForm: (userResponseHattersLongForm) => {
-    set(() => ({ userResponseHattersLongForm }))
+  userResponseHatersLongForm: '',
+  setUserResponseHatersLongForm: (userResponseHatersLongForm) => {
+    set(() => ({ userResponseHatersLongForm }))
   },
 
-  userResponseHattersShortForm: ['', '', ''],
+  userResponseHatersShortForm: ['', '', ''],
 
-  updateHattersShortFormNumberOfResponses: (removeOrAdd) => {
+  updateHatersShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
       if (removeOrAdd === 'ADD') {
         return {
-          userResponseHattersShortForm: [
-            ...state.userResponseHattersShortForm,
+          userResponseHatersShortForm: [
+            ...state.userResponseHatersShortForm,
             ''
           ]
         }
       }
       if (removeOrAdd === 'REMOVE') {
-        state.userResponseHattersShortForm.pop()
+        state.userResponseHatersShortForm.pop()
         return {
-          userResponseHattersShortForm: state.userResponseHattersShortForm
+          userResponseHatersShortForm: state.userResponseHatersShortForm
         }
       }
       return state
     })
   },
 
-  setUserResponseHattersShortForm: (userResponseHattersShortForm, index) => {
+  setUserResponseHatersShortForm: (userResponseHatersShortForm, index) => {
     set((state) => ({
-      userResponseHattersShortForm: state.userResponseHattersShortForm.map(
-        (item, i) => (i === index ? userResponseHattersShortForm : item),
+      userResponseHatersShortForm: state.userResponseHatersShortForm.map(
+        (item, i) => (i === index ? userResponseHatersShortForm : item),
         []
       )
     }))

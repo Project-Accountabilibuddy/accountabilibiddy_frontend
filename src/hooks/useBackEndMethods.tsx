@@ -15,10 +15,10 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setProjectName,
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
-    setUserResponseHattersLongForm,
+    setUserResponseHatersLongForm,
     setWeeksExpectedToComplete,
     setUserResponseWhyShortForm,
-    setUserResponseHattersShortForm,
+    setUserResponseHatersShortForm,
     projectName
   } = useGlobalState()
 
@@ -44,17 +44,17 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
               userResponseWhatLongForm,
               userResponseWhyLongForm,
               userResponseSacrificeLongForm,
-              userResponseHattersLongForm,
+              userResponseHatersLongForm,
               weeksExpectedToComplete,
               userResponseWhyShortForm,
-              userResponseHattersShortForm
+              userResponseHatersShortForm
             } = res.data.Items[0]
 
             setProjectName(projectName)
             setUserResponseWhatLongForm(userResponseWhatLongForm)
             setUserResponseWhyLongForm(userResponseWhyLongForm)
             setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
-            setUserResponseHattersLongForm(userResponseHattersLongForm)
+            setUserResponseHatersLongForm(userResponseHatersLongForm)
             setWeeksExpectedToComplete(weeksExpectedToComplete)
 
             JSON.parse(userResponseWhyShortForm).forEach(
@@ -63,9 +63,9 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
               }
             )
 
-            JSON.parse(userResponseHattersShortForm).forEach(
+            JSON.parse(userResponseHatersShortForm).forEach(
               (response: string, index: number) => {
-                setUserResponseHattersShortForm(response, index)
+                setUserResponseHatersShortForm(response, index)
               }
             )
           })
