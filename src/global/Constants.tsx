@@ -1,4 +1,4 @@
-const DEFAULT_FORM_RESPONSES = {
+const SETUP_PROJECT_SCREENS = {
   PROJECT_NAME: 'project-name',
   WHAT_LONG_FORM: 'what-long-form',
   WHY_LONG_FORM: 'why-long-form',
@@ -15,4 +15,4 @@ const ROUTES = {
   PROJECT_SETUP: '/project-setup'
 }
 
-export { DEFAULT_FORM_RESPONSES, ROUTES }
+export { SETUP_PROJECT_SCREENS, ROUTES }

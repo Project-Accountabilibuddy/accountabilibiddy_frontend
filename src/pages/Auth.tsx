@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
-import { useLocation, useNavigate } from 'react-router-dom'
-import GoogleIcon from '@mui/icons-material/Google'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import PersonIcon from '@mui/icons-material/Person'
+import { useNavigate } from 'react-router-dom'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
-import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
+import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -38,23 +34,8 @@ const StyledAuthentication = styled.div`
     }
   }
 
-  .auth_options {
-    width: 400px;
-
-    .o_auth_button {
-      margin-top: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      button {
-        width: 100%;
-      }
-
-      svg {
-        margin-right: 8px;
-      }
-    }
+  button {
+    margin-top: 24px;
   }
 `
 
@@ -70,16 +51,6 @@ const Authentication = (): JSX.Element => {
   const { setGlobalLoading } = useGlobalState()
 
   const navigate = useNavigate()
-  const { pathname } = useLocation()
-
-  // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
-  useEffect(() => {
-    if (pathname.includes('sign-up')) {
-      setAuthFormInView('SIGN_UP')
-    } else if (pathname.includes('sign-in')) {
-      setAuthFormInView('SIGN_IN')
-    }
-  }, [pathname])
 
   const handleSignUpUser = async (): Promise<any> => {
     try {
@@ -101,7 +72,7 @@ const Authentication = (): JSX.Element => {
       .then((res) => {
         console.log('NEW USER RES', res)
         navigate(
-          `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.PROJECT_NAME}`
+          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
         )
       })
       .catch((err) => {
@@ -222,48 +193,6 @@ const Authentication = (): JSX.Element => {
           >
             I don't have an account
           </Button>
-          <div className="auth_options">
-            <h3 className="heading-2">Choose a signin method</h3>
-            <div className="o_auth_button">
-              <GoogleIcon color="primary" />
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  void Auth.federatedSignIn({
-                    provider: CognitoHostedUIIdentityProvider.Google
-                  })
-                }}
-              >
-                Google
-              </Button>
-            </div>
-            <div className="o_auth_button">
-              <FacebookIcon color="primary" />
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  void Auth.federatedSignIn({
-                    provider: CognitoHostedUIIdentityProvider.Facebook
-                  })
-                }}
-              >
-                Facebook
-              </Button>
-            </div>
-            <div className="o_auth_button">
-              <PersonIcon color="primary" />
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  void Auth.federatedSignIn({
-                    provider: CognitoHostedUIIdentityProvider.Facebook
-                  })
-                }}
-              >
-                Email / Password
-              </Button>
-            </div>
-          </div>
         </>
       )}
     </StyledAuthentication>

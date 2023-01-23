@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
 
 import useGlobalState from '../global/GlobalSate'
-import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
+import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 const StyledProject = styled.div`
   display: flex;
@@ -251,7 +251,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.WHAT_LONG_FORM)
               }}
             />
           </div>
@@ -262,7 +262,7 @@ const Project = (): JSX.Element => {
               className="edit_icon"
               color="primary"
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.WHY_LONG_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.WHY_LONG_FORM)
               }}
             />
           </div>
@@ -275,7 +275,7 @@ const Project = (): JSX.Element => {
             <div
               className="fade_edit"
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
@@ -287,7 +287,7 @@ const Project = (): JSX.Element => {
             <div
               className="fade_edit"
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
@@ -334,7 +334,7 @@ const Project = (): JSX.Element => {
             <h3 className="body-2">{userResponseHatersLongForm}</h3>
             <EditIcon
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.HATERS_LONG_FORM)
               }}
               className="edit_icon"
               color="primary"
@@ -345,7 +345,7 @@ const Project = (): JSX.Element => {
             <h3 className="body-2">{userResponseSacrificeLongForm}</h3>
             <EditIcon
               onClick={() => {
-                handleEditField(DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM)
+                handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)
               }}
               className="edit_icon"
               color="primary"

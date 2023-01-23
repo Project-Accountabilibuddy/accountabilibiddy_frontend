@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
-import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
+import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 const StyledProjectSetup = styled.div`
   display: flex;
@@ -49,11 +49,11 @@ const ProjectSetup = (): JSX.Element => {
   // USER SHOULD NEVER BE ABLE TO UPDATE PROJECT NAME
   useEffect(() => {
     if (
-      endOfPath === DEFAULT_FORM_RESPONSES.PROJECT_NAME &&
+      endOfPath === SETUP_PROJECT_SCREENS.PROJECT_NAME &&
       projectName !== ''
     ) {
       navigate(
-        `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`
+        `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
       )
     }
   }, [endOfPath])
@@ -74,7 +74,7 @@ const ProjectSetup = (): JSX.Element => {
 
   return (
     <StyledProjectSetup>
-      {endOfPath === DEFAULT_FORM_RESPONSES.PROJECT_NAME && (
+      {endOfPath === SETUP_PROJECT_SCREENS.PROJECT_NAME && (
         <FormInput
           type="TEXT"
           title="Better come up with an inspring name"
@@ -85,12 +85,12 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleCreateProject({ projectName })
             navigate(
-              `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM}`
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.WHAT_LONG_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.WHAT_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What do you want to do? Please make it interesting..."
@@ -102,12 +102,12 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleContinueAction(
               { userResponseWhatLongForm },
-              DEFAULT_FORM_RESPONSES.WHY_LONG_FORM
+              SETUP_PROJECT_SCREENS.WHY_LONG_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.WHY_LONG_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.WHY_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="Why the fuck are you doing this?"
@@ -119,12 +119,12 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleContinueAction(
               { userResponseWhyLongForm },
-              DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM
+              SETUP_PROJECT_SCREENS.HATERS_LONG_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.HATERS_LONG_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.HATERS_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What will your internal bitch say?"
@@ -136,12 +136,12 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleContinueAction(
               { userResponseHatersLongForm },
-              DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM
+              SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.SACRIFICES_LONG_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM && (
         <FormInput
           type="TEXT"
           title="What sacrifces will be made? Is this actually worth it?"
@@ -153,12 +153,12 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleContinueAction(
               { userResponseSacrificeLongForm },
-              DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM
+              SETUP_PROJECT_SCREENS.WHY_SHORT_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.WHY_SHORT_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.WHY_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
@@ -173,12 +173,12 @@ const ProjectSetup = (): JSX.Element => {
                   userResponseWhyShortForm
                 )
               },
-              DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM
+              SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.HATERS_SHORT_FORM && (
+      {endOfPath === SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
@@ -193,12 +193,12 @@ const ProjectSetup = (): JSX.Element => {
                   userResponseHatersShortForm
                 )
               },
-              DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE
+              SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE
             )
           }}
         />
       )}
-      {endOfPath === DEFAULT_FORM_RESPONSES.WEEKS_EXPECTED_TO_COMPLETE && (
+      {endOfPath === SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE && (
         <FormInput
           type="NUMBER"
           title="Choose a time that is inspiring but not impossible"
