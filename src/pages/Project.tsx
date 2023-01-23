@@ -82,8 +82,8 @@ const StyledProject = styled.div`
       margin: 12px 6px 12px 6px;
 
       .section_middle_top,
-      .section_weekly_form_fields,
-      .section_weekly_feed,
+      .section_daily_form_fields,
+      .section_daily_feed,
       .section_time {
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
@@ -115,8 +115,8 @@ const StyledProject = styled.div`
         }
       }
 
-      .section_weekly_form_fields {
-        .section_weekly_form {
+      .section_daily_form_fields {
+        .section_daily_form {
           color: var(--color-white);
           background-color: var(--color-dark-grey);
           border-radius: 4px;
@@ -127,7 +127,7 @@ const StyledProject = styled.div`
         }
       }
 
-      .section_weekly_feed {
+      .section_daily_feed {
         margin-bottom: 0;
         height: 100%;
         overflow: scroll;
@@ -171,13 +171,13 @@ const Project = (): JSX.Element => {
     projectName,
     userResponseWhyLongForm,
     userResponseHatersLongForm,
-    weekResponseFeed,
+    daysResponseFeed,
     userResponseWhyShortForm,
     weeksExpectedToComplete,
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
-    setWeekResponseFeed,
+    setDaysResponseFeed,
     setInEditFormMode
   } = useGlobalState()
 
@@ -215,7 +215,7 @@ const Project = (): JSX.Element => {
   }
 
   const handleSubmitWeekReview = (): void => {
-    setWeekResponseFeed({
+    setDaysResponseFeed({
       weeksGoals: inputWeeksGoals,
       lastWeeksReview: inputLastWeeksReview
     })
@@ -294,10 +294,10 @@ const Project = (): JSX.Element => {
               <h5 className="label">Why</h5>
             </div>
           </div>
-          <div className="section_weekly_form_fields">
+          <div className="section_daily_form_fields">
             <h3 className="body-2">Last Week Review:</h3>
             <textarea
-              className="section_weekly_form"
+              className="section_daily_form"
               value={inputLastWeeksReview}
               onChange={(e) => {
                 setInputLastWeeksReview(e.target.value)
@@ -306,7 +306,7 @@ const Project = (): JSX.Element => {
             />
             <h3 className="body-2">This Weeks Goals:</h3>
             <textarea
-              className="section_weekly_form"
+              className="section_daily_form"
               value={inputWeeksGoals}
               onChange={(e) => {
                 setInputWeeksGoals(e.target.value)
@@ -315,8 +315,8 @@ const Project = (): JSX.Element => {
             />
             <Button onClick={handleSubmitWeekReview}>Submit</Button>
           </div>
-          <div className="section_weekly_feed">
-            {weekResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
+          <div className="section_daily_feed">
+            {daysResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
               return (
                 <div key={i} className="weeks_response">
                   <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
