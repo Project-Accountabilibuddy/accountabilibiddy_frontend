@@ -17,7 +17,6 @@ const isLocalhost = Boolean(
     )
 )
 
-// TODO: UPDATE CONFIG TO INCLUDE PROD ENVIRONMENT REDIRECT URI
 const [localRedirectSignIn, productionRedirectSignIn] =
   awsConfig.oauth.redirectSignIn.split(',')
 

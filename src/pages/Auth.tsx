@@ -85,6 +85,7 @@ const Authentication = (): JSX.Element => {
     try {
       await Auth.signIn(userEmail, password).then(() => {
         navigate(ROUTES.PROJECT)
+
         handleGetProjects(() => {
           setGlobalLoading(false)
         })

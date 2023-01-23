@@ -6,7 +6,7 @@ import useGlobalState from '../global/GlobalSate'
 interface useBackEndMethodsReturn {
   handleGetProjects: (
     onCompletionCB?: () => void,
-    onFailCB?: () => void
+    onCreateNewAccountCB?: () => void
   ) => void
   handleUpdateProject: (fieldToUpdate: object) => void
   handleCreateProject: (projectName: object) => void
@@ -27,7 +27,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
   const handleGetProjects = (
     onCompletionCB = () => {},
-    onFailCB = () => {}
+    onCreateNewAccountCB = () => {}
   ): void => {
     Auth.currentSession()
       .then((res) => {
@@ -79,7 +79,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
           .catch((err) => {
             console.log('GET PROJECT ERR', err)
             onCompletionCB()
-            onFailCB()
+            onCreateNewAccountCB()
           })
       })
       .catch((err) => {

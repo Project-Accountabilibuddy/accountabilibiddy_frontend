@@ -37,7 +37,7 @@ const StyledLanding = styled.div`
   .auth_options {
     width: 400px;
 
-    .o_auth_button {
+    .auth_option {
       margin-top: 24px;
       display: flex;
       align-items: center;
@@ -73,7 +73,7 @@ const Landing = (): JSX.Element => {
         your brain from melting
       </h3>
       <div className="auth_options">
-        <div className="o_auth_button">
+        <div className="auth_option">
           <GoogleIcon color="primary" />
           <Button
             variant="outlined"
@@ -86,7 +86,7 @@ const Landing = (): JSX.Element => {
             Google
           </Button>
         </div>
-        <div className="o_auth_button">
+        <div className="auth_option">
           <FacebookIcon color="primary" />
           <Button
             variant="outlined"
@@ -99,7 +99,7 @@ const Landing = (): JSX.Element => {
             Facebook
           </Button>
         </div>
-        <div className="o_auth_button">
+        <div className="auth_option">
           <PersonIcon color="primary" />
           <Button
             variant="outlined"
