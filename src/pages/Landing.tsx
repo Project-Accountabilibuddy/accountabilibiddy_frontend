@@ -86,7 +86,7 @@ const Landing = (): JSX.Element => {
             Google
           </Button>
         </div>
-        <div className="auth_option">
+        {/* <div className="auth_option">
           <FacebookIcon color="primary" />
           <Button
             variant="outlined"
@@ -98,7 +98,7 @@ const Landing = (): JSX.Element => {
           >
             Facebook
           </Button>
-        </div>
+        </div> */}
         <div className="auth_option">
           <PersonIcon color="primary" />
           <Button
