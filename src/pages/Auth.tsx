@@ -6,6 +6,7 @@ import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
 import GoogleIcon from '@mui/icons-material/Google'
 import FacebookIcon from '@mui/icons-material/Facebook'
+import PersonIcon from '@mui/icons-material/Person'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
@@ -37,17 +38,22 @@ const StyledAuthentication = styled.div`
     }
   }
 
-  button {
-  }
+  .auth_options {
+    width: 400px;
 
-  .o_auth_button {
-    margin-top: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .o_auth_button {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    svg {
-      margin-right: 8px;
+      button {
+        width: 100%;
+      }
+
+      svg {
+        margin-right: 8px;
+      }
     }
   }
 `
@@ -216,31 +222,47 @@ const Authentication = (): JSX.Element => {
           >
             I don't have an account
           </Button>
-          <div className="o_auth_button">
-            <GoogleIcon color="primary" />
-            <Button
-              variant="outlined"
-              onClick={() => {
-                void Auth.federatedSignIn({
-                  provider: CognitoHostedUIIdentityProvider.Google
-                })
-              }}
-            >
-              Sign In with Google
-            </Button>
-          </div>
-          <div className="o_auth_button">
-            <FacebookIcon color="primary" />
-            <Button
-              variant="outlined"
-              onClick={() => {
-                void Auth.federatedSignIn({
-                  provider: CognitoHostedUIIdentityProvider.Facebook
-                })
-              }}
-            >
-              Sign In with Facebook
-            </Button>
+          <div className="auth_options">
+            <h3 className="heading-2">Choose a signin method</h3>
+            <div className="o_auth_button">
+              <GoogleIcon color="primary" />
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Google
+                  })
+                }}
+              >
+                Google
+              </Button>
+            </div>
+            <div className="o_auth_button">
+              <FacebookIcon color="primary" />
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Facebook
+                  })
+                }}
+              >
+                Facebook
+              </Button>
+            </div>
+            <div className="o_auth_button">
+              <PersonIcon color="primary" />
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Facebook
+                  })
+                }}
+              >
+                Email / Password
+              </Button>
+            </div>
           </div>
         </>
       )}
