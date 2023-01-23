@@ -4,10 +4,12 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
+import GoogleIcon from '@mui/icons-material/Google'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
 import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -202,6 +204,17 @@ const Authentication = (): JSX.Element => {
             }}
           >
             I don't have an account
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              void Auth.federatedSignIn({
+                provider: CognitoHostedUIIdentityProvider.Google
+              })
+            }}
+          >
+            Sign In with Google
+            <GoogleIcon color="primary" />
           </Button>
         </>
       )}
