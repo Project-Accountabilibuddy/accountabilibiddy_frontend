@@ -4,7 +4,10 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
-  handleGetProjects: (onCompletionCB?: () => void) => void
+  handleGetProjects: (
+    onCompletionCB?: () => void,
+    onCreateNewAccountCB?: () => void
+  ) => void
   handleUpdateProject: (fieldToUpdate: object) => void
   handleCreateProject: (projectName: object) => void
 }
@@ -22,7 +25,10 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     projectName
   } = useGlobalState()
 
-  const handleGetProjects = (onCompletionCB = () => {}): void => {
+  const handleGetProjects = (
+    onCompletionCB = () => {},
+    onCreateNewAccountCB = () => {}
+  ): void => {
     Auth.currentSession()
       .then((res) => {
         const idToken = res.getIdToken().getJwtToken()
@@ -69,9 +75,11 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
               }
             )
           })
+
           .catch((err) => {
             console.log('GET PROJECT ERR', err)
             onCompletionCB()
+            onCreateNewAccountCB()
           })
       })
       .catch((err) => {

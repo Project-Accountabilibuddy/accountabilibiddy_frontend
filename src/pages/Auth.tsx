@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
-import { DEFAULT_FORM_RESPONSES, ROUTES } from '../global/Constants'
+import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -51,16 +51,6 @@ const Authentication = (): JSX.Element => {
   const { setGlobalLoading } = useGlobalState()
 
   const navigate = useNavigate()
-  const { pathname } = useLocation()
-
-  // NAVIGATES USER TO PROPER AUTH FLOW FROM LANDING PAGE BUTTONS
-  useEffect(() => {
-    if (pathname.includes('sign-up')) {
-      setAuthFormInView('SIGN_UP')
-    } else if (pathname.includes('sign-in')) {
-      setAuthFormInView('SIGN_IN')
-    }
-  }, [pathname])
 
   const handleSignUpUser = async (): Promise<any> => {
     try {
@@ -82,7 +72,7 @@ const Authentication = (): JSX.Element => {
       .then((res) => {
         console.log('NEW USER RES', res)
         navigate(
-          `${ROUTES.PROJECT_SETUP}/${DEFAULT_FORM_RESPONSES.PROJECT_NAME}`
+          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
         )
       })
       .catch((err) => {
@@ -95,6 +85,7 @@ const Authentication = (): JSX.Element => {
     try {
       await Auth.signIn(userEmail, password).then(() => {
         navigate(ROUTES.PROJECT)
+
         handleGetProjects(() => {
           setGlobalLoading(false)
         })

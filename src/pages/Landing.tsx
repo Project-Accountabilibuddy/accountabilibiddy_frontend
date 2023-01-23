@@ -2,14 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
+import GoogleIcon from '@mui/icons-material/Google'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import PersonIcon from '@mui/icons-material/Person'
+import { Auth } from 'aws-amplify'
 
 import { ROUTES } from '../global/Constants'
 
 const StyledLanding = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   padding: 0 20%;
   height: 100%;
 
@@ -28,8 +34,23 @@ const StyledLanding = styled.div`
     margin-bottom: 24px;
   }
 
-  button {
-    margin-top: 24px;
+  .auth_options {
+    width: 400px;
+
+    .auth_option {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        width: 100%;
+      }
+
+      svg {
+        margin-right: 8px;
+      }
+    }
   }
 `
 
@@ -51,22 +72,45 @@ const Landing = (): JSX.Element => {
         single setting I recommend taking breaks in between questions to keep
         your brain from melting
       </h3>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          navigate(`${ROUTES.AUTH}/sign-up`)
-        }}
-      >
-        Begin Journey
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          navigate(`${ROUTES.AUTH}/sign-in`)
-        }}
-      >
-        Sign In
-      </Button>
+      <div className="auth_options">
+        <div className="auth_option">
+          <GoogleIcon color="primary" />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              void Auth.federatedSignIn({
+                provider: CognitoHostedUIIdentityProvider.Google
+              })
+            }}
+          >
+            Google
+          </Button>
+        </div>
+        {/* <div className="auth_option">
+          <FacebookIcon color="primary" />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              void Auth.federatedSignIn({
+                provider: CognitoHostedUIIdentityProvider.Facebook
+              })
+            }}
+          >
+            Facebook
+          </Button>
+        </div> */}
+        <div className="auth_option">
+          <PersonIcon color="primary" />
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigate(ROUTES.AUTH)
+            }}
+          >
+            Email / Password
+          </Button>
+        </div>
+      </div>
     </StyledLanding>
   )
 }
