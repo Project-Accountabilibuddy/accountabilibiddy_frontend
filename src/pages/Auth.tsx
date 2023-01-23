@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useLocation, useNavigate } from 'react-router-dom'
 import GoogleIcon from '@mui/icons-material/Google'
+import FacebookIcon from '@mui/icons-material/Facebook'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
@@ -37,7 +38,17 @@ const StyledAuthentication = styled.div`
   }
 
   button {
+  }
+
+  .o_auth_button {
     margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-right: 8px;
+    }
   }
 `
 
@@ -205,17 +216,32 @@ const Authentication = (): JSX.Element => {
           >
             I don't have an account
           </Button>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              void Auth.federatedSignIn({
-                provider: CognitoHostedUIIdentityProvider.Google
-              })
-            }}
-          >
-            Sign In with Google
+          <div className="o_auth_button">
             <GoogleIcon color="primary" />
-          </Button>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                void Auth.federatedSignIn({
+                  provider: CognitoHostedUIIdentityProvider.Google
+                })
+              }}
+            >
+              Sign In with Google
+            </Button>
+          </div>
+          <div className="o_auth_button">
+            <FacebookIcon color="primary" />
+            <Button
+              variant="outlined"
+              onClick={() => {
+                void Auth.federatedSignIn({
+                  provider: CognitoHostedUIIdentityProvider.Facebook
+                })
+              }}
+            >
+              Sign In with Facebook
+            </Button>
+          </div>
         </>
       )}
     </StyledAuthentication>
