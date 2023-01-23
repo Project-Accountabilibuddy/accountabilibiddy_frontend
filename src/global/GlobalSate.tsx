@@ -1,8 +1,10 @@
 import create from 'zustand'
+import dayjs from 'dayjs'
 
-interface WeeksResponse {
+interface DaysResponse {
   weeksGoals: string
   lastWeeksReview: string
+  dateSubmitted: dayjs.Dayjs
 }
 
 interface GlobalState {
@@ -14,8 +16,8 @@ interface GlobalState {
   userResponseHatersLongForm: string
   userResponseHatersShortForm: string[]
 
-  daysResponseFeed: WeeksResponse[]
-  setDaysResponseFeed: (weeksResponse: WeeksResponse) => void
+  daysResponseFeed: DaysResponse[]
+  setDaysResponseFeed: (daysResponse: DaysResponse) => void
 
   setUserResponseWhatLongForm: (userResponseWhatLongForm: string) => void
   setUserResponseSacrificeLongForm: (
@@ -135,9 +137,9 @@ const useGlobalState = create<GlobalState>((set) => ({
 
   userResponseWeeksToAccomplish: 1,
   daysResponseFeed: [],
-  setDaysResponseFeed: (weeksResponse) => {
+  setDaysResponseFeed: (daysResponse) => {
     set((state) => ({
-      daysResponseFeed: [...state.daysResponseFeed, weeksResponse]
+      daysResponseFeed: [daysResponse, ...state.daysResponseFeed]
     }))
   },
 

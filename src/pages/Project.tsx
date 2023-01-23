@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
+import dayjs from 'dayjs'
+import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
@@ -125,6 +127,19 @@ const StyledProject = styled.div`
           width: 100%;
           resize: none;
         }
+
+        height: 300px;
+        transition: height 2s ease-in-out;
+      }
+
+      .section_daily_form_fields.formnotavailable {
+        height: 0px;
+
+        .section_daily_form,
+        h3,
+        button {
+          display: none;
+        }
       }
 
       .section_daily_feed {
@@ -217,7 +232,8 @@ const Project = (): JSX.Element => {
   const handleSubmitWeekReview = (): void => {
     setDaysResponseFeed({
       weeksGoals: inputWeeksGoals,
-      lastWeeksReview: inputLastWeeksReview
+      lastWeeksReview: inputLastWeeksReview,
+      dateSubmitted: dayjs()
     })
 
     setInputLastWeeksReview('')
@@ -228,6 +244,12 @@ const Project = (): JSX.Element => {
     setInEditFormMode(true)
     navigate(`${ROUTES.PROJECT_SETUP}/${fieldToEdit}`)
   }
+
+  const mostRecentResponseTime = daysResponseFeed[0]?.dateSubmitted
+
+  const formFilledOutthisMinute =
+    dayjs().isSame(mostRecentResponseTime, 'minutes') &&
+    daysResponseFeed.length > 0
 
   return (
     <StyledProject>
@@ -294,11 +316,16 @@ const Project = (): JSX.Element => {
               <h5 className="label">Why</h5>
             </div>
           </div>
-          <div className="section_daily_form_fields">
+          <div
+            className={cx('section_daily_form_fields', {
+              formnotavailable: formFilledOutthisMinute
+            })}
+          >
             <h3 className="body-2">Last Week Review:</h3>
             <textarea
               className="section_daily_form"
               value={inputLastWeeksReview}
+              disabled={formFilledOutthisMinute}
               onChange={(e) => {
                 setInputLastWeeksReview(e.target.value)
               }}
@@ -306,6 +333,7 @@ const Project = (): JSX.Element => {
             />
             <h3 className="body-2">This Weeks Goals:</h3>
             <textarea
+              disabled={formFilledOutthisMinute}
               className="section_daily_form"
               value={inputWeeksGoals}
               onChange={(e) => {
@@ -316,14 +344,19 @@ const Project = (): JSX.Element => {
             <Button onClick={handleSubmitWeekReview}>Submit</Button>
           </div>
           <div className="section_daily_feed">
-            {daysResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
-              return (
-                <div key={i} className="weeks_response">
-                  <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
-                  <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
-                </div>
-              )
-            })}
+            {daysResponseFeed.map(
+              ({ weeksGoals, lastWeeksReview, dateSubmitted }, i) => {
+                return (
+                  <div key={i} className="weeks_response">
+                    <h5 className="body-2">{`Submitted ${dayjs(
+                      dateSubmitted
+                    ).format('ddd MMM D, ha')}`}</h5>
+                    <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
+                    <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
+                  </div>
+                )
+              }
+            )}
           </div>
         </div>
         <div className="section_right">
