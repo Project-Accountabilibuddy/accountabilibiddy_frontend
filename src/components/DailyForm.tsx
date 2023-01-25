@@ -5,6 +5,7 @@ import cx from 'classnames'
 import dayjs from 'dayjs'
 
 import useGlobalState from '../global/GlobalSate'
+import useBackEndMethods from '../hooks/useBackEndMethods'
 
 interface DailyFormProps {
   className: string
@@ -42,12 +43,18 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   const [inputFocusToday, setInputFocusToday] = useState('')
 
   const { daysResponseFeed, setDaysResponseFeed } = useGlobalState()
+  const { handleUpdateProject } = useBackEndMethods()
 
   const handleSubmitWeekReview = (): void => {
-    setDaysResponseFeed({
+    const daysResponse = {
       userResponseExcelYesterday: inputExcelYesterday,
       userResponseFocusYesterday: inputFocusToday,
       dateSubmitted: dayjs()
+    }
+
+    setDaysResponseFeed(daysResponse)
+    handleUpdateProject({
+      daysResponseFeed: JSON.stringify([...daysResponseFeed, daysResponse])
     })
 
     setInputFocusToday('')

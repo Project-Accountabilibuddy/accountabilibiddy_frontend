@@ -22,6 +22,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setWeeksExpectedToComplete,
     setUserResponseWhyShortForm,
     setUserResponseHatersShortForm,
+    setDaysResponseFeed,
     projectName
   } = useGlobalState()
 
@@ -53,7 +54,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
               userResponseHatersLongForm,
               weeksExpectedToComplete,
               userResponseWhyShortForm,
-              userResponseHatersShortForm
+              userResponseHatersShortForm,
+              daysResponseFeed
             } = res.data.Items[0]
 
             setProjectName(projectName)
@@ -62,6 +64,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
             setUserResponseHatersLongForm(userResponseHatersLongForm)
             setWeeksExpectedToComplete(weeksExpectedToComplete)
+
+            setDaysResponseFeed(JSON.parse(daysResponseFeed))
 
             JSON.parse(userResponseWhyShortForm).forEach(
               (response: string, index: number) => {
