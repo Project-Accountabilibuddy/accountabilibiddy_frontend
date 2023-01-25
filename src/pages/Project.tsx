@@ -273,14 +273,21 @@ const Project = (): JSX.Element => {
           <DailyForm className="section_daily_form_fields" />
           <div className="section_daily_feed">
             {daysResponseFeed.map(
-              ({ weeksGoals, lastWeeksReview, dateSubmitted }, i) => {
+              (
+                {
+                  userResponseExcelYesterday,
+                  userResponseFocusYesterday,
+                  dateSubmitted
+                },
+                i
+              ) => {
                 return (
                   <div key={i} className="weeks_response">
                     <h5 className="body-2">{`Submitted ${dayjs(
                       dateSubmitted
                     ).format('ddd MMM D, ha')}`}</h5>
-                    <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
-                    <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
+                    <h6 className="body-2">{`What is your focus today? ${userResponseFocusYesterday}`}</h6>
+                    <h6 className="body-2">{`How did you excel yesterday? ${userResponseExcelYesterday}`}</h6>
                   </div>
                 )
               }

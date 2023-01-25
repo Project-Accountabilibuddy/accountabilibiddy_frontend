@@ -11,16 +11,6 @@ interface DailyFormProps {
 }
 
 const StyledDailyForm = styled.div`
-  .form_input_field {
-    color: var(--color-white);
-    background-color: var(--color-dark-grey);
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    width: 100%;
-    resize: none;
-  }
-
   .form_content {
     height: 200px;
     transition: height 2s ease-in-out;
@@ -35,55 +25,64 @@ const StyledDailyForm = styled.div`
       display: none;
     }
   }
+
+  .form_input_field {
+    color: var(--color-white);
+    background-color: var(--color-dark-grey);
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    width: 100%;
+    resize: none;
+  }
 `
 
 const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
-  const [inputWeeksGoals, setInputWeeksGoals] = useState('')
-  const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
+  const [inputExcelYesterday, setinputExcelYesterday] = useState('')
+  const [inputFocusToday, setInputFocusToday] = useState('')
 
   const { daysResponseFeed, setDaysResponseFeed } = useGlobalState()
 
   const handleSubmitWeekReview = (): void => {
     setDaysResponseFeed({
-      weeksGoals: inputWeeksGoals,
-      lastWeeksReview: inputLastWeeksReview,
+      userResponseExcelYesterday: inputExcelYesterday,
+      userResponseFocusYesterday: inputFocusToday,
       dateSubmitted: dayjs()
     })
 
-    setInputLastWeeksReview('')
-    setInputWeeksGoals('')
+    setInputFocusToday('')
+    setinputExcelYesterday('')
   }
 
-  const mostRecentResponseTime = daysResponseFeed[0]?.dateSubmitted
-
-  const formFilledOutthisMinute =
-    dayjs().isSame(mostRecentResponseTime, 'minutes') &&
-    daysResponseFeed.length > 0
+  const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
+    // TODO: CHANGE TO 'day' ONCE TESTING OF DAILY FORM IS COMPLETE
+    return dayjs().isSame(response.dateSubmitted, 'minute')
+  })
 
   return (
     <StyledDailyForm className={className}>
       <div
         className={cx('form_content', {
-          formnotavailable: formFilledOutthisMinute
+          formnotavailable: formHasBeenFilledOutToday
         })}
       >
-        <h3 className="body-2">Last Week Review:</h3>
+        <h3 className="body-2">What is your focus today?</h3>
         <textarea
           className="form_input_field"
-          value={inputLastWeeksReview}
-          disabled={formFilledOutthisMinute}
+          value={inputFocusToday}
+          disabled={formHasBeenFilledOutToday}
           onChange={(e) => {
-            setInputLastWeeksReview(e.target.value)
+            setInputFocusToday(e.target.value)
           }}
           rows={3}
         />
-        <h3 className="body-2">This Weeks Goals:</h3>
+        <h3 className="body-2">How did you excel yesterday?</h3>
         <textarea
-          disabled={formFilledOutthisMinute}
+          disabled={formHasBeenFilledOutToday}
           className="form_input_field"
-          value={inputWeeksGoals}
+          value={inputExcelYesterday}
           onChange={(e) => {
-            setInputWeeksGoals(e.target.value)
+            setinputExcelYesterday(e.target.value)
           }}
           rows={3}
         />

@@ -2,8 +2,8 @@ import create from 'zustand'
 import dayjs from 'dayjs'
 
 interface DaysResponse {
-  weeksGoals: string
-  lastWeeksReview: string
+  userResponseExcelYesterday: string
+  userResponseFocusYesterday: string
   dateSubmitted: dayjs.Dayjs
 }
 
