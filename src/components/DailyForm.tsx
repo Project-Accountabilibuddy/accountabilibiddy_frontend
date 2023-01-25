@@ -11,6 +11,16 @@ interface DailyFormProps {
 }
 
 const StyledDailyForm = styled.div`
+  .form_input_field {
+    color: var(--color-white);
+    background-color: var(--color-dark-grey);
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    width: 100%;
+    resize: none;
+  }
+
   .form_content {
     height: 200px;
     transition: height 2s ease-in-out;
@@ -18,16 +28,6 @@ const StyledDailyForm = styled.div`
 
   .form_content.formnotavailable {
     height: 0px;
-
-    .form_input_field {
-      color: var(--color-white);
-      background-color: var(--color-dark-grey);
-      border-radius: 4px;
-      border: none;
-      outline: none;
-      width: 100%;
-      resize: none;
-    }
 
     .form_input_field,
     h3,
