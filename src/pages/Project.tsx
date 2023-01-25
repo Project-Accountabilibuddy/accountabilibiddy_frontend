@@ -5,10 +5,10 @@ import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
 import dayjs from 'dayjs'
-import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import DailyForm from '../components/DailyForm'
 
 const StyledProject = styled.div`
   display: flex;
@@ -117,31 +117,6 @@ const StyledProject = styled.div`
         }
       }
 
-      .section_daily_form_fields {
-        .section_daily_form {
-          color: var(--color-white);
-          background-color: var(--color-dark-grey);
-          border-radius: 4px;
-          border: none;
-          outline: none;
-          width: 100%;
-          resize: none;
-        }
-
-        height: 300px;
-        transition: height 2s ease-in-out;
-      }
-
-      .section_daily_form_fields.formnotavailable {
-        height: 0px;
-
-        .section_daily_form,
-        h3,
-        button {
-          display: none;
-        }
-      }
-
       .section_daily_feed {
         margin-bottom: 0;
         height: 100%;
@@ -177,9 +152,6 @@ const StyledProject = styled.div`
 `
 
 const Project = (): JSX.Element => {
-  const [inputWeeksGoals, setInputWeeksGoals] = useState('')
-  const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
-
   const navigate = useNavigate()
 
   const {
@@ -192,7 +164,6 @@ const Project = (): JSX.Element => {
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
-    setDaysResponseFeed,
     setInEditFormMode
   } = useGlobalState()
 
@@ -229,27 +200,10 @@ const Project = (): JSX.Element => {
       })
   }
 
-  const handleSubmitWeekReview = (): void => {
-    setDaysResponseFeed({
-      weeksGoals: inputWeeksGoals,
-      lastWeeksReview: inputLastWeeksReview,
-      dateSubmitted: dayjs()
-    })
-
-    setInputLastWeeksReview('')
-    setInputWeeksGoals('')
-  }
-
   const handleEditField = (fieldToEdit: string): void => {
     setInEditFormMode(true)
     navigate(`${ROUTES.PROJECT_SETUP}/${fieldToEdit}`)
   }
-
-  const mostRecentResponseTime = daysResponseFeed[0]?.dateSubmitted
-
-  const formFilledOutthisMinute =
-    dayjs().isSame(mostRecentResponseTime, 'minutes') &&
-    daysResponseFeed.length > 0
 
   return (
     <StyledProject>
@@ -316,33 +270,7 @@ const Project = (): JSX.Element => {
               <h5 className="label">Why</h5>
             </div>
           </div>
-          <div
-            className={cx('section_daily_form_fields', {
-              formnotavailable: formFilledOutthisMinute
-            })}
-          >
-            <h3 className="body-2">Last Week Review:</h3>
-            <textarea
-              className="section_daily_form"
-              value={inputLastWeeksReview}
-              disabled={formFilledOutthisMinute}
-              onChange={(e) => {
-                setInputLastWeeksReview(e.target.value)
-              }}
-              rows={3}
-            />
-            <h3 className="body-2">This Weeks Goals:</h3>
-            <textarea
-              disabled={formFilledOutthisMinute}
-              className="section_daily_form"
-              value={inputWeeksGoals}
-              onChange={(e) => {
-                setInputWeeksGoals(e.target.value)
-              }}
-              rows={3}
-            />
-            <Button onClick={handleSubmitWeekReview}>Submit</Button>
-          </div>
+          <DailyForm className="section_daily_form_fields" />
           <div className="section_daily_feed">
             {daysResponseFeed.map(
               ({ weeksGoals, lastWeeksReview, dateSubmitted }, i) => {
