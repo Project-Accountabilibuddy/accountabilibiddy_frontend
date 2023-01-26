@@ -17,7 +17,8 @@ interface GlobalState {
   userResponseHatersShortForm: string[]
 
   daysResponseFeed: DaysResponse[]
-  setDaysResponseFeed: (daysResponse: DaysResponse) => void
+  setDaysResponse: (daysResponse: DaysResponse) => void
+  setDaysResponseFeed: (daysResponseFeed: DaysResponse[]) => void
 
   setUserResponseWhatLongForm: (userResponseWhatLongForm: string) => void
   setUserResponseSacrificeLongForm: (
@@ -137,10 +138,13 @@ const useGlobalState = create<GlobalState>((set) => ({
 
   userResponseWeeksToAccomplish: 1,
   daysResponseFeed: [],
-  setDaysResponseFeed: (daysResponse) => {
+  setDaysResponse: (daysResponse) => {
     set((state) => ({
       daysResponseFeed: [daysResponse, ...state.daysResponseFeed]
     }))
+  },
+  setDaysResponseFeed: (daysResponseFeed) => {
+    set(() => ({ daysResponseFeed }))
   },
 
   weeksExpectedToComplete: '6',

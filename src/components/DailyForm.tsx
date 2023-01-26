@@ -42,7 +42,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   const [inputExcelYesterday, setinputExcelYesterday] = useState('')
   const [inputFocusToday, setInputFocusToday] = useState('')
 
-  const { daysResponseFeed, setDaysResponseFeed } = useGlobalState()
+  const { daysResponseFeed, setDaysResponse } = useGlobalState()
   const { handleUpdateProject } = useBackEndMethods()
 
   const handleSubmitWeekReview = (): void => {
@@ -52,7 +52,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
       dateSubmitted: dayjs()
     }
 
-    setDaysResponseFeed(daysResponse)
+    setDaysResponse(daysResponse)
     handleUpdateProject({
       daysResponseFeed: JSON.stringify([...daysResponseFeed, daysResponse])
     })
