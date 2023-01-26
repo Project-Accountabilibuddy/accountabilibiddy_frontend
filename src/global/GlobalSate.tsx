@@ -1,8 +1,10 @@
 import create from 'zustand'
+import dayjs from 'dayjs'
 
-interface WeeksResponse {
-  weeksGoals: string
-  lastWeeksReview: string
+interface DaysResponse {
+  userResponseExcelYesterday: string
+  userResponseFocusYesterday: string
+  dateSubmitted: dayjs.Dayjs
 }
 
 interface GlobalState {
@@ -14,8 +16,9 @@ interface GlobalState {
   userResponseHatersLongForm: string
   userResponseHatersShortForm: string[]
 
-  weekResponseFeed: WeeksResponse[]
-  setWeekResponseFeed: (weeksResponse: WeeksResponse) => void
+  daysResponseFeed: DaysResponse[]
+  setDaysResponse: (daysResponse: DaysResponse) => void
+  setDaysResponseFeed: (daysResponseFeed: DaysResponse[]) => void
 
   setUserResponseWhatLongForm: (userResponseWhatLongForm: string) => void
   setUserResponseSacrificeLongForm: (
@@ -134,11 +137,14 @@ const useGlobalState = create<GlobalState>((set) => ({
   },
 
   userResponseWeeksToAccomplish: 1,
-  weekResponseFeed: [],
-  setWeekResponseFeed: (weeksResponse) => {
+  daysResponseFeed: [],
+  setDaysResponse: (daysResponse) => {
     set((state) => ({
-      weekResponseFeed: [...state.weekResponseFeed, weeksResponse]
+      daysResponseFeed: [daysResponse, ...state.daysResponseFeed]
     }))
+  },
+  setDaysResponseFeed: (daysResponseFeed) => {
+    set(() => ({ daysResponseFeed }))
   },
 
   weeksExpectedToComplete: '6',

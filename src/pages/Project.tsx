@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
+import dayjs from 'dayjs'
 
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import DailyForm from '../components/DailyForm'
 
 const StyledProject = styled.div`
   display: flex;
@@ -82,8 +84,8 @@ const StyledProject = styled.div`
       margin: 12px 6px 12px 6px;
 
       .section_middle_top,
-      .section_weekly_form_fields,
-      .section_weekly_feed,
+      .section_daily_form_fields,
+      .section_daily_feed,
       .section_time {
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
@@ -115,19 +117,7 @@ const StyledProject = styled.div`
         }
       }
 
-      .section_weekly_form_fields {
-        .section_weekly_form {
-          color: var(--color-white);
-          background-color: var(--color-dark-grey);
-          border-radius: 4px;
-          border: none;
-          outline: none;
-          width: 100%;
-          resize: none;
-        }
-      }
-
-      .section_weekly_feed {
+      .section_daily_feed {
         margin-bottom: 0;
         height: 100%;
         overflow: scroll;
@@ -162,22 +152,18 @@ const StyledProject = styled.div`
 `
 
 const Project = (): JSX.Element => {
-  const [inputWeeksGoals, setInputWeeksGoals] = useState('')
-  const [inputLastWeeksReview, setInputLastWeeksReview] = useState('')
-
   const navigate = useNavigate()
 
   const {
     projectName,
     userResponseWhyLongForm,
     userResponseHatersLongForm,
-    weekResponseFeed,
+    daysResponseFeed,
     userResponseWhyShortForm,
     weeksExpectedToComplete,
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
-    setWeekResponseFeed,
     setInEditFormMode
   } = useGlobalState()
 
@@ -212,16 +198,6 @@ const Project = (): JSX.Element => {
       .catch((error) => {
         console.log('error signing out: ', error)
       })
-  }
-
-  const handleSubmitWeekReview = (): void => {
-    setWeekResponseFeed({
-      weeksGoals: inputWeeksGoals,
-      lastWeeksReview: inputLastWeeksReview
-    })
-
-    setInputLastWeeksReview('')
-    setInputWeeksGoals('')
   }
 
   const handleEditField = (fieldToEdit: string): void => {
@@ -294,36 +270,28 @@ const Project = (): JSX.Element => {
               <h5 className="label">Why</h5>
             </div>
           </div>
-          <div className="section_weekly_form_fields">
-            <h3 className="body-2">Last Week Review:</h3>
-            <textarea
-              className="section_weekly_form"
-              value={inputLastWeeksReview}
-              onChange={(e) => {
-                setInputLastWeeksReview(e.target.value)
-              }}
-              rows={3}
-            />
-            <h3 className="body-2">This Weeks Goals:</h3>
-            <textarea
-              className="section_weekly_form"
-              value={inputWeeksGoals}
-              onChange={(e) => {
-                setInputWeeksGoals(e.target.value)
-              }}
-              rows={3}
-            />
-            <Button onClick={handleSubmitWeekReview}>Submit</Button>
-          </div>
-          <div className="section_weekly_feed">
-            {weekResponseFeed.map(({ weeksGoals, lastWeeksReview }, i) => {
-              return (
-                <div key={i} className="weeks_response">
-                  <h6 className="body-2">{`Current weeks goals: ${weeksGoals}`}</h6>
-                  <h6 className="body-2">{`Previou weeks review: ${lastWeeksReview}`}</h6>
-                </div>
-              )
-            })}
+          <DailyForm className="section_daily_form_fields" />
+          <div className="section_daily_feed">
+            {daysResponseFeed.map(
+              (
+                {
+                  userResponseExcelYesterday,
+                  userResponseFocusYesterday,
+                  dateSubmitted
+                },
+                i
+              ) => {
+                return (
+                  <div key={i} className="weeks_response">
+                    <h5 className="body-2">{`Submitted ${dayjs(
+                      dateSubmitted
+                    ).format('ddd MMM D, ha')}`}</h5>
+                    <h6 className="body-2">{`What is your focus today? ${userResponseFocusYesterday}`}</h6>
+                    <h6 className="body-2">{`How did you excel yesterday? ${userResponseExcelYesterday}`}</h6>
+                  </div>
+                )
+              }
+            )}
           </div>
         </div>
         <div className="section_right">
