@@ -54,7 +54,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
 
     setDaysResponse(daysResponse)
     handleUpdateProject({
-      daysResponseFeed: JSON.stringify([...daysResponseFeed, daysResponse])
+      daysResponseFeed: JSON.stringify([daysResponse, ...daysResponseFeed])
     })
 
     setInputFocusToday('')
