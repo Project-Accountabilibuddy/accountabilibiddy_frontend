@@ -8,16 +8,6 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
-const DUMMY_DAYS = [
-  { day: 'mon', checkedIn: true },
-  { day: 'tue', checkedIn: true },
-  { day: 'wed', checkedIn: false },
-  { day: 'thu', checkedIn: true },
-  { day: 'fri', checkedIn: undefined },
-  { day: 'sat', checkedIn: undefined },
-  { day: 'sun', checkedIn: undefined }
-]
-
 const StyledCheckInStatus = styled.div`
   border: 2px solid var(--color-secondary);
   border-radius: 4px;
@@ -80,7 +70,33 @@ const CheckInStatus = (): JSX.Element => {
   const [checkInStatusSectionOpen, setCheckInStatusSectionOpen] =
     useState(false)
 
-  const { daysResponseFeed } = useGlobalState()
+  const { daysResponseFeed, weeksExpectedToComplete } = useGlobalState()
+
+  const buildCheckInStatus = () => {
+    // TODO: 1. store the start date of the project on creation (right now that's the start)
+    // TODO: 2. build entire check status object with date stamps based on start date
+    // TODO: 3. map back over check status array updating status based on days response feed (true, false)
+    // TODO: 4. stop updating the check status once todays date is reached (undefined)
+
+    // TODO: EDGE CASE: user does not start on monday.... keep them undefined for first pass
+
+    const dummyWeek = {
+      currentWeek: true,
+      days: [
+        { day: 'mon', checkedIn: undefined },
+        { day: 'tue', checkedIn: undefined },
+        { day: 'wed', checkedIn: undefined },
+        { day: 'thu', checkedIn: undefined },
+        { day: 'fri', checkedIn: undefined },
+        { day: 'sat', checkedIn: undefined },
+        { day: 'sun', checkedIn: undefined }
+      ]
+    }
+
+    const allWeeks = [dummyWeek]
+
+    return allWeeks
+  }
 
   return (
     <StyledCheckInStatus>
@@ -90,7 +106,7 @@ const CheckInStatus = (): JSX.Element => {
         })}
       >
         <div className="current_week_check_in">
-          {DUMMY_DAYS.map(({ day, checkedIn }, i) => {
+          {buildCheckInStatus()[0].days.map(({ day, checkedIn }, i) => {
             return (
               <div className="day_check" key={i}>
                 <div className="caption">{day}</div>
