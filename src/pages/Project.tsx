@@ -86,7 +86,6 @@ const StyledProject = styled.div`
 
       .section_middle_top,
       .section_daily_form_fields,
-      .section_check_in_status,
       .section_daily_feed,
       .section_time {
         border: 2px solid var(--color-secondary);
@@ -222,7 +221,7 @@ const Project = (): JSX.Element => {
       </div>
       <div className="section_group">
         <div className="section_left">
-          <CheckInStatusSection className="section_check_in_status" />
+          <CheckInStatusSection />
           <div className="section_top_left">
             <h2 className="body-1 section_title">What are you doing?</h2>
             <h3 className="body-2">{userResponseWhatLongForm}</h3>
