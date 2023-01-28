@@ -23,7 +23,7 @@ const StyledCheckInStatus = styled.div<{
     padding-right: 24px;
 
     .current_week_check_in {
-      display: flex;
+      display: none;
       flex-direction: row;
       width: 100%;
       justify-content: space-between;
@@ -48,6 +48,11 @@ const StyledCheckInStatus = styled.div<{
           border: 2px solid var(--color-primary);
         }
       }
+    }
+
+    .showweek.current_week_check_in {
+      display: flex;
+      animation: fadein 3s;
     }
 
     .open_close_arrow {
@@ -119,7 +124,12 @@ const CheckInStatus = (): JSX.Element => {
       >
         {buildCheckInStatus().map((week, k) => {
           return (
-            <div className="current_week_check_in" key={k}>
+            <div
+              key={k}
+              className={cx('current_week_check_in', {
+                showweek: checkInStatusSectionOpen || k === 0
+              })}
+            >
               {week.days.map(({ day, checkedIn }, i) => {
                 return (
                   <div className="day_check" key={i}>
