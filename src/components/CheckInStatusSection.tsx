@@ -48,6 +48,11 @@ const StyledCheckInStatus = styled.div<{
           border: 2px solid var(--color-primary);
         }
       }
+
+      .week_label_text {
+        width: 90px;
+        text-align: end;
+      }
     }
 
     .showweek.current_week_check_in {
@@ -82,40 +87,54 @@ const CheckInStatus = (): JSX.Element => {
     useGlobalState()
 
   const buildCheckInStatus = () => {
-    // TODO: 1. store the start date of the project on creation (right now that's the start)
-    // TODO: 2. build entire check status object with date stamps based on start date
-    // TODO: 3. map back over check status array updating status based on days response feed (true, false)
-    // TODO: 4. stop updating the check status once todays date is reached (undefined)
-
-    // TODO: EDGE CASE: user does not start on monday.... keep them undefined for first pass
-
     const allWeeks = []
 
-    const dummyWeek = {
-      currentWeek: true,
-      days: [
-        { day: 'mon', checkedIn: undefined },
-        { day: 'tue', checkedIn: undefined },
-        { day: 'wed', checkedIn: undefined },
-        { day: 'thu', checkedIn: undefined },
-        { day: 'fri', checkedIn: undefined },
-        { day: 'sat', checkedIn: undefined },
-        { day: 'sun', checkedIn: undefined }
-      ]
-    }
+    const allCheckInDates = daysResponseFeed.map((day) => {
+      return day.dateSubmitted
+    })
 
-    for (let i = 0; i < Number(weeksExpectedToComplete); i++) {
-      allWeeks.push(dummyWeek)
-    }
+    // BUILD ALL WEEKS BASED ON WEEKS EXPECTED TO COMPLETE
+    for (let week = 0; week < Number(weeksExpectedToComplete); week++) {
+      const weekToBuild: {
+        currentWeek: boolean
+        days: Array<{ day: dayjs.Dayjs; checkedIn: boolean | undefined }>
+      } = {
+        currentWeek: dayjs(projectStartDate)
+          .add(week, 'week')
+          .isSame(dayjs(), 'week'),
+        days: []
+      }
 
-    console.log('allWeeks', allWeeks)
+      for (let day = 0; day < 7; day++) {
+        let checkedIn
+        const dayDate = dayjs(projectStartDate)
+          .add(week, 'week')
+          .add(day, 'day')
+
+        if (dayjs(dayDate).isBefore(dayjs())) {
+          checkedIn = false
+
+          allCheckInDates.forEach((checkInDate) => {
+            if (dayjs(checkInDate).isSame(dayDate, 'day')) {
+              checkedIn = true
+            }
+          })
+        }
+
+        weekToBuild.days.push({ day: dayDate, checkedIn })
+      }
+
+      allWeeks.push(weekToBuild)
+    }
 
     return allWeeks
   }
 
+  console.log('BUILD CHECK IN STATUS: ', buildCheckInStatus())
+
   return (
     <StyledCheckInStatus
-      checinsectionopenheight={40 * Number(weeksExpectedToComplete)}
+      checinsectionopenheight={42 * Number(weeksExpectedToComplete)}
     >
       <div
         className={cx('form_content', {
@@ -133,7 +152,7 @@ const CheckInStatus = (): JSX.Element => {
               {week.days.map(({ day, checkedIn }, i) => {
                 return (
                   <div className="day_check" key={i}>
-                    <div className="caption">{day}</div>
+                    <div className="caption">{dayjs(day).format('ddd')}</div>
                     {checkedIn === true && <CheckCircleIcon color="primary" />}
                     {checkedIn === false && <CancelIcon />}
                     {checkedIn === undefined && (
@@ -142,9 +161,10 @@ const CheckInStatus = (): JSX.Element => {
                   </div>
                 )
               })}
-              <h3 className="body-1">{`${
-                k + 1
-              }/${weeksExpectedToComplete}`}</h3>
+              <h3 className="body-1 week_label_text">
+                {`${k + 1}/${weeksExpectedToComplete}`}
+                <span className="caption"> wks</span>
+              </h3>
             </div>
           )
         })}
