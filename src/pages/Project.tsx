@@ -87,8 +87,7 @@ const StyledProject = styled.div`
 
       .section_middle_top,
       .section_daily_form_fields,
-      .section_daily_feed,
-      .section_time {
+      .section_daily_feed {
         border: 2px solid var(--color-secondary);
         border-radius: 4px;
         margin-bottom: 12px;
@@ -162,7 +161,6 @@ const Project = (): JSX.Element => {
     userResponseHatersLongForm,
     daysResponseFeed,
     userResponseWhyShortForm,
-    weeksExpectedToComplete,
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
@@ -247,9 +245,6 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_middle">
-          <div className="section_time">
-            <h2 className="body-1">{`${weeksExpectedToComplete}/10 Weeks Remaining`}</h2>
-          </div>
           <div className="section_middle_top">
             <div
               className="fade_edit"
