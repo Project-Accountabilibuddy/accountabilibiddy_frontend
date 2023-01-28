@@ -56,16 +56,9 @@ const App = (): JSX.Element => {
     setGlobalLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
-        handleGetProjects(
-          () => {
-            setGlobalLoading(false)
-          },
-          () => {
-            navigate(
-              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
-            )
-          }
-        )
+        handleGetProjects(() => {
+          setGlobalLoading(false)
+        })
       })
       .catch((err) => {
         console.log({ err })
