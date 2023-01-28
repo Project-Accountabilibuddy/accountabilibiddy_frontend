@@ -62,8 +62,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    // TODO: CHANGE TO 'day' ONCE TESTING OF DAILY FORM IS COMPLETE
-    return dayjs().isSame(response.dateSubmitted, 'minute')
+    return dayjs().isSame(response.dateSubmitted, 'day')
   })
 
   return (

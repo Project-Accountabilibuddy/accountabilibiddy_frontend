@@ -130,7 +130,7 @@ const CheckInStatus = (): JSX.Element => {
     return allWeeks
   }
 
-  console.log('BUILD CHECK IN STATUS: ', buildCheckInStatus())
+  //   console.log('BUILD CHECK IN STATUS: ', buildCheckInStatus())
 
   return (
     <StyledCheckInStatus
