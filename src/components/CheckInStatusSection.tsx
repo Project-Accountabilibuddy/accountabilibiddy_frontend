@@ -8,7 +8,9 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
-const StyledCheckInStatus = styled.div`
+const StyledCheckInStatus = styled.div<{
+  checinsectionopenheight: number
+}>`
   border: 2px solid var(--color-secondary);
   border-radius: 4px;
   margin-bottom: 12px;
@@ -63,7 +65,7 @@ const StyledCheckInStatus = styled.div`
   }
 
   .form_content.checkinstatusopen {
-    height: 300px;
+    height: ${(props) => props.checinsectionopenheight}px;
   }
 `
 
@@ -107,7 +109,9 @@ const CheckInStatus = (): JSX.Element => {
   }
 
   return (
-    <StyledCheckInStatus>
+    <StyledCheckInStatus
+      checinsectionopenheight={40 * Number(weeksExpectedToComplete)}
+    >
       <div
         className={cx('form_content', {
           checkinstatusopen: checkInStatusSectionOpen
