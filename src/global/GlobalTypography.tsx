@@ -16,16 +16,6 @@ const StyledGlobalTypography = styled.div`
     animation: fadein 2s;
   }
 
-  .heading-1 {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 38px;
-    line-height: 42px;
-    letter-spacing: 0.25px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-  }
-
   @keyframes fadein {
     from {
       opacity: 0;
@@ -35,89 +25,76 @@ const StyledGlobalTypography = styled.div`
     }
   }
 
-  .heading-2 {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 28px;
-    line-height: 30px;
-    font-family: 'Anton', sans-serif;
+  .heading-1 {
+    opacity: 1;
     color: var(--color-white);
+    font-family: 'Prompt', sans-serif;
+    font-size: 38px;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 42px;
+  }
+
+  .heading-2 {
+    opacity: 1;
+    color: var(--color-white);
+    font-family: 'Prompt', sans-serif;
+    font-size: 28px;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 30px;
   }
 
   .heading-3 {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 30px;
-    font-family: 'Anton', sans-serif;
+    opacity: 1;
     color: var(--color-white);
-    letter-spacing: 0.15px;
-    margin: 48px auto 34px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 28px;
   }
 
   .body-1 {
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    font-family: 'Anton', sans-serif;
+    opacity: 1;
     color: var(--color-white);
-    letter-spacing: 0.5px;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0px;
     text-align: center;
+    line-height: 24px;
   }
 
   .body-2 {
-    font-style: normal;
-    font-weight: normal;
+    opacity: 1;
+    color: var(--color-white);
+    font-family: 'Ubuntu Mono', monospace;
     font-size: 18px;
-    line-height: 24px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-    letter-spacing: 0.25px;
-  }
-
-  .subtitle {
+    font-weight: 400;
     font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 28px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-    letter-spacing: 0.15px;
-  }
-
-  .subtitle-2 {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 24px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-    letter-spacing: 0.1px;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 22px;
   }
 
   .caption {
-    font-style: normal;
-    font-weight: normal;
+    opacity: 1;
+    color: var(--color-white);
+    font-family: 'Ubuntu Mono', monospace;
     font-size: 16px;
-    line-height: 20px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-    letter-spacing: 0.4px;
-  }
-
-  .label {
+    font-weight: 400;
     font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
-    font-family: 'Anton', sans-serif;
-    color: var(--color-white);
-    letter-spacing: 0.4px;
-  }
-
-  .bold {
-    font-weight: bold;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 20px;
   }
 `
 
