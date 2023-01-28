@@ -16,6 +16,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
   const {
     setUserResponseWhatLongForm,
     setProjectName,
+    setProjectStartDate,
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
     setUserResponseHatersLongForm,
@@ -48,6 +49,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
             const {
               projectName,
+              projectStartDate,
               userResponseWhatLongForm,
               userResponseWhyLongForm,
               userResponseSacrificeLongForm,
@@ -59,6 +61,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             } = res.data.Items[0]
 
             setProjectName(projectName)
+            setProjectStartDate(projectStartDate)
             setUserResponseWhatLongForm(userResponseWhatLongForm)
             setUserResponseWhyLongForm(userResponseWhyLongForm)
             setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)

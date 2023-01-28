@@ -11,6 +11,7 @@ interface GlobalState {
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
   projectName: string
+  projectStartDate: dayjs.Dayjs
   userResponseWhyLongForm: string
   userResponseWhyShortForm: string[]
   userResponseHatersLongForm: string
@@ -25,6 +26,7 @@ interface GlobalState {
     userResponseSacrificeLongForm: string
   ) => void
   setProjectName: (projectName: string) => void
+  setProjectStartDate: (projectStartDate: dayjs.Dayjs) => void
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void
 
   updateWhyShortFormNumberOfResponses: (removeOrAdd: string) => void
@@ -65,6 +67,11 @@ const useGlobalState = create<GlobalState>((set) => ({
   projectName: '',
   setProjectName: (projectName) => {
     set(() => ({ projectName }))
+  },
+
+  projectStartDate: dayjs(),
+  setProjectStartDate: (projectStartDate) => {
+    set(() => ({ projectStartDate }))
   },
 
   userResponseWhyLongForm: '',

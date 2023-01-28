@@ -26,6 +26,7 @@ const StyledCheckInStatus = styled.div`
       width: 100%;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 4px;
 
       .day_check {
         display: flex;
@@ -70,7 +71,8 @@ const CheckInStatus = (): JSX.Element => {
   const [checkInStatusSectionOpen, setCheckInStatusSectionOpen] =
     useState(false)
 
-  const { daysResponseFeed, weeksExpectedToComplete } = useGlobalState()
+  const { daysResponseFeed, weeksExpectedToComplete, projectStartDate } =
+    useGlobalState()
 
   const buildCheckInStatus = () => {
     // TODO: 1. store the start date of the project on creation (right now that's the start)
@@ -79,6 +81,8 @@ const CheckInStatus = (): JSX.Element => {
     // TODO: 4. stop updating the check status once todays date is reached (undefined)
 
     // TODO: EDGE CASE: user does not start on monday.... keep them undefined for first pass
+
+    const allWeeks = []
 
     const dummyWeek = {
       currentWeek: true,
@@ -93,7 +97,11 @@ const CheckInStatus = (): JSX.Element => {
       ]
     }
 
-    const allWeeks = [dummyWeek]
+    for (let i = 0; i < Number(weeksExpectedToComplete); i++) {
+      allWeeks.push(dummyWeek)
+    }
+
+    console.log('allWeeks', allWeeks)
 
     return allWeeks
   }
@@ -105,20 +113,27 @@ const CheckInStatus = (): JSX.Element => {
           checkinstatusopen: checkInStatusSectionOpen
         })}
       >
-        <div className="current_week_check_in">
-          {buildCheckInStatus()[0].days.map(({ day, checkedIn }, i) => {
-            return (
-              <div className="day_check" key={i}>
-                <div className="caption">{day}</div>
-                {checkedIn === true && <CheckCircleIcon color="primary" />}
-                {checkedIn === false && <CancelIcon />}
-                {checkedIn === undefined && <div className="empty_circle" />}
-              </div>
-            )
-          })}
-          <h3 className="body-1">1/8</h3>
-        </div>
-
+        {buildCheckInStatus().map((week, k) => {
+          return (
+            <div className="current_week_check_in" key={k}>
+              {week.days.map(({ day, checkedIn }, i) => {
+                return (
+                  <div className="day_check" key={i}>
+                    <div className="caption">{day}</div>
+                    {checkedIn === true && <CheckCircleIcon color="primary" />}
+                    {checkedIn === false && <CancelIcon />}
+                    {checkedIn === undefined && (
+                      <div className="empty_circle" />
+                    )}
+                  </div>
+                )
+              })}
+              <h3 className="body-1">{`${
+                k + 1
+              }/${weeksExpectedToComplete}`}</h3>
+            </div>
+          )
+        })}
         <KeyboardArrowDownIcon
           className={cx('open_close_arrow', {
             pointarrowup: checkInStatusSectionOpen
