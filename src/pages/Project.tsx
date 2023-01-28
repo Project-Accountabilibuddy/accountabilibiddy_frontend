@@ -71,6 +71,7 @@ const StyledProject = styled.div`
       padding: 12px;
       height: 100%;
       overflow: scroll;
+      text-align: start;
     }
 
     .section_bottom_left,
@@ -257,7 +258,7 @@ const Project = (): JSX.Element => {
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
-              <h5 className="label">Haters</h5>
+              <h5 className="caption">Haters</h5>
             </div>
             {shortResponseInView !== '' && (
               <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
@@ -269,7 +270,7 @@ const Project = (): JSX.Element => {
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
-              <h5 className="label">Why</h5>
+              <h5 className="caption">Why</h5>
             </div>
           </div>
           <DailyForm className="section_daily_form_fields" />

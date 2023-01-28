@@ -8,12 +8,13 @@ interface ThemeProps {
 
 export const GlobalPallete = {
   colors: {
-    primary: '#86c232',
-    secondary: '#61892F',
+    primary: '#3CFFD5',
+    secondary: '#4333A3',
     background: '#222629',
     lightGrey: '#6B6E70',
     darkGrey: '#474B4F',
-    white: '#FFFFFF'
+    white: '#FFFFFF',
+    red: '#FF424A'
   }
 }
 
@@ -24,6 +25,7 @@ const CSSVariables = styled.div`
   --color-light-grey: ${GlobalPallete.colors.lightGrey};
   --color-dark-grey: ${GlobalPallete.colors.darkGrey};
   --color-white: ${GlobalPallete.colors.white};
+  --color-red: ${GlobalPallete.colors.red};
 
   --height-top-bar: 60px;
 `
