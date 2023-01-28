@@ -111,7 +111,7 @@ const CheckInStatus = (): JSX.Element => {
           .add(week, 'week')
           .add(day, 'day')
 
-        if (dayjs(dayDate).isBefore(dayjs())) {
+        if (dayjs(dayDate).isBefore(dayjs().add(1, 'day'))) {
           checkedIn = false
 
           allCheckInDates.forEach((checkInDate) => {
