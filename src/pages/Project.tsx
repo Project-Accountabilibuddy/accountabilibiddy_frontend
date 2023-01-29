@@ -11,6 +11,11 @@ import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
 
+interface ShortAnswer {
+  text: string
+  type: string
+}
+
 const StyledProject = styled.div`
   display: flex;
   flex-direction: column;
@@ -107,9 +112,9 @@ const StyledProject = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         position: absolute;
         width: -webkit-fill-available;
+        width: -moz-available;
         margin-right: 114px;
 
         .fade_in_out_text {
@@ -204,7 +209,7 @@ const Project = (): JSX.Element => {
 
   // HANDLES FADE IN/OUT OF SHORT RESPONSES
   useEffect(() => {
-    const getRandomShortAnswer = (): { text: string; type: string } => {
+    const getRandomShortAnswer = (): ShortAnswer => {
       const randInt = Math.floor(Math.random() * allShortResponses.length)
       return allShortResponses[randInt]
     }
