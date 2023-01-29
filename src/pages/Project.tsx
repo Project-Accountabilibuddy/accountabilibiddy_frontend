@@ -35,7 +35,15 @@ const StyledProject = styled.div`
     height: var(--height-top-bar);
     padding: 0 24px;
 
+    .logo {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+    }
+
     .sign_out_button {
+      z-index: 1;
+
       :hover {
         cursor: pointer;
         color: var(--color-primary);
@@ -220,7 +228,7 @@ const Project = (): JSX.Element => {
     <StyledProject>
       <div className="top_nav_bar">
         <h1 className="caption">{`Hello, ${userName}`}</h1>
-        <h1 className="heading-2">BiliBuddy</h1>
+        <h1 className="heading-2 logo">BiliBuddy</h1>
         <h1
           className="caption sign_out_button"
           onClick={() => {

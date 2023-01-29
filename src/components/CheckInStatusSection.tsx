@@ -43,12 +43,13 @@ const StyledCheckInStatus = styled.div<{
       .day_check {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .caption {
           font-size: 12px;
           line-height: 14px;
           color: var(--color-light-grey);
-          margin: 0;
+          margin-bottom: 2px;
         }
 
         .empty_circle {
