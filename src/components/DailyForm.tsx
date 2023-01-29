@@ -12,6 +12,8 @@ interface DailyFormProps {
 }
 
 const StyledDailyForm = styled.div`
+  margin-top: 80px;
+
   .form_content {
     height: 272px;
     transition: height 2s ease-in-out;

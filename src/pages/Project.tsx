@@ -102,11 +102,14 @@ const StyledProject = styled.div`
       }
 
       .section_middle_top {
-        position: relative;
-        height: 42px;
+        height: 38px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        position: absolute;
+        width: -webkit-fill-available;
+        margin-right: 114px;
 
         .fade_in_out_text {
           color: var(--color-primary);
@@ -152,6 +155,7 @@ const StyledProject = styled.div`
 
     .section_right {
       margin: 12px 12px 12px 6px;
+      padding-top: 80px;
     }
   }
 
