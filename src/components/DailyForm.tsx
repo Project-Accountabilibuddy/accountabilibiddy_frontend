@@ -13,8 +13,34 @@ interface DailyFormProps {
 
 const StyledDailyForm = styled.div`
   .form_content {
-    height: 200px;
+    height: 242px;
     transition: height 2s ease-in-out;
+
+    .heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 12px;
+
+      .heading-3 {
+        text-align: start;
+      }
+    }
+
+    .form_input_field {
+      color: var(--color-white);
+      background-color: var(--color-dark-grey);
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      width: 100%;
+      resize: none;
+    }
+
+    .submit_button {
+      width: 100%;
+      margin-top: 12px;
+    }
   }
 
   .form_content.formnotavailable {
@@ -22,19 +48,10 @@ const StyledDailyForm = styled.div`
 
     .form_input_field,
     h3,
+    h2,
     button {
       display: none;
     }
-  }
-
-  .form_input_field {
-    color: var(--color-white);
-    background-color: var(--color-dark-grey);
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    width: 100%;
-    resize: none;
   }
 `
 
@@ -63,7 +80,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
     // TODO: CHANGE TO 'day' ONCE TESTING OF DAILY FORM IS COMPLETE
-    return dayjs().isSame(response.dateSubmitted, 'minute')
+    return dayjs().isSame(response.dateSubmitted, 'day')
   })
 
   return (
@@ -73,7 +90,11 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           formnotavailable: formHasBeenFilledOutToday
         })}
       >
-        <h3 className="body-2">What is your focus today?</h3>
+        <div className="heading">
+          <h2 className="heading-3">Check-in today</h2>
+          <h3 className="caption">{dayjs().format('ddd MMM D')}</h3>
+        </div>
+        <h3 className="caption">What is your focus today?</h3>
         <textarea
           className="form_input_field"
           value={inputFocusToday}
@@ -83,7 +104,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           }}
           rows={3}
         />
-        <h3 className="body-2">How did you excel yesterday?</h3>
+        <h3 className="caption">How did you excel yesterday?</h3>
         <textarea
           disabled={formHasBeenFilledOutToday}
           className="form_input_field"
@@ -93,7 +114,13 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           }}
           rows={3}
         />
-        <Button onClick={handleSubmitWeekReview}>Submit</Button>
+        <Button
+          className="submit_button"
+          variant="outlined"
+          onClick={handleSubmitWeekReview}
+        >
+          Submit
+        </Button>
       </div>
     </StyledDailyForm>
   )

@@ -15,7 +15,7 @@ const StyledProject = styled.div`
   text-align: center;
   justify-content: center;
 
-  .body-2 {
+  .caption {
     text-align: start;
     color: var(--color-light-grey);
   }
@@ -44,11 +44,12 @@ const StyledProject = styled.div`
 
   .section_group {
     height: calc(100vh - var(--height-top-bar));
+    padding: 0 100px;
     display: flex;
 
     .section_left,
     .section_right {
-      width: 50%;
+      width: 70%;
       margin: 12px 6px 12px 12px;
       display: flex;
       flex-direction: column;
@@ -63,7 +64,7 @@ const StyledProject = styled.div`
       flex-direction: column;
       position: relative;
       border: 2px solid var(--color-secondary);
-      border-radius: 4px;
+      border-radius: 6px;
       margin-bottom: 12px;
       padding: 12px;
       height: 100%;
@@ -87,7 +88,7 @@ const StyledProject = styled.div`
       .section_daily_feed,
       .section_time {
         border: 2px solid var(--color-secondary);
-        border-radius: 4px;
+        border-radius: 6px;
         margin-bottom: 12px;
         padding: 12px;
       }
@@ -124,7 +125,12 @@ const StyledProject = styled.div`
         .weeks_response {
           border-bottom: 2px solid var(--color-secondary);
           margin-bottom: 12px;
-          padding: 12px;
+          padding-bottom: 12px;
+
+          .time_submitted {
+            width: 100%;
+            text-align: end;
+          }
         }
       }
     }
@@ -154,7 +160,6 @@ const Project = (): JSX.Element => {
   const navigate = useNavigate()
 
   const {
-    projectName,
     userResponseWhyLongForm,
     userResponseHatersLongForm,
     daysResponseFeed,
@@ -208,7 +213,7 @@ const Project = (): JSX.Element => {
     <StyledProject>
       <div className="top_nav_bar">
         <h1 className="caption">Hello, Nick</h1>
-        <h1 className="heading-1">BiliBuddy</h1>
+        <h1 className="heading-2">BiliBuddy</h1>
         <h1
           className="caption sign_out_button"
           onClick={() => {
@@ -221,8 +226,8 @@ const Project = (): JSX.Element => {
       <div className="section_group">
         <div className="section_left">
           <div className="section_top_left">
-            <h2 className="body-1 section_title">What are you doing?</h2>
-            <h3 className="body-2">{userResponseWhatLongForm}</h3>
+            <h2 className="heading-3 section_title">What are you doing?</h2>
+            <h3 className="caption">{userResponseWhatLongForm}</h3>
             <EditIcon
               className="edit_icon"
               color="primary"
@@ -232,8 +237,8 @@ const Project = (): JSX.Element => {
             />
           </div>
           <div className="section_bottom_left">
-            <h2 className="body-1 section_title">Why are you doing this?</h2>
-            <h3 className="body-2">{userResponseWhyLongForm}</h3>
+            <h2 className="heading-3 section_title">Why are you doing this?</h2>
+            <h3 className="caption">{userResponseWhyLongForm}</h3>
             <EditIcon
               className="edit_icon"
               color="primary"
@@ -283,11 +288,13 @@ const Project = (): JSX.Element => {
               ) => {
                 return (
                   <div key={i} className="weeks_response">
-                    <h5 className="body-2">{`Submitted ${dayjs(
-                      dateSubmitted
-                    ).format('ddd MMM D, ha')}`}</h5>
-                    <h6 className="body-2">{`What is your focus today? ${userResponseFocusYesterday}`}</h6>
-                    <h6 className="body-2">{`How did you excel yesterday? ${userResponseExcelYesterday}`}</h6>
+                    <h5 className="caption time_submitted">
+                      {dayjs(dateSubmitted).format('ddd MMM D')}
+                    </h5>
+                    <h6 className="caption">What is your focus today?</h6>
+                    <h6 className="caption">{userResponseFocusYesterday}</h6>
+                    <h6 className="caption">How did you excel yesterday?</h6>
+                    <h6 className="caption">{userResponseExcelYesterday}</h6>
                   </div>
                 )
               }
@@ -296,10 +303,10 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_right">
           <div className="section_top_right">
-            <h2 className="body-1 section_title">
+            <h2 className="heading-3 section_title">
               What will your internal hater say?
             </h2>
-            <h3 className="body-2">{userResponseHatersLongForm}</h3>
+            <h3 className="caption">{userResponseHatersLongForm}</h3>
             <EditIcon
               onClick={() => {
                 handleEditField(SETUP_PROJECT_SCREENS.HATERS_LONG_FORM)
@@ -309,8 +316,10 @@ const Project = (): JSX.Element => {
             />
           </div>
           <div className="section_bottom_right">
-            <h2 className="body-1 section_title">What are you sacrificing?</h2>
-            <h3 className="body-2">{userResponseSacrificeLongForm}</h3>
+            <h2 className="heading-3 section_title">
+              What are you sacrificing?
+            </h2>
+            <h3 className="caption">{userResponseSacrificeLongForm}</h3>
             <EditIcon
               onClick={() => {
                 handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)
