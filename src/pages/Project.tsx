@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
@@ -34,13 +33,12 @@ const StyledProject = styled.div`
     justify-content: space-between;
     height: var(--height-top-bar);
     padding: 0 24px;
-    background-color: var(--color-light-grey);
-    border-bottom: 2px solid var(--color-secondary);
 
-    .future_logo {
-      width: 100%;
-      position: absolute;
-      left: 0;
+    .sign_out_button {
+      :hover {
+        cursor: pointer;
+        color: var(--color-primary);
+      }
     }
   }
 
@@ -209,15 +207,16 @@ const Project = (): JSX.Element => {
   return (
     <StyledProject>
       <div className="top_nav_bar">
-        <h1 className="heading-1">{projectName}</h1>
-        <h1 className="heading-1 future_logo">Accountabilibuddy</h1>
-        <Button
+        <h1 className="caption">Hello, Nick</h1>
+        <h1 className="heading-1">BiliBuddy</h1>
+        <h1
+          className="caption sign_out_button"
           onClick={() => {
             void handleSignOut()
           }}
         >
           Sign Out
-        </Button>
+        </h1>
       </div>
       <div className="section_group">
         <div className="section_left">
