@@ -8,9 +8,14 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
+interface checkInDays {
+  day: dayjs.Dayjs
+  checkedIn: boolean | undefined
+}
+
 interface AllDayCheckInStatuses {
   currentWeek: boolean
-  days: Array<{ day: dayjs.Dayjs; checkedIn: boolean | undefined }>
+  days: checkInDays[]
 }
 
 const StyledCheckInStatus = styled.div<{
@@ -91,7 +96,7 @@ const CheckInStatus = (): JSX.Element => {
   const { daysResponseFeed, weeksExpectedToComplete, projectStartDate } =
     useGlobalState()
 
-  const buildCheckInStatus = () => {
+  const buildCheckInStatus = (): AllDayCheckInStatuses[] => {
     const allWeeks = []
 
     const allCheckInDates = daysResponseFeed.map((day) => {
