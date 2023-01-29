@@ -125,11 +125,18 @@ const StyledProject = styled.div`
         .weeks_response {
           border-bottom: 2px solid var(--color-secondary);
           margin-bottom: 12px;
-          padding-bottom: 12px;
 
           .time_submitted {
             width: 100%;
             text-align: end;
+          }
+
+          .response_title {
+            color: var(--color-white);
+          }
+
+          .response_text {
+            padding-bottom: 12px;
           }
         }
       }
@@ -167,6 +174,7 @@ const Project = (): JSX.Element => {
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
+    userName,
     setInEditFormMode
   } = useGlobalState()
 
@@ -211,7 +219,7 @@ const Project = (): JSX.Element => {
   return (
     <StyledProject>
       <div className="top_nav_bar">
-        <h1 className="caption">Hello, Nick</h1>
+        <h1 className="caption">{`Hello, ${userName}`}</h1>
         <h1 className="heading-2">BiliBuddy</h1>
         <h1
           className="caption sign_out_button"
@@ -288,10 +296,18 @@ const Project = (): JSX.Element => {
                     <h5 className="caption time_submitted">
                       {dayjs(dateSubmitted).format('ddd MMM D')}
                     </h5>
-                    <h6 className="caption">What is your focus today?</h6>
-                    <h6 className="caption">{userResponseFocusYesterday}</h6>
-                    <h6 className="caption">How did you excel yesterday?</h6>
-                    <h6 className="caption">{userResponseExcelYesterday}</h6>
+                    <h6 className="caption response_title">
+                      What is your focus today?
+                    </h6>
+                    <h6 className="caption response_text">
+                      {userResponseFocusYesterday}
+                    </h6>
+                    <h6 className="caption response_title">
+                      How did you excel yesterday?
+                    </h6>
+                    <h6 className="caption response_text">
+                      {userResponseExcelYesterday}
+                    </h6>
                   </div>
                 )
               }

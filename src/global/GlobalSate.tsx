@@ -51,6 +51,10 @@ interface GlobalState {
   setInEditFormMode: (inEditFormMode: boolean) => void
   globalLoading: boolean
   setGlobalLoading: (globalLoading: boolean) => void
+
+  // USER AUTH STATE
+  setUserName: (userName: string) => void
+  userName: string
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
@@ -168,7 +172,13 @@ const useGlobalState = create<GlobalState>((set) => ({
   globalLoading: false,
   setGlobalLoading: (globalLoading) => {
     set(() => ({ globalLoading }))
-  }
+  },
+
+  // USER AUTH STATE
+  setUserName: (userName) => {
+    set(() => ({ userName }))
+  },
+  userName: ''
 }))
 
 export default useGlobalState
