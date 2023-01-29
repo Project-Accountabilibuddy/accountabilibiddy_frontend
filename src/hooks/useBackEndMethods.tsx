@@ -4,10 +4,7 @@ import { Auth } from 'aws-amplify'
 import useGlobalState from '../global/GlobalSate'
 
 interface useBackEndMethodsReturn {
-  handleGetProjects: (
-    onCompletionCB?: () => void,
-    onCreateNewAccountCB?: () => void
-  ) => void
+  handleGetProjects: (onCompletionCB?: () => void) => void
   handleUpdateProject: (fieldToUpdate: object) => void
   handleCreateProject: (projectName: object) => void
 }
@@ -16,6 +13,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
   const {
     setUserResponseWhatLongForm,
     setProjectName,
+    setProjectStartDate,
     setUserResponseSacrificeLongForm,
     setUserResponseWhyLongForm,
     setUserResponseHatersLongForm,
@@ -26,10 +24,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     projectName
   } = useGlobalState()
 
-  const handleGetProjects = (
-    onCompletionCB = () => {},
-    onCreateNewAccountCB = () => {}
-  ): void => {
+  const handleGetProjects = (onCompletionCB = () => {}): void => {
     Auth.currentSession()
       .then((res) => {
         const idToken = res.getIdToken().getJwtToken()
@@ -48,6 +43,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
             const {
               projectName,
+              projectStartDate,
               userResponseWhatLongForm,
               userResponseWhyLongForm,
               userResponseSacrificeLongForm,
@@ -59,6 +55,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             } = res.data.Items[0]
 
             setProjectName(projectName)
+            setProjectStartDate(projectStartDate)
             setUserResponseWhatLongForm(userResponseWhatLongForm)
             setUserResponseWhyLongForm(userResponseWhyLongForm)
             setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
@@ -83,7 +80,6 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
           .catch((err) => {
             console.log('GET PROJECT ERR', err)
             onCompletionCB()
-            onCreateNewAccountCB()
           })
       })
       .catch((err) => {

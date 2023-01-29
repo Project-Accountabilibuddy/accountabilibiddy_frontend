@@ -13,13 +13,13 @@ interface DailyFormProps {
 
 const StyledDailyForm = styled.div`
   .form_content {
-    height: 242px;
+    height: 272px;
     transition: height 2s ease-in-out;
 
     .heading {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
       margin-bottom: 12px;
 
       .heading-3 {
@@ -29,7 +29,7 @@ const StyledDailyForm = styled.div`
 
     .form_input_field {
       color: var(--color-white);
-      background-color: var(--color-dark-grey);
+      background-color: var(--color-background);
       border-radius: 4px;
       border: none;
       outline: none;
@@ -44,11 +44,10 @@ const StyledDailyForm = styled.div`
   }
 
   .form_content.formnotavailable {
-    height: 0px;
+    height: 28px;
 
     .form_input_field,
-    h3,
-    h2,
+    .question_title,
     button {
       display: none;
     }
@@ -79,7 +78,6 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    // TODO: CHANGE TO 'day' ONCE TESTING OF DAILY FORM IS COMPLETE
     return dayjs().isSame(response.dateSubmitted, 'day')
   })
 
@@ -91,10 +89,15 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
         })}
       >
         <div className="heading">
-          <h2 className="heading-3">Check-in today</h2>
+          {!formHasBeenFilledOutToday && (
+            <h2 className="heading-3">Check-in today</h2>
+          )}
+          {formHasBeenFilledOutToday && (
+            <h2 className="heading-3">Checked in today... Nice</h2>
+          )}
           <h3 className="caption">{dayjs().format('ddd MMM D')}</h3>
         </div>
-        <h3 className="caption">What is your focus today?</h3>
+        <h3 className="caption question_title">What is your focus today?</h3>
         <textarea
           className="form_input_field"
           value={inputFocusToday}
@@ -102,9 +105,9 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           onChange={(e) => {
             setInputFocusToday(e.target.value)
           }}
-          rows={3}
+          rows={4}
         />
-        <h3 className="caption">How did you excel yesterday?</h3>
+        <h3 className="caption question_title">How did you excel yesterday?</h3>
         <textarea
           disabled={formHasBeenFilledOutToday}
           className="form_input_field"
@@ -112,7 +115,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           onChange={(e) => {
             setinputExcelYesterday(e.target.value)
           }}
-          rows={3}
+          rows={4}
         />
         <Button
           className="submit_button"

@@ -11,6 +11,7 @@ interface GlobalState {
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
   projectName: string
+  projectStartDate: dayjs.Dayjs
   userResponseWhyLongForm: string
   userResponseWhyShortForm: string[]
   userResponseHatersLongForm: string
@@ -25,6 +26,7 @@ interface GlobalState {
     userResponseSacrificeLongForm: string
   ) => void
   setProjectName: (projectName: string) => void
+  setProjectStartDate: (projectStartDate: dayjs.Dayjs) => void
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void
 
   updateWhyShortFormNumberOfResponses: (removeOrAdd: string) => void
@@ -49,6 +51,10 @@ interface GlobalState {
   setInEditFormMode: (inEditFormMode: boolean) => void
   globalLoading: boolean
   setGlobalLoading: (globalLoading: boolean) => void
+
+  // USER AUTH STATE
+  setUserName: (userName: string) => void
+  userName: string
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
@@ -65,6 +71,11 @@ const useGlobalState = create<GlobalState>((set) => ({
   projectName: '',
   setProjectName: (projectName) => {
     set(() => ({ projectName }))
+  },
+
+  projectStartDate: dayjs(),
+  setProjectStartDate: (projectStartDate) => {
+    set(() => ({ projectStartDate }))
   },
 
   userResponseWhyLongForm: '',
@@ -161,7 +172,13 @@ const useGlobalState = create<GlobalState>((set) => ({
   globalLoading: false,
   setGlobalLoading: (globalLoading) => {
     set(() => ({ globalLoading }))
-  }
+  },
+
+  // USER AUTH STATE
+  setUserName: (userName) => {
+    set(() => ({ userName }))
+  },
+  userName: ''
 }))
 
 export default useGlobalState

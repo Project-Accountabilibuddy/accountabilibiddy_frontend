@@ -8,7 +8,7 @@ import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
-import { ROUTES, SETUP_PROJECT_SCREENS } from './global/Constants'
+import { ROUTES } from './global/Constants'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -30,7 +30,7 @@ const StyledGlobalLoading = styled.div`
 
 const App = (): JSX.Element => {
   const { handleGetProjects } = useBackEndMethods()
-  const { globalLoading, setGlobalLoading } = useGlobalState()
+  const { globalLoading, setGlobalLoading, setUserName } = useGlobalState()
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -55,17 +55,11 @@ const App = (): JSX.Element => {
   useEffect(() => {
     setGlobalLoading(true)
     Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        handleGetProjects(
-          () => {
-            setGlobalLoading(false)
-          },
-          () => {
-            navigate(
-              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
-            )
-          }
-        )
+      .then((res) => {
+        setUserName(res.attributes.email)
+        handleGetProjects(() => {
+          setGlobalLoading(false)
+        })
       })
       .catch((err) => {
         console.log({ err })
