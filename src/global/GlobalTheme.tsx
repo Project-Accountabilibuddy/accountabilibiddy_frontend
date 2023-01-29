@@ -27,7 +27,7 @@ const CSSVariables = styled.div`
   --color-white: ${GlobalPallete.colors.white};
   --color-red: ${GlobalPallete.colors.red};
 
-  --height-top-bar: 60px;
+  --height-top-bar: 54px;
 `
 
 const MaterialUIPallet = createTheme({
