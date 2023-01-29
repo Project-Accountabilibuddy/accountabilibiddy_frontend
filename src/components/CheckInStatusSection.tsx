@@ -8,6 +8,11 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
+interface AllDayCheckInStatuses {
+  currentWeek: boolean
+  days: Array<{ day: dayjs.Dayjs; checkedIn: boolean | undefined }>
+}
+
 const StyledCheckInStatus = styled.div<{
   checinsectionopenheight: number
 }>`
@@ -95,36 +100,41 @@ const CheckInStatus = (): JSX.Element => {
 
     // BUILD ALL WEEKS BASED ON WEEKS EXPECTED TO COMPLETE
     for (let week = 0; week < Number(weeksExpectedToComplete); week++) {
-      const weekToBuild: {
-        currentWeek: boolean
-        days: Array<{ day: dayjs.Dayjs; checkedIn: boolean | undefined }>
-      } = {
+      const allDayCheckInStatuses: AllDayCheckInStatuses = {
         currentWeek: dayjs(projectStartDate)
           .add(week, 'week')
           .isSame(dayjs(), 'week'),
         days: []
       }
 
+      // BUILD ALL DAYS FOR EACH WEEK ADDING CHECK IN STATUS
       for (let day = 0; day < 7; day++) {
         let checkedIn
-        const dayDate = dayjs(projectStartDate)
+
+        const daysDate = dayjs(projectStartDate)
           .add(week, 'week')
           .add(day, 'day')
 
-        if (dayjs(dayDate).isBefore(dayjs().add(1, 'day'))) {
-          checkedIn = false
+        // CHECK IF DAY IS BEFORE TODAY
+        if (dayjs(daysDate).isBefore(dayjs().add(1, 'day'))) {
+          // IF DAY IS TODAY IT SHOULD NOT DEFAULT TO "NOT" CHECKED IN
+          if (!dayjs(daysDate).isSame(dayjs(), 'day')) {
+            checkedIn = false
+          }
 
+          // CHECK IF DAY IS IN CHECK IN DATES
           allCheckInDates.forEach((checkInDate) => {
-            if (dayjs(checkInDate).isSame(dayDate, 'day')) {
+            if (dayjs(checkInDate).isSame(daysDate, 'day')) {
               checkedIn = true
             }
           })
         }
 
-        weekToBuild.days.push({ day: dayDate, checkedIn })
+        allDayCheckInStatuses.days.push({ day: daysDate, checkedIn })
+        // checkedIn = undefined
       }
 
-      allWeeks.push(weekToBuild)
+      allWeeks.push(allDayCheckInStatuses)
     }
 
     return allWeeks

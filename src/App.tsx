@@ -8,7 +8,7 @@ import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
-import { ROUTES, SETUP_PROJECT_SCREENS } from './global/Constants'
+import { ROUTES } from './global/Constants'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
