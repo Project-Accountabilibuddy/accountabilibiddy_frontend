@@ -64,6 +64,10 @@ const StyledCheckInStatus = styled.div<{
         width: 90px;
         text-align: end;
       }
+
+      .wks_text {
+        color: var(--color-white);
+      }
     }
 
     .showweek.current_week_check_in {
@@ -179,7 +183,7 @@ const CheckInStatus = (): JSX.Element => {
               })}
               <h3 className="body-1 week_label_text">
                 {`${k + 1}/${weeksExpectedToComplete}`}
-                <span className="caption"> wks</span>
+                <span className="caption wks_text"> wks</span>
               </h3>
             </div>
           )
