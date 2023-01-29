@@ -19,7 +19,7 @@ const StyledCheckInStatus = styled.div<{
   border: 2px solid var(--color-secondary);
   border-radius: 4px;
   margin-bottom: 12px;
-  padding: 8px;
+  padding: 12px;
   position: relative;
 
   .form_content {
@@ -116,7 +116,7 @@ const CheckInStatus = (): JSX.Element => {
           .add(day, 'day')
 
         // CHECK IF DAY IS BEFORE TODAY
-        if (dayjs(daysDate).isBefore(dayjs().add(1, 'day'))) {
+        if (dayjs(daysDate).isBefore(dayjs())) {
           // IF DAY IS TODAY IT SHOULD NOT DEFAULT TO "NOT" CHECKED IN
           if (!dayjs(daysDate).isSame(dayjs(), 'day')) {
             checkedIn = false
@@ -131,7 +131,7 @@ const CheckInStatus = (): JSX.Element => {
         }
 
         allDayCheckInStatuses.days.push({ day: daysDate, checkedIn })
-        // checkedIn = undefined
+        checkedIn = undefined
       }
 
       allWeeks.push(allDayCheckInStatuses)
