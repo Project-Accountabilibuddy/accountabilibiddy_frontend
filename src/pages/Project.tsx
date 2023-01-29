@@ -4,6 +4,7 @@ import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
 import dayjs from 'dayjs'
+import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
@@ -116,11 +117,14 @@ const StyledProject = styled.div`
           padding: 0 12px;
         }
 
+        .fade_in_out_text.redtext {
+          color: var(--color-red);
+        }
+
         .fade_edit {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          position: absolute;
+          right: 10px;
+          top: 20px;
 
           :hover {
             cursor: pointer;
@@ -191,8 +195,8 @@ const Project = (): JSX.Element => {
   } = useGlobalState()
 
   const allShortResponses = [
-    ...userResponseWhyShortForm,
-    ...userResponseHatersShortForm
+    ...userResponseWhyShortForm.map((res) => ({ text: res, type: 'WHY' })),
+    ...userResponseHatersShortForm.map((res) => ({ text: res, type: 'HATE' }))
   ]
   const [shortResponseInView, setShortResponseInView] = useState(
     allShortResponses[0]
@@ -200,13 +204,13 @@ const Project = (): JSX.Element => {
 
   // HANDLES FADE IN/OUT OF SHORT RESPONSES
   useEffect(() => {
-    const getRandomShortAnswer = (): string => {
+    const getRandomShortAnswer = (): { text: string; type: string } => {
       const randInt = Math.floor(Math.random() * allShortResponses.length)
       return allShortResponses[randInt]
     }
 
     setInterval(() => {
-      setShortResponseInView('')
+      setShortResponseInView({ text: '', type: '' })
       setTimeout(() => {
         setShortResponseInView(getRandomShortAnswer())
       }, 100)
@@ -270,26 +274,26 @@ const Project = (): JSX.Element => {
         </div>
         <div className="section_middle">
           <div className="section_middle_top">
-            <div
-              className="fade_edit"
-              onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
-              }}
-            >
-              <EditIcon className="edit_icon" color="primary" />
-              <h5 className="caption">Haters</h5>
-            </div>
-            {shortResponseInView !== '' && (
-              <h2 className="body-1 fade_in_out_text">{shortResponseInView}</h2>
+            {shortResponseInView.text !== '' && (
+              <h2
+                className={cx('body-1 fade_in_out_text', {
+                  redtext: shortResponseInView.type === 'HATE'
+                })}
+              >
+                {shortResponseInView.text}
+              </h2>
             )}
             <div
               className="fade_edit"
               onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
+                if (shortResponseInView.type === 'WHY') {
+                  handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
+                } else {
+                  handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
+                }
               }}
             >
               <EditIcon className="edit_icon" color="primary" />
-              <h5 className="caption">Why</h5>
             </div>
           </div>
           <DailyForm className="section_daily_form_fields" />
