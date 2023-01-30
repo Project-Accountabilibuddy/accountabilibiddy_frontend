@@ -21,11 +21,12 @@ interface AllDayCheckInStatuses {
 const StyledCheckInStatus = styled.div<{
   checinsectionopenheight: number
 }>`
-  border: 2px solid var(--color-secondary);
-  border-radius: 4px;
+  border: 1px solid var(--color-primary);
+  border-radius: 2px;
   margin-bottom: 12px;
   padding: 12px;
   position: relative;
+  background-color: var(--color-black);
 
   .form_content {
     height: 38px;

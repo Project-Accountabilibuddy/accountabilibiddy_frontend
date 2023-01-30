@@ -15,7 +15,8 @@ const StyledAuthentication = styled.div`
   text-align: center;
   justify-content: center;
   padding: 0 20%;
-  height: 100%;
+  height: 100vw;
+  width: 100vh;
 
   .heading-1 {
     color: var(--color-primary);

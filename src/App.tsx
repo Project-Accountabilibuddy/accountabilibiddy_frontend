@@ -14,11 +14,41 @@ import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
 import ProjectSetUpPage from './pages/ProjectSetup'
 import ProjectPage from './pages/Project'
+import BackGroundImage from './test_background.jpeg'
 
 const StyledApp = styled.div`
-  background-color: var(--color-background);
-  height: 100vh;
-  width: 100vw;
+  background-image: url(${BackGroundImage});
+  background-size: auto 100%;
+  animation: animatedBackground 300s linear infinite;
+
+  @keyframes animatedBackground {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .content {
+    color: var(--color-white);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+  }
 `
 
 const StyledGlobalLoading = styled.div`
@@ -71,22 +101,24 @@ const App = (): JSX.Element => {
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          {globalLoading && (
-            <StyledGlobalLoading>
-              <CircularProgress />
-            </StyledGlobalLoading>
-          )}
-          {!globalLoading && (
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path={`${ROUTES.PROJECT_SETUP}/*`}
-                element={<ProjectSetUpPage />}
-              />
-              <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
-              <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
-            </Routes>
-          )}
+          <div className="content">
+            {globalLoading && (
+              <StyledGlobalLoading>
+                <CircularProgress />
+              </StyledGlobalLoading>
+            )}
+            {!globalLoading && (
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route
+                  path={`${ROUTES.PROJECT_SETUP}/*`}
+                  element={<ProjectSetUpPage />}
+                />
+                <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
+                <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
+              </Routes>
+            )}
+          </div>
         </StyledApp>
       </GlobalTypography>
     </GlobalTheme>
