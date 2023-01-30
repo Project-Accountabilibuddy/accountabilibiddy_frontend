@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Auth } from 'aws-amplify'
+import { useNavigate } from 'react-router-dom'
 
 import useGlobalState from '../global/GlobalSate'
+import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 interface useBackEndMethodsReturn {
   handleGetProjects: (onCompletionCB?: () => void) => void
@@ -24,6 +26,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     projectName
   } = useGlobalState()
 
+  const navigate = useNavigate()
+
   const handleGetProjects = (onCompletionCB = () => {}): void => {
     Auth.currentSession()
       .then((res) => {
@@ -36,6 +40,13 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
             config
           )
           .then((res) => {
+            if (res.data.Items.length === 0) {
+              console.log('PROJECT HAS NOT BEEN SET UP YET')
+              navigate(
+                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
+              )
+            }
+
             console.log('Retrieved Project: ', res.data.Items[0].projectName)
 
             onCompletionCB()
