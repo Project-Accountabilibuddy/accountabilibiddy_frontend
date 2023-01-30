@@ -14,7 +14,8 @@ export const GlobalPallete = {
     lightGrey: '#6B6E70',
     darkGrey: '#474B4F',
     white: '#FFFFFF',
-    red: '#FF424A'
+    red: '#FF424A',
+    black: '#000000'
   }
 }
 
@@ -26,7 +27,7 @@ const CSSVariables = styled.div`
   --color-dark-grey: ${GlobalPallete.colors.darkGrey};
   --color-white: ${GlobalPallete.colors.white};
   --color-red: ${GlobalPallete.colors.red};
-  --color-black: #000000;
+  --color-black: ${GlobalPallete.colors.black};
 
   --height-top-bar: 54px;
 `
