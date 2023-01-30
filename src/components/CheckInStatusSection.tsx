@@ -26,6 +26,7 @@ const StyledCheckInStatus = styled.div<{
   margin-bottom: 12px;
   padding: 12px;
   position: relative;
+  background-color: var(--color-black);
 
   .form_content {
     height: 38px;

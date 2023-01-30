@@ -33,6 +33,7 @@ const CSSVariables = styled.div`
 
 const MaterialUIPallet = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: GlobalPallete.colors.primary
     },

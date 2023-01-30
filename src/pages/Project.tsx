@@ -92,11 +92,21 @@ const StyledProject = styled.div`
       height: 100%;
       overflow: scroll;
       text-align: start;
+      background-color: var(--color-black);
     }
 
     .section_bottom_left,
     .section_bottom_right {
       margin-bottom: 0;
+    }
+
+    .section_middle_top,
+    .section_top_left,
+    .section_bottom_left,
+    .section_top_right,
+    .section_bottom_right,
+    :before {
+      background: rgba(0, 0, 0, 0.6);
     }
 
     .section_middle {
@@ -114,6 +124,14 @@ const StyledProject = styled.div`
         border-radius: 2px;
         margin-bottom: 12px;
         padding: 12px;
+        background-color: var(--color-black);
+      }
+
+      .section_daily_feed,
+      .section_middle_top,
+      .section_daily_form_fields,
+      :before {
+        background: rgba(0, 0, 0, 0.6);
       }
 
       .section_middle_top {
