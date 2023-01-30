@@ -26,6 +26,7 @@ const CSSVariables = styled.div`
   --color-dark-grey: ${GlobalPallete.colors.darkGrey};
   --color-white: ${GlobalPallete.colors.white};
   --color-red: ${GlobalPallete.colors.red};
+  --color-black: #000000;
 
   --height-top-bar: 54px;
 `

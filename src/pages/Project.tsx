@@ -42,6 +42,10 @@ const StyledProject = styled.div`
     height: var(--height-top-bar);
     padding: 0 24px;
 
+    .caption {
+      color: var(--color-white);
+    }
+
     .logo {
       position: absolute;
       width: 100%;
@@ -50,6 +54,7 @@ const StyledProject = styled.div`
 
     .sign_out_button {
       z-index: 1;
+      color: var(--color-white);
 
       :hover {
         cursor: pointer;
@@ -69,6 +74,7 @@ const StyledProject = styled.div`
       margin: 12px 6px 12px 12px;
       display: flex;
       flex-direction: column;
+      padding-bottom: 36px;
     }
 
     .section_top_left,
@@ -79,8 +85,8 @@ const StyledProject = styled.div`
       align-items: flex-end;
       flex-direction: column;
       position: relative;
-      border: 2px solid var(--color-secondary);
-      border-radius: 6px;
+      border: 1px solid var(--color-primary);
+      border-radius: 2px;
       margin-bottom: 12px;
       padding: 12px;
       height: 100%;
@@ -94,16 +100,18 @@ const StyledProject = styled.div`
     }
 
     .section_middle {
+      z-index: 1;
       width: 100%;
       display: flex;
       flex-direction: column;
       margin: 12px 6px 12px 6px;
+      padding-bottom: 36px;
 
       .section_middle_top,
       .section_daily_form_fields,
       .section_daily_feed {
-        border: 2px solid var(--color-secondary);
-        border-radius: 6px;
+        border: 1px solid var(--color-primary);
+        border-radius: 2px;
         margin-bottom: 12px;
         padding: 12px;
       }
@@ -123,7 +131,7 @@ const StyledProject = styled.div`
           padding: 0 12px;
         }
 
-        .fade_in_out_text.redtext {
+        .fade_in_out_text.hate_res {
           color: var(--color-red);
         }
 
@@ -138,13 +146,17 @@ const StyledProject = styled.div`
         }
       }
 
+      .section_middle_top.hate_res {
+        border-color: var(--color-red);
+      }
+
       .section_daily_feed {
         margin-bottom: 0;
         height: 100%;
         overflow: scroll;
 
         .weeks_response {
-          border-bottom: 2px solid var(--color-secondary);
+          border-bottom: 1px solid var(--color-primary);
           margin-bottom: 12px;
 
           .time_submitted {
@@ -165,7 +177,7 @@ const StyledProject = styled.div`
 
     .section_right {
       margin: 12px 12px 12px 6px;
-      padding-top: 80px;
+      padding-top: 78px;
     }
   }
 
@@ -279,11 +291,15 @@ const Project = (): JSX.Element => {
           </div>
         </div>
         <div className="section_middle">
-          <div className="section_middle_top">
+          <div
+            className={cx('section_middle_top', {
+              hate_res: shortResponseInView.type === 'HATE'
+            })}
+          >
             {shortResponseInView.text !== '' && (
               <h2
                 className={cx('body-1 fade_in_out_text', {
-                  redtext: shortResponseInView.type === 'HATE'
+                  hate_res: shortResponseInView.type === 'HATE'
                 })}
               >
                 {shortResponseInView.text}

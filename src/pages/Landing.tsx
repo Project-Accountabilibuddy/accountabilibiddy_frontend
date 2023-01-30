@@ -25,12 +25,10 @@ const StyledLanding = styled.div`
   }
 
   .heading-2 {
-    color: var(--color-light-grey);
     margin-bottom: 24px;
   }
 
   .body-1 {
-    color: var(--color-light-grey);
     margin-bottom: 24px;
   }
 

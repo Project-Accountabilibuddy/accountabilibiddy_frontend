@@ -14,11 +14,23 @@ import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
 import ProjectSetUpPage from './pages/ProjectSetup'
 import ProjectPage from './pages/Project'
+import BackGroundImage from './test_background.jpeg'
 
 const StyledApp = styled.div`
-  background-color: var(--color-background);
+  background-image: url(${BackGroundImage});
   height: 100vh;
   width: 100vw;
+  background-size: auto 100%;
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 `
 
 const StyledGlobalLoading = styled.div`

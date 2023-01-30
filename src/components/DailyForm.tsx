@@ -12,7 +12,7 @@ interface DailyFormProps {
 }
 
 const StyledDailyForm = styled.div`
-  margin-top: 80px;
+  margin-top: 78px;
 
   .form_content {
     height: 272px;
