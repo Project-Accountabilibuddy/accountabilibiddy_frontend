@@ -10,6 +10,7 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
+import LogoBig from '../icons/LogoBig'
 
 interface ShortAnswer {
   text: string
@@ -241,7 +242,7 @@ const Project = (): JSX.Element => {
     <StyledProject>
       <div className="top_nav_bar">
         <h1 className="caption">{`Hello, ${userName}`}</h1>
-        <h1 className="heading-2 logo">BiliBuddy</h1>
+        <LogoBig className="logo" />
         <h1
           className="caption sign_out_button"
           onClick={() => {
