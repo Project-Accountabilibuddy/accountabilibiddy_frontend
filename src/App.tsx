@@ -21,6 +21,7 @@ const StyledApp = styled.div`
   height: 100vh;
   width: 100vw;
   background-size: auto 100%;
+  animation: animatedBackground 300s linear infinite;
 
   :before {
     content: '';
@@ -30,6 +31,15 @@ const StyledApp = styled.div`
     bottom: 0px;
     left: 0px;
     background-color: rgba(0, 0, 0, 0.5);
+
+    @keyframes animatedBackground {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100% 0;
+      }
+    }
   }
 `
 
