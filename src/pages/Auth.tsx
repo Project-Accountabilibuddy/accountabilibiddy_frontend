@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 import GoogleIcon from '@mui/icons-material/Google'
 import FacebookIcon from '@mui/icons-material/Facebook'
-import { InputAdornment } from '@mui/material'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
@@ -20,12 +19,11 @@ const StyledAuthentication = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 20%;
-  height: 100vw;
-  width: 100vh;
 
   .logo {
-    margin-bottom: 24px;
     width: 100%;
+    position: absolute;
+    top: 100px;
   }
 
   .heading-2 {
@@ -38,9 +36,25 @@ const StyledAuthentication = styled.div`
     width: 400px;
   }
 
+  .or_group {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .caption {
+      margin: 0 8px;
+      color: var(--color-white);
+    }
+
+    .or_line {
+      border-bottom: 1px solid var(--color-white);
+      width: 100%;
+    }
+  }
+
   .auth_options {
     .auth_option {
-      margin-top: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -58,7 +72,7 @@ const StyledAuthentication = styled.div`
   }
 
   button {
-    margin-top: 24px;
+    margin-bottom: 24px;
     width: 400px;
   }
 `
@@ -147,13 +161,18 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <Button
+            variant="outlined"
             onClick={() => {
               void handleSignUpUser()
             }}
           >
             Sign Up
           </Button>
-
+          <div className="or_group">
+            <div className="or_line" />
+            <h5 className="caption"> OR </h5>
+            <div className="or_line" />
+          </div>
           <div className="auth_options">
             <div className="auth_option">
               <Button
@@ -198,7 +217,7 @@ const Authentication = (): JSX.Element => {
           <h3 className="heading-2">Confirm Sign Up</h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Code"
             value={code}
             onChange={(e) => {
@@ -219,7 +238,7 @@ const Authentication = (): JSX.Element => {
           <h3 className="heading-2">Let's get back to work</h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Email"
             value={userEmail}
             onChange={(e) => {
@@ -228,7 +247,7 @@ const Authentication = (): JSX.Element => {
           />
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
@@ -236,13 +255,15 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <Button
+            variant="outlined"
             onClick={() => {
               void handleSignInUser()
             }}
           >
-            Sign In
+            Log In
           </Button>
           <Button
+            variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_UP')
             }}
