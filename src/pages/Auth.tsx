@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 import GoogleIcon from '@mui/icons-material/Google'
 import FacebookIcon from '@mui/icons-material/Facebook'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import InputAdornment from '@mui/material/InputAdornment'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
@@ -82,6 +84,7 @@ const Authentication = (): JSX.Element => {
 
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const [code, setCode] = useState('')
 
@@ -152,12 +155,24 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
+            type={showPassword ? 'text' : 'password'}
             className="text_field"
             variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <VisibilityIcon
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                  />
+                </InputAdornment>
+              )
             }}
           />
           <Button
@@ -246,12 +261,24 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
+            type={showPassword ? 'text' : 'password'}
             className="text_field"
             variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <VisibilityIcon
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                  />
+                </InputAdornment>
+              )
             }}
           />
           <Button
