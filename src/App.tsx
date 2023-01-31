@@ -76,7 +76,7 @@ const App = (): JSX.Element => {
       .catch(() => {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === ROUTES.PROJECT) {
-          navigate('/')
+          // navigate('/')
         }
       })
   }, [navigate, pathname])
