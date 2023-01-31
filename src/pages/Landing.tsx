@@ -29,7 +29,6 @@ const StyledLanding = styled.div`
 `
 
 const Landing = (): JSX.Element => {
-  // TODO: RESOLVE BUG WHERE OAUTH DOES NOT DIRECT USER TO CREATE PROJECT NAME
   const navigate = useNavigate()
 
   return (
