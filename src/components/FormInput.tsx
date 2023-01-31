@@ -52,6 +52,7 @@ const StyledFormInput = styled.div`
     margin-bottom: 24px;
     padding: 8px;
     border-radius: 4px;
+    caret-color: var(--color-primary);
   }
 
   .week_options {
