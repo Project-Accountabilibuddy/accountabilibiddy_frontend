@@ -13,7 +13,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
-import LogoBig from '../icons/LogoBig'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -21,12 +20,6 @@ const StyledAuthentication = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 20%;
-
-  .logo {
-    width: 100%;
-    position: absolute;
-    top: 100px;
-  }
 
   .heading-2 {
     margin-bottom: 24px;
@@ -139,7 +132,6 @@ const Authentication = (): JSX.Element => {
 
   return (
     <StyledAuthentication>
-      <LogoBig className="logo" />
       {authFormInView === 'SIGN_UP' && (
         <>
           <h3 className="heading-2">

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
 
+import useGlobalState from '../global/GlobalSate'
+
 interface FormInputProps {
   type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
   title: string
@@ -13,6 +15,7 @@ interface FormInputProps {
   setResponseText?: (responseText: string) => void
   setGroupResponse?: (responseText: string, index: number) => void
   continueAction: () => void
+  backAction?: (() => void) | null
   updateNumberOfGroupResponses?: (removeOrAdd: 'ADD' | 'REMOVE') => void
   setResponseNumber?: (responseNumber: number) => void
 }
@@ -36,6 +39,7 @@ const StyledFormInput = styled.div`
 
   button {
     margin-top: 120px;
+    width: 400px;
   }
 
   textarea {
@@ -93,6 +97,12 @@ const StyledFormInput = styled.div`
       justify-content: space-between;
     }
   }
+
+  .nav_buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 `
 
 const FormInput = ({
@@ -105,10 +115,13 @@ const FormInput = ({
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
+  backAction = null,
   updateNumberOfGroupResponses = () => {},
   setResponseNumber = () => {}
 }: FormInputProps): JSX.Element => {
   const ref = useRef<HTMLTextAreaElement>(null)
+
+  const { inEditFormMode } = useGlobalState()
 
   useEffect(() => {
     if (ref?.current != null) {
@@ -195,13 +208,20 @@ const FormInput = ({
           </div>
         </>
       )}
-      <Button
-        disabled={responseText.length === 0 && type === 'TEXT'}
-        variant="outlined"
-        onClick={continueAction}
-      >
-        Continue Journey
-      </Button>
+      <div className="nav_buttons">
+        {backAction !== null && !inEditFormMode && (
+          <Button variant="text" onClick={backAction}>
+            Back
+          </Button>
+        )}
+        <Button
+          disabled={responseText.length === 0 && type === 'TEXT'}
+          variant="outlined"
+          onClick={continueAction}
+        >
+          {inEditFormMode ? 'Save' : 'Next'}
+        </Button>
+      </div>
     </StyledFormInput>
   )
 }

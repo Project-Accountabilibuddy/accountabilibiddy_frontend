@@ -14,6 +14,8 @@ const StyledProjectSetup = styled.div`
   justify-content: center;
   padding: 0 20%;
   height: 100%;
+  width: 100%;
+  position: relative;
 `
 
 const ProjectSetup = (): JSX.Element => {
@@ -78,6 +80,7 @@ const ProjectSetup = (): JSX.Element => {
         <FormInput
           type="TEXT"
           title="Better come up with an inspring name"
+          description="Note: be careful this can not be changed..."
           responseText={projectName}
           setResponseText={(text) => {
             setProjectName(text)
@@ -122,6 +125,11 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.HATERS_LONG_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.HATERS_LONG_FORM && (
@@ -139,6 +147,11 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM && (
@@ -154,6 +167,11 @@ const ProjectSetup = (): JSX.Element => {
             handleContinueAction(
               { userResponseSacrificeLongForm },
               SETUP_PROJECT_SCREENS.WHY_SHORT_FORM
+            )
+          }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_LONG_FORM}`
             )
           }}
         />
@@ -176,6 +194,11 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM && (
@@ -196,6 +219,11 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_SHORT_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE && (
@@ -212,6 +240,11 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             // handleUpdateProject({ weeksExpectedToComplete })
             navigate(ROUTES.PROJECT)
+          }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM}`
+            )
           }}
         />
       )}
