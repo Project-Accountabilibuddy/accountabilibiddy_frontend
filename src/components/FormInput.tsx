@@ -8,6 +8,7 @@ import useGlobalState from '../global/GlobalSate'
 interface FormInputProps {
   type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
   title: string
+  step: string
   description?: string
   responseText?: string
   groupResponses?: string[]
@@ -107,6 +108,7 @@ const StyledFormInput = styled.div`
 
 const FormInput = ({
   title,
+  step,
   type,
   description,
   responseText = '',
@@ -131,6 +133,7 @@ const FormInput = ({
 
   return (
     <StyledFormInput>
+      {!inEditFormMode && <h1 className="body-1">{step}</h1>}
       <h1 className="heading-1">{title}</h1>
       {Boolean(description) && <h3 className="heading-2">{description}</h3>}
       {type === 'TEXT' && (
