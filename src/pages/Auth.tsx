@@ -4,39 +4,62 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
+import GoogleIcon from '@mui/icons-material/Google'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import { InputAdornment } from '@mui/material'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import LogoBig from '../icons/LogoBig'
 
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   justify-content: center;
   padding: 0 20%;
   height: 100vw;
   width: 100vh;
 
-  .heading-1 {
-    color: var(--color-primary);
+  .logo {
     margin-bottom: 24px;
+    width: 100%;
   }
 
   .heading-2 {
-    color: var(--color-light-grey);
     margin-bottom: 24px;
+    width: 400px;
   }
 
   .text_field {
-    padding-top: 12px;
-    input {
-      color: white;
+    margin-bottom: 24px;
+    width: 400px;
+  }
+
+  .auth_options {
+    .auth_option {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        position: relative;
+
+        svg {
+          position: absolute;
+          left: 8px;
+          margin-right: 8px;
+        }
+      }
     }
   }
 
   button {
     margin-top: 24px;
+    width: 400px;
   }
 `
 
@@ -99,7 +122,7 @@ const Authentication = (): JSX.Element => {
 
   return (
     <StyledAuthentication>
-      <h1 className="heading-1">Accountabilibuddy</h1>
+      <LogoBig className="logo" />
       {authFormInView === 'SIGN_UP' && (
         <>
           <h3 className="heading-2">
@@ -107,7 +130,7 @@ const Authentication = (): JSX.Element => {
           </h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Email"
             value={userEmail}
             onChange={(e) => {
@@ -116,7 +139,7 @@ const Authentication = (): JSX.Element => {
           />
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
@@ -130,7 +153,38 @@ const Authentication = (): JSX.Element => {
           >
             Sign Up
           </Button>
+
+          <div className="auth_options">
+            <div className="auth_option">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Google
+                  })
+                }}
+              >
+                <GoogleIcon color="primary" />
+                Google
+              </Button>
+            </div>
+            <div className="auth_option">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Facebook
+                  })
+                }}
+              >
+                <FacebookIcon color="primary" />
+                Facebook
+              </Button>
+            </div>
+          </div>
+
           <Button
+            variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_IN')
             }}
