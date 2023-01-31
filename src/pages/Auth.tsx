@@ -29,6 +29,10 @@ const StyledAuthentication = styled.div`
   .text_field {
     margin-bottom: 24px;
     width: 400px;
+
+    .visibility_icon:hover {
+      cursor: pointer;
+    }
   }
 
   .or_group {
@@ -159,6 +163,7 @@ const Authentication = (): JSX.Element => {
               endAdornment: (
                 <InputAdornment position="end">
                   <VisibilityIcon
+                    className="visibility_icon"
                     onClick={() => {
                       setShowPassword(!showPassword)
                     }}
@@ -265,6 +270,7 @@ const Authentication = (): JSX.Element => {
               endAdornment: (
                 <InputAdornment position="end">
                   <VisibilityIcon
+                    className="visibility_icon"
                     onClick={() => {
                       setShowPassword(!showPassword)
                     }}

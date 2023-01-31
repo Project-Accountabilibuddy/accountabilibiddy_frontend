@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
 import dayjs from 'dayjs'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
 
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
@@ -24,6 +25,16 @@ const StyledDailyForm = styled.div`
       align-items: center;
       margin-bottom: 12px;
 
+      .checked_in {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        svg {
+          margin-right: 8px;
+        }
+      }
+
       .heading-3 {
         text-align: start;
       }
@@ -35,7 +46,7 @@ const StyledDailyForm = styled.div`
 
     .form_input_field {
       color: var(--color-white);
-      background-color: var(--color-background);
+      background: none;
       border-radius: 4px;
       border: none;
       outline: none;
@@ -99,7 +110,10 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
             <h2 className="heading-3">Check-in today</h2>
           )}
           {formHasBeenFilledOutToday && (
-            <h2 className="heading-3">Checked in today... Nice</h2>
+            <div className="checked_in">
+              <CheckBoxIcon color="primary" />
+              <h2 className="heading-3">Checked in today... Nice</h2>
+            </div>
           )}
           <h3 className="caption">{dayjs().format('ddd MMM D')}</h3>
         </div>
