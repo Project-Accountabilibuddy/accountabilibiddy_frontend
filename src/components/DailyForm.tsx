@@ -46,7 +46,7 @@ const StyledDailyForm = styled.div`
 
     .form_input_field {
       color: var(--color-white);
-      background-color: var(--color-background);
+      background: none;
       border-radius: 4px;
       border: none;
       outline: none;
