@@ -64,7 +64,6 @@ const StyledFormInput = styled.div`
       align-items: center;
       juect-content: center;
       padding: 24px;
-      background-color: var(--color-light-grey);
       border: 2px solid var(--color-light-grey);
       color: var(--color-white);
       border-radius: 4px;
@@ -108,9 +107,9 @@ const StyledFormInput = styled.div`
 `
 
 const FormInput = ({
+  type,
   title,
   step,
-  type,
   description,
   responseText = '',
   groupResponses = [],
@@ -159,7 +158,7 @@ const FormInput = ({
                 onClick={() => {
                   setResponseNumber(weekOption)
                 }}
-                className={cx('week_option', {
+                className={cx('week_option body-2', {
                   selected: weekOption === responseNumber
                 })}
                 key={index}

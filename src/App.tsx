@@ -38,7 +38,7 @@ const StyledApp = styled.div`
     right: 0;
     left: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
   }
 
   .content {
@@ -83,7 +83,7 @@ const App = (): JSX.Element => {
       .catch(() => {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === ROUTES.PROJECT) {
-          // navigate('/')
+          navigate('/')
         }
       })
   }, [navigate, pathname])
@@ -104,12 +104,14 @@ const App = (): JSX.Element => {
       })
   }, [])
 
+  const onProjectPage = pathname === ROUTES.PROJECT
+
   return (
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
           <div className="content">
-            {pathname !== ROUTES.PROJECT && <LogoBig className="logo" />}
+            {!onProjectPage && <LogoBig className="logo" />}
             {globalLoading && (
               <StyledGlobalLoading>
                 <CircularProgress />

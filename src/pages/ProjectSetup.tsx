@@ -64,7 +64,7 @@ const ProjectSetup = (): JSX.Element => {
     fieldToUpdate: object,
     nextFormInView: string
   ): void => {
-    // handleUpdateProject(fieldToUpdate)
+    handleUpdateProject(fieldToUpdate)
 
     if (inEditFormMode) {
       navigate(ROUTES.PROJECT)
@@ -87,7 +87,7 @@ const ProjectSetup = (): JSX.Element => {
             setProjectName(text)
           }}
           continueAction={() => {
-            // handleCreateProject({ projectName })
+            handleCreateProject({ projectName })
             navigate(
               `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
             )
@@ -246,7 +246,7 @@ const ProjectSetup = (): JSX.Element => {
             setWeeksExpectedToComplete(String(text))
           }}
           continueAction={() => {
-            // handleUpdateProject({ weeksExpectedToComplete })
+            handleUpdateProject({ weeksExpectedToComplete })
             navigate(ROUTES.PROJECT)
           }}
           backAction={() => {
