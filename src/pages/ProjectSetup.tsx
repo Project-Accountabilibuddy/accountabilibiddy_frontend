@@ -14,6 +14,8 @@ const StyledProjectSetup = styled.div`
   justify-content: center;
   padding: 0 20%;
   height: 100%;
+  width: 100%;
+  position: relative;
 `
 
 const ProjectSetup = (): JSX.Element => {
@@ -77,7 +79,9 @@ const ProjectSetup = (): JSX.Element => {
       {endOfPath === SETUP_PROJECT_SCREENS.PROJECT_NAME && (
         <FormInput
           type="TEXT"
+          step="Step 1/8"
           title="Better come up with an inspring name"
+          description="Note: be careful this can not be changed..."
           responseText={projectName}
           setResponseText={(text) => {
             setProjectName(text)
@@ -93,6 +97,7 @@ const ProjectSetup = (): JSX.Element => {
       {endOfPath === SETUP_PROJECT_SCREENS.WHAT_LONG_FORM && (
         <FormInput
           type="TEXT"
+          step="Step 2/8"
           title="What do you want to do? Please make it interesting..."
           description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
           responseText={userResponseWhatLongForm}
@@ -110,6 +115,7 @@ const ProjectSetup = (): JSX.Element => {
       {endOfPath === SETUP_PROJECT_SCREENS.WHY_LONG_FORM && (
         <FormInput
           type="TEXT"
+          step="Steop 3/8"
           title="Why the fuck are you doing this?"
           description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
           responseText={userResponseWhyLongForm}
@@ -122,11 +128,17 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.HATERS_LONG_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.HATERS_LONG_FORM && (
         <FormInput
           type="TEXT"
+          step="Step 4/8"
           title="What will your internal bitch say?"
           description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
           responseText={userResponseHatersLongForm}
@@ -139,11 +151,17 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM && (
         <FormInput
           type="TEXT"
+          step="Step 5/8"
           title="What sacrifces will be made? Is this actually worth it?"
           description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
           responseText={userResponseSacrificeLongForm}
@@ -156,11 +174,17 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.WHY_SHORT_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.WHY_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
+          step="Step 6/8"
           title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
           groupResponses={userResponseWhyShortForm}
           responseText={userResponseWhyLongForm}
@@ -176,11 +200,17 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM && (
         <FormInput
           type="MULTIPLE_TEXT"
+          step="Step 7/8"
           title="Distill the voice of others and your own inner bitch that tells you why you can't"
           groupResponses={userResponseHatersShortForm}
           responseText={userResponseHatersLongForm}
@@ -196,11 +226,17 @@ const ProjectSetup = (): JSX.Element => {
               SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE
             )
           }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_SHORT_FORM}`
+            )
+          }}
         />
       )}
       {endOfPath === SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE && (
         <FormInput
           type="NUMBER"
+          step="Last Step"
           title="Choose a time that is inspiring but not impossible"
           description="This can nto be edited, deadlines are important,
            what is to keep you from continueing to push this shit out.
@@ -212,6 +248,11 @@ const ProjectSetup = (): JSX.Element => {
           continueAction={() => {
             handleUpdateProject({ weeksExpectedToComplete })
             navigate(ROUTES.PROJECT)
+          }}
+          backAction={() => {
+            navigate(
+              `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM}`
+            )
           }}
         />
       )}

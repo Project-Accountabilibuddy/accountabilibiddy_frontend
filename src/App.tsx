@@ -9,12 +9,13 @@ import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
 import { ROUTES } from './global/Constants'
+import BackGroundImage from './test_background.jpeg'
+import LogoBig from './icons/LogoBig'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
 import ProjectSetUpPage from './pages/ProjectSetup'
 import ProjectPage from './pages/Project'
-import BackGroundImage from './test_background.jpeg'
 
 const StyledApp = styled.div`
   background-image: url(${BackGroundImage});
@@ -37,7 +38,7 @@ const StyledApp = styled.div`
     right: 0;
     left: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
   }
 
   .content {
@@ -48,6 +49,12 @@ const StyledApp = styled.div`
     justify-content: center;
     height: 100vh;
     width: 100vw;
+
+    .logo {
+      width: 100%;
+      position: absolute;
+      top: 80px;
+    }
   }
 `
 
@@ -97,11 +104,14 @@ const App = (): JSX.Element => {
       })
   }, [])
 
+  const onProjectPage = pathname === ROUTES.PROJECT
+
   return (
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
           <div className="content">
+            {!onProjectPage && <LogoBig className="logo" />}
             {globalLoading && (
               <StyledGlobalLoading>
                 <CircularProgress />

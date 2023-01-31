@@ -3,9 +3,12 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
 
+import useGlobalState from '../global/GlobalSate'
+
 interface FormInputProps {
   type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
   title: string
+  step: string
   description?: string
   responseText?: string
   groupResponses?: string[]
@@ -13,6 +16,7 @@ interface FormInputProps {
   setResponseText?: (responseText: string) => void
   setGroupResponse?: (responseText: string, index: number) => void
   continueAction: () => void
+  backAction?: (() => void) | null
   updateNumberOfGroupResponses?: (removeOrAdd: 'ADD' | 'REMOVE') => void
   setResponseNumber?: (responseNumber: number) => void
 }
@@ -36,6 +40,7 @@ const StyledFormInput = styled.div`
 
   button {
     margin-top: 120px;
+    width: 400px;
   }
 
   textarea {
@@ -47,6 +52,7 @@ const StyledFormInput = styled.div`
     margin-bottom: 24px;
     padding: 8px;
     border-radius: 4px;
+    caret-color: var(--color-primary);
   }
 
   .week_options {
@@ -58,7 +64,6 @@ const StyledFormInput = styled.div`
       align-items: center;
       juect-content: center;
       padding: 24px;
-      background-color: var(--color-light-grey);
       border: 2px solid var(--color-light-grey);
       color: var(--color-white);
       border-radius: 4px;
@@ -93,11 +98,18 @@ const StyledFormInput = styled.div`
       justify-content: space-between;
     }
   }
+
+  .nav_buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 `
 
 const FormInput = ({
-  title,
   type,
+  title,
+  step,
   description,
   responseText = '',
   groupResponses = [],
@@ -105,10 +117,13 @@ const FormInput = ({
   setResponseText = () => {},
   setGroupResponse = () => {},
   continueAction,
+  backAction = null,
   updateNumberOfGroupResponses = () => {},
   setResponseNumber = () => {}
 }: FormInputProps): JSX.Element => {
   const ref = useRef<HTMLTextAreaElement>(null)
+
+  const { inEditFormMode } = useGlobalState()
 
   useEffect(() => {
     if (ref?.current != null) {
@@ -118,6 +133,7 @@ const FormInput = ({
 
   return (
     <StyledFormInput>
+      {!inEditFormMode && <h1 className="body-1">{step}</h1>}
       <h1 className="heading-1">{title}</h1>
       {Boolean(description) && <h3 className="heading-2">{description}</h3>}
       {type === 'TEXT' && (
@@ -142,7 +158,7 @@ const FormInput = ({
                 onClick={() => {
                   setResponseNumber(weekOption)
                 }}
-                className={cx('week_option', {
+                className={cx('week_option body-2', {
                   selected: weekOption === responseNumber
                 })}
                 key={index}
@@ -195,13 +211,20 @@ const FormInput = ({
           </div>
         </>
       )}
-      <Button
-        disabled={responseText.length === 0 && type === 'TEXT'}
-        variant="outlined"
-        onClick={continueAction}
-      >
-        Continue Journey
-      </Button>
+      <div className="nav_buttons">
+        {backAction !== null && !inEditFormMode && (
+          <Button variant="text" onClick={backAction}>
+            Back
+          </Button>
+        )}
+        <Button
+          disabled={responseText.length === 0 && type === 'TEXT'}
+          variant="outlined"
+          onClick={continueAction}
+        >
+          {inEditFormMode ? 'Save' : 'Next'}
+        </Button>
+      </div>
     </StyledFormInput>
   )
 }

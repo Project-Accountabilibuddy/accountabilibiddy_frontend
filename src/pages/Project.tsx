@@ -46,7 +46,7 @@ const StyledProject = styled.div`
       color: var(--color-white);
     }
 
-    .logo {
+    .project_logo {
       position: absolute;
       width: 100%;
       text-align: center;
@@ -272,7 +272,7 @@ const Project = (): JSX.Element => {
     <StyledProject>
       <div className="top_nav_bar">
         <h1 className="caption">{`Hello, ${userName}`}</h1>
-        <LogoBig className="logo" />
+        <LogoBig className="project_logo" />
         <h1
           className="caption sign_out_button"
           onClick={() => {
