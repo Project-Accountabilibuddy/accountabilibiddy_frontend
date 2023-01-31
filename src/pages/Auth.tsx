@@ -4,39 +4,78 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
+import GoogleIcon from '@mui/icons-material/Google'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import InputAdornment from '@mui/material/InputAdornment'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import LogoBig from '../icons/LogoBig'
 
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   justify-content: center;
   padding: 0 20%;
-  height: 100vw;
-  width: 100vh;
 
-  .heading-1 {
-    color: var(--color-primary);
-    margin-bottom: 24px;
+  .logo {
+    width: 100%;
+    position: absolute;
+    top: 100px;
   }
 
   .heading-2 {
-    color: var(--color-light-grey);
     margin-bottom: 24px;
+    width: 400px;
   }
 
   .text_field {
-    padding-top: 12px;
-    input {
-      color: white;
+    margin-bottom: 24px;
+    width: 400px;
+  }
+
+  .or_group {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .caption {
+      margin: 0 8px;
+      color: var(--color-white);
+    }
+
+    .or_line {
+      border-bottom: 1px solid var(--color-white);
+      width: 100%;
+    }
+  }
+
+  .auth_options {
+    .auth_option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        position: relative;
+
+        svg {
+          position: absolute;
+          left: 8px;
+          margin-right: 8px;
+        }
+      }
     }
   }
 
   button {
-    margin-top: 24px;
+    margin-bottom: 24px;
+    width: 400px;
   }
 `
 
@@ -45,6 +84,7 @@ const Authentication = (): JSX.Element => {
 
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const [code, setCode] = useState('')
 
@@ -99,7 +139,7 @@ const Authentication = (): JSX.Element => {
 
   return (
     <StyledAuthentication>
-      <h1 className="heading-1">Accountabilibuddy</h1>
+      <LogoBig className="logo" />
       {authFormInView === 'SIGN_UP' && (
         <>
           <h3 className="heading-2">
@@ -107,7 +147,7 @@ const Authentication = (): JSX.Element => {
           </h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Email"
             value={userEmail}
             onChange={(e) => {
@@ -115,22 +155,70 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
+            type={showPassword ? 'text' : 'password'}
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
             }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <VisibilityIcon
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                  />
+                </InputAdornment>
+              )
+            }}
           />
           <Button
+            variant="outlined"
             onClick={() => {
               void handleSignUpUser()
             }}
           >
             Sign Up
           </Button>
+          <div className="or_group">
+            <div className="or_line" />
+            <h5 className="caption"> OR </h5>
+            <div className="or_line" />
+          </div>
+          <div className="auth_options">
+            <div className="auth_option">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Google
+                  })
+                }}
+              >
+                <GoogleIcon color="primary" />
+                Google
+              </Button>
+            </div>
+            <div className="auth_option">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  void Auth.federatedSignIn({
+                    provider: CognitoHostedUIIdentityProvider.Facebook
+                  })
+                }}
+              >
+                <FacebookIcon color="primary" />
+                Facebook
+              </Button>
+            </div>
+          </div>
+
           <Button
+            variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_IN')
             }}
@@ -144,7 +232,7 @@ const Authentication = (): JSX.Element => {
           <h3 className="heading-2">Confirm Sign Up</h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Code"
             value={code}
             onChange={(e) => {
@@ -165,7 +253,7 @@ const Authentication = (): JSX.Element => {
           <h3 className="heading-2">Let's get back to work</h3>
           <TextField
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Email"
             value={userEmail}
             onChange={(e) => {
@@ -173,22 +261,36 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
+            type={showPassword ? 'text' : 'password'}
             className="text_field"
-            variant="outlined"
+            variant="standard"
             label="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)
             }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <VisibilityIcon
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                  />
+                </InputAdornment>
+              )
+            }}
           />
           <Button
+            variant="outlined"
             onClick={() => {
               void handleSignInUser()
             }}
           >
-            Sign In
+            Log In
           </Button>
           <Button
+            variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_UP')
             }}

@@ -29,6 +29,10 @@ const StyledDailyForm = styled.div`
       }
     }
 
+    .question_title {
+      color: var(--color-white);
+    }
+
     .form_input_field {
       color: var(--color-white);
       background-color: var(--color-background);
