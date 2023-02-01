@@ -12,7 +12,7 @@ import { ROUTES } from './global/Constants'
 
 import LogoBig from './icons/LogoBig'
 import SunBackgroundImage from './images/sun_background.png'
-import MountainForgroundImage from './images/mountain_forground.png'
+import MountainforegroundImage from './images/mountain_foreground.png'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -24,8 +24,8 @@ const StyledApp = styled.div`
   background-size: auto 100%;
   background-position: center;
 
-  .forground {
-    background-image: url(${MountainForgroundImage});
+  .foreground {
+    background-image: url(${MountainforegroundImage});
     background-size: auto 100%;
     animation: animatedBackground 200s linear infinite;
 
@@ -129,7 +129,7 @@ const App = (): JSX.Element => {
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          <div className="forground">
+          <div className="foreground">
             <div className="content">
               {!onProjectPage && <LogoBig className="logo" />}
               {globalLoading && (
