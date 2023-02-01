@@ -10,7 +10,7 @@ const StyledLanding = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 0 10% 8% 10%;
+  padding: 0 10% 10% 10%;
   height: 100%;
   justify-content: flex-end;
 
@@ -23,7 +23,7 @@ const StyledLanding = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding-right: 24px;
+      padding-right: 34px;
 
       .welcome_text,
       .quote_text,
@@ -72,9 +72,10 @@ const Landing = (): JSX.Element => {
             </h2>
           </div>
           <h3 className="caption inspire_text">
-            Billibuddy was created to help users inspire themselves to complete
-            aims they have always wanted to achieve but for some reason or
-            another have not.
+            In todays “safe” society motivation rarely comes from external
+            sources it must come from within. Billibuddy can not motivate you.
+            It might however help you inspire yourself to achieve something in
+            your life that you have always wanted to make happen.
           </h3>
           <Button
             className="begin_button"
@@ -110,12 +111,6 @@ const Landing = (): JSX.Element => {
         dashboard. Here they will be presented with constant reminders as to why
         they decided to take there chosen project on. There is also a daily
         check in feature to help hold users accountable to themselves.
-      </h3>
-      <h3 className="body-2">
-        In todays “safe” society motivation rarely comes from external sources
-        it must come from within. Billibuddy can not motivate you. It might
-        however help you inspire yourself to achieve something in your life that
-        you have always wanted to make happen.
       </h3>
     </StyledLanding>
   )
