@@ -9,8 +9,8 @@ import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
 import { ROUTES } from './global/Constants'
-import LogoBig from './icons/LogoBig'
 
+import LogoBig from './icons/LogoBig'
 import SunBackgroundImage from './images/sun_background.png'
 import MountainForgroundImage from './images/mountain_forground.png'
 
@@ -60,7 +60,7 @@ const StyledApp = styled.div`
       .logo {
         width: 100%;
         position: absolute;
-        top: 80px;
+        top: 40px;
       }
     }
   }
