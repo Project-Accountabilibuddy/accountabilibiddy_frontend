@@ -15,6 +15,7 @@ const StyledTopNavBar = styled.div`
   position: fixed;
   width: 100vw;
   top: 0;
+  z-index: 1;
 
   .project_name {
     padding-left: 24px;
