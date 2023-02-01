@@ -254,13 +254,12 @@ const Project = (): JSX.Element => {
   }, [])
 
   const handleSignOut = async (): Promise<any> => {
-    await Auth.signOut()
-      .then(() => {
-        navigate('/')
-      })
-      .catch((error) => {
-        console.log('error signing out: ', error)
-      })
+    try {
+      await Auth.signOut()
+      navigate('/')
+    } catch (error) {
+      console.log('error signing out: ', error)
+    }
   }
 
   const handleEditField = (fieldToEdit: string): void => {

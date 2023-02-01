@@ -6,9 +6,9 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 
 interface useBackEndMethodsReturn {
-  handleGetProjects: (onCompletionCB?: () => void) => void
-  handleUpdateProject: (fieldToUpdate: object) => void
-  handleCreateProject: (projectName: object) => void
+  handleGetProjects: (onCompletionCB?: () => void) => Promise<void>
+  handleUpdateProject: (fieldToUpdate: object) => Promise<void>
+  handleCreateProject: (projectName: object) => Promise<void>
 }
 
 const useBackEndMethods = (): useBackEndMethodsReturn => {
@@ -28,126 +28,109 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
 
   const navigate = useNavigate()
 
-  const handleGetProjects = (onCompletionCB = () => {}): void => {
-    Auth.currentSession()
-      .then((res) => {
-        const idToken = res.getIdToken().getJwtToken()
-        const config = { headers: { Authorization: idToken } }
+  const handleGetProjects = async (onCompletionCB = () => {}): Promise<any> => {
+    try {
+      const session = await Auth.currentSession()
+      const idToken = session.getIdToken().getJwtToken()
+      const config = { headers: { Authorization: idToken } }
 
-        axios
-          .get(
-            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
-            config
-          )
-          .then((res) => {
-            if (res.data.Items.length === 0) {
-              console.log('PROJECT HAS NOT BEEN SET UP YET')
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
-              )
-            }
+      const response = await axios.get(
+        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+        config
+      )
 
-            console.log('Retrieved Project: ', res.data.Items[0].projectName)
+      if (response.data.Items.length === 0) {
+        throw new Error('PROJECT_NOT_SET_UP_YET')
+      }
 
-            onCompletionCB()
+      console.log('Retrieved Project: ', response.data.Items[0].projectName)
 
-            // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
-            const {
-              projectName,
-              projectStartDate,
-              userResponseWhatLongForm,
-              userResponseWhyLongForm,
-              userResponseSacrificeLongForm,
-              userResponseHatersLongForm,
-              weeksExpectedToComplete,
-              userResponseWhyShortForm,
-              userResponseHatersShortForm,
-              daysResponseFeed
-            } = res.data.Items[0]
+      // TODO: SUPPORT MUTLIPLE PROJECTS FEATURE HERE
+      const {
+        projectName,
+        projectStartDate,
+        userResponseWhatLongForm,
+        userResponseWhyLongForm,
+        userResponseSacrificeLongForm,
+        userResponseHatersLongForm,
+        weeksExpectedToComplete,
+        userResponseWhyShortForm,
+        userResponseHatersShortForm,
+        daysResponseFeed
+      } = response.data.Items[0]
 
-            setProjectName(projectName)
-            setProjectStartDate(projectStartDate)
-            setUserResponseWhatLongForm(userResponseWhatLongForm)
-            setUserResponseWhyLongForm(userResponseWhyLongForm)
-            setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
-            setUserResponseHatersLongForm(userResponseHatersLongForm)
-            setWeeksExpectedToComplete(weeksExpectedToComplete)
+      setProjectName(projectName)
+      setProjectStartDate(projectStartDate)
+      setUserResponseWhatLongForm(userResponseWhatLongForm)
+      setUserResponseWhyLongForm(userResponseWhyLongForm)
+      setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
+      setUserResponseHatersLongForm(userResponseHatersLongForm)
+      setWeeksExpectedToComplete(weeksExpectedToComplete)
 
-            setDaysResponseFeed(JSON.parse(daysResponseFeed))
+      setDaysResponseFeed(JSON.parse(daysResponseFeed))
 
-            JSON.parse(userResponseWhyShortForm).forEach(
-              (response: string, index: number) => {
-                setUserResponseWhyShortForm(response, index)
-              }
-            )
+      JSON.parse(userResponseWhyShortForm).forEach(
+        (response: string, index: number) => {
+          setUserResponseWhyShortForm(response, index)
+        }
+      )
 
-            JSON.parse(userResponseHatersShortForm).forEach(
-              (response: string, index: number) => {
-                setUserResponseHatersShortForm(response, index)
-              }
-            )
-          })
+      JSON.parse(userResponseHatersShortForm).forEach(
+        (response: string, index: number) => {
+          setUserResponseHatersShortForm(response, index)
+        }
+      )
+    } catch (err: any) {
+      console.log('GET PROJECT ERR', err)
 
-          .catch((err) => {
-            console.log('GET PROJECT ERR', err)
-            onCompletionCB()
-          })
-      })
-      .catch((err) => {
-        console.log('ID TOKEN ERR', err)
-      })
+      if (err.message === 'PROJECT_NOT_SET_UP_YET') {
+        navigate(
+          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
+        )
+      }
+    } finally {
+      onCompletionCB()
+    }
   }
 
-  const handleUpdateProject = (fieldToUpdate: object): void => {
-    Auth.currentSession()
-      .then((res) => {
-        const idToken = res.getIdToken().getJwtToken()
-        const config = { headers: { Authorization: idToken } }
+  const handleUpdateProject = async (fieldToUpdate: object): Promise<any> => {
+    try {
+      const session = await Auth.currentSession()
+      const idToken = session.getIdToken().getJwtToken()
+      const config = { headers: { Authorization: idToken } }
 
-        axios
-          .put(
-            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
-            {
-              fieldToUpdate: Object.keys(fieldToUpdate)[0],
-              updateValue: Object.values(fieldToUpdate)[0],
-              projectToUpdate: projectName
-            },
-            config
-          )
-          .then((res) => {
-            console.log(res.data)
-          })
-          .catch((err) => {
-            console.log('UPDATE PROJECT ERR', err)
-          })
-      })
-      .catch((err) => {
-        console.log('ID TOKEN ERR', err)
-      })
+      const response = await axios.put(
+        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+        {
+          fieldToUpdate: Object.keys(fieldToUpdate)[0],
+          updateValue: Object.values(fieldToUpdate)[0],
+          projectToUpdate: projectName
+        },
+        config
+      )
+
+      console.log(response.data)
+    } catch (err) {
+      console.log('UPDATE PROJECT ERR', err)
+    }
   }
 
-  const handleCreateProject = (projectName: object): void => {
-    Auth.currentSession()
-      .then((res) => {
-        const idToken = res.getIdToken().getJwtToken()
-        const config = { headers: { Authorization: idToken } }
+  const handleCreateProject = async (projectName: object): Promise<any> => {
+    try {
+      const session = await Auth.currentSession()
+      const idToken = session.getIdToken().getJwtToken()
+      const config = { headers: { Authorization: idToken } }
 
-        axios
-          .post(
-            'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
-            projectName,
-            config
-          )
-          .then((res) => {
-            console.log(res.data)
-          })
-          .catch((err) => {
-            console.log('UPDATE PROJECT ERR', err)
-          })
-      })
-      .catch((err) => {
-        console.log('ID TOKEN ERR', err)
-      })
+      const response = await axios.post(
+        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+        projectName,
+        config
+      )
+
+      console.log(response.data)
+    } catch (err) {
+      console.log('CREATE PROJECT ERR', err)
+    }
   }
 
   return {
