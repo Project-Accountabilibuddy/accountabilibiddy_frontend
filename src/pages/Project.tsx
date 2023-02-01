@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
 import dayjs from 'dayjs'
@@ -10,7 +9,7 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
-import LogoBig from '../icons/LogoBig'
+import TopNavBar from '../components/TopNavBar'
 
 interface ShortAnswer {
   text: string
@@ -35,35 +34,8 @@ const StyledProject = styled.div`
     width: 100%;
   }
 
-  .top_nav_bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: var(--height-top-bar);
-    padding: 0 24px;
-
-    .caption {
-      color: var(--color-white);
-    }
-
-    .project_logo {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-    }
-
-    .sign_out_button {
-      z-index: 1;
-      color: var(--color-white);
-
-      :hover {
-        cursor: pointer;
-        color: var(--color-primary);
-      }
-    }
-  }
-
   .section_group {
+    margin-top: var(--height-top-bar);
     height: calc(100vh - var(--height-top-bar));
     padding: 0 100px;
     display: flex;
@@ -226,7 +198,6 @@ const Project = (): JSX.Element => {
     userResponseHatersShortForm,
     userResponseWhatLongForm,
     userResponseSacrificeLongForm,
-    userName,
     setInEditFormMode
   } = useGlobalState()
 
@@ -253,152 +224,136 @@ const Project = (): JSX.Element => {
     }, 10000)
   }, [])
 
-  const handleSignOut = async (): Promise<any> => {
-    try {
-      await Auth.signOut()
-      navigate('/')
-    } catch (error) {
-      console.log('error signing out: ', error)
-    }
-  }
-
   const handleEditField = (fieldToEdit: string): void => {
     setInEditFormMode(true)
     navigate(`${ROUTES.PROJECT_SETUP}/${fieldToEdit}`)
   }
 
   return (
-    <StyledProject>
-      <div className="top_nav_bar">
-        <h1 className="caption">{`Hello, ${userName}`}</h1>
-        <LogoBig className="project_logo" />
-        <h1
-          className="caption sign_out_button"
-          onClick={() => {
-            void handleSignOut()
-          }}
-        >
-          Sign Out
-        </h1>
-      </div>
-      <div className="section_group">
-        <div className="section_left">
-          <CheckInStatusSection />
-          <div className="section_top_left">
-            <h2 className="heading-3 section_title">What are you doing?</h2>
-            <h3 className="caption">{userResponseWhatLongForm}</h3>
-            <EditIcon
-              className="edit_icon"
-              color="primary"
-              onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.WHAT_LONG_FORM)
-              }}
-            />
-          </div>
-          <div className="section_bottom_left">
-            <h2 className="heading-3 section_title">Why are you doing this?</h2>
-            <h3 className="caption">{userResponseWhyLongForm}</h3>
-            <EditIcon
-              className="edit_icon"
-              color="primary"
-              onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.WHY_LONG_FORM)
-              }}
-            />
-          </div>
-        </div>
-        <div className="section_middle">
-          <div
-            className={cx('section_middle_top', {
-              hate_res: shortResponseInView.type === 'HATE'
-            })}
-          >
-            {shortResponseInView.text !== '' && (
-              <h2
-                className={cx('body-1 fade_in_out_text', {
-                  hate_res: shortResponseInView.type === 'HATE'
-                })}
-              >
-                {shortResponseInView.text}
+    <>
+      <TopNavBar />
+      <StyledProject>
+        <div className="section_group">
+          <div className="section_left">
+            <CheckInStatusSection />
+            <div className="section_top_left">
+              <h2 className="heading-3 section_title">What are you doing?</h2>
+              <h3 className="caption">{userResponseWhatLongForm}</h3>
+              <EditIcon
+                className="edit_icon"
+                color="primary"
+                onClick={() => {
+                  handleEditField(SETUP_PROJECT_SCREENS.WHAT_LONG_FORM)
+                }}
+              />
+            </div>
+            <div className="section_bottom_left">
+              <h2 className="heading-3 section_title">
+                Why are you doing this?
               </h2>
-            )}
-            <div
-              className="fade_edit"
-              onClick={() => {
-                if (shortResponseInView.type === 'WHY') {
-                  handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
-                } else {
-                  handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
-                }
-              }}
-            >
-              <EditIcon className="edit_icon" color="primary" />
+              <h3 className="caption">{userResponseWhyLongForm}</h3>
+              <EditIcon
+                className="edit_icon"
+                color="primary"
+                onClick={() => {
+                  handleEditField(SETUP_PROJECT_SCREENS.WHY_LONG_FORM)
+                }}
+              />
             </div>
           </div>
-          <DailyForm className="section_daily_form_fields" />
-          <div className="section_daily_feed">
-            {daysResponseFeed.map(
-              (
-                {
-                  userResponseExcelYesterday,
-                  userResponseFocusYesterday,
-                  dateSubmitted
-                },
-                i
-              ) => {
-                return (
-                  <div key={i} className="weeks_response">
-                    <h5 className="caption time_submitted">
-                      {dayjs(dateSubmitted).format('ddd MMM D')}
-                    </h5>
-                    <h6 className="caption response_title">
-                      What is your focus today?
-                    </h6>
-                    <h6 className="caption response_text">
-                      {userResponseFocusYesterday}
-                    </h6>
-                    <h6 className="caption response_title">
-                      How did you excel yesterday?
-                    </h6>
-                    <h6 className="caption response_text">
-                      {userResponseExcelYesterday}
-                    </h6>
-                  </div>
-                )
-              }
-            )}
+          <div className="section_middle">
+            <div
+              className={cx('section_middle_top', {
+                hate_res: shortResponseInView.type === 'HATE'
+              })}
+            >
+              {shortResponseInView.text !== '' && (
+                <h2
+                  className={cx('body-1 fade_in_out_text', {
+                    hate_res: shortResponseInView.type === 'HATE'
+                  })}
+                >
+                  {shortResponseInView.text}
+                </h2>
+              )}
+              <div
+                className="fade_edit"
+                onClick={() => {
+                  if (shortResponseInView.type === 'WHY') {
+                    handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
+                  } else {
+                    handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
+                  }
+                }}
+              >
+                <EditIcon className="edit_icon" color="primary" />
+              </div>
+            </div>
+            <DailyForm className="section_daily_form_fields" />
+            <div className="section_daily_feed">
+              {daysResponseFeed.map(
+                (
+                  {
+                    userResponseExcelYesterday,
+                    userResponseFocusYesterday,
+                    dateSubmitted
+                  },
+                  i
+                ) => {
+                  return (
+                    <div key={i} className="weeks_response">
+                      <h5 className="caption time_submitted">
+                        {dayjs(dateSubmitted).format('ddd MMM D')}
+                      </h5>
+                      <h6 className="caption response_title">
+                        What is your focus today?
+                      </h6>
+                      <h6 className="caption response_text">
+                        {userResponseFocusYesterday}
+                      </h6>
+                      <h6 className="caption response_title">
+                        How did you excel yesterday?
+                      </h6>
+                      <h6 className="caption response_text">
+                        {userResponseExcelYesterday}
+                      </h6>
+                    </div>
+                  )
+                }
+              )}
+            </div>
+          </div>
+          <div className="section_right">
+            <div className="section_top_right">
+              <h2 className="heading-3 section_title">
+                What will your internal hater say?
+              </h2>
+              <h3 className="caption">{userResponseHatersLongForm}</h3>
+              <EditIcon
+                onClick={() => {
+                  handleEditField(SETUP_PROJECT_SCREENS.HATERS_LONG_FORM)
+                }}
+                className="edit_icon"
+                color="primary"
+              />
+            </div>
+            <div className="section_bottom_right">
+              <h2 className="heading-3 section_title">
+                What are you sacrificing?
+              </h2>
+              <h3 className="caption">{userResponseSacrificeLongForm}</h3>
+              <EditIcon
+                onClick={() => {
+                  handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)
+                }}
+                className="edit_icon"
+                color="primary"
+              />
+            </div>
           </div>
         </div>
-        <div className="section_right">
-          <div className="section_top_right">
-            <h2 className="heading-3 section_title">
-              What will your internal hater say?
-            </h2>
-            <h3 className="caption">{userResponseHatersLongForm}</h3>
-            <EditIcon
-              onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.HATERS_LONG_FORM)
-              }}
-              className="edit_icon"
-              color="primary"
-            />
-          </div>
-          <div className="section_bottom_right">
-            <h2 className="heading-3 section_title">
-              What are you sacrificing?
-            </h2>
-            <h3 className="caption">{userResponseSacrificeLongForm}</h3>
-            <EditIcon
-              onClick={() => {
-                handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)
-              }}
-              className="edit_icon"
-              color="primary"
-            />
-          </div>
-        </div>
-      </div>
-    </StyledProject>
+      </StyledProject>
+    </>
   )
 }
 
