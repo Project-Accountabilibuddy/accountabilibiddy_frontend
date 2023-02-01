@@ -73,35 +73,46 @@ const App = (): JSX.Element => {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then(() => {
+    const autoNavigateUserBasedOnAuth = async (): Promise<any> => {
+      try {
+        await Auth.currentAuthenticatedUser()
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
         if (pathname === '/' || pathname === ROUTES.AUTH) {
           navigate(ROUTES.PROJECT)
         }
-      })
-      .catch(() => {
+      } catch (err) {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === ROUTES.PROJECT) {
           navigate('/')
         }
-      })
+      }
+    }
+
+    autoNavigateUserBasedOnAuth().finally(() => {
+      console.log('autoNavigateUserBasedOnAuth finished')
+    })
   }, [navigate, pathname])
 
-  // CHECKS IF USER IS SIGNED IN AND SETS USER STATE
   useEffect(() => {
-    setGlobalLoading(true)
-    Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((res) => {
-        setUserName(res.attributes.email)
-        handleGetProjects(() => {
+    const getUserAndProjectState = async (): Promise<any> => {
+      try {
+        setGlobalLoading(true)
+        const response = await Auth.currentAuthenticatedUser({
+          bypassCache: true
+        })
+        setUserName(response.attributes.email)
+        await handleGetProjects(() => {
           setGlobalLoading(false)
         })
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log({ err })
         setGlobalLoading(false)
-      })
+      }
+    }
+
+    getUserAndProjectState().finally(() => {
+      console.log('getUserAndProjectState finished')
+    })
   }, [])
 
   const onProjectPage = pathname === ROUTES.PROJECT

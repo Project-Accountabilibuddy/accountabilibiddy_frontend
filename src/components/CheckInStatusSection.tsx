@@ -127,7 +127,7 @@ const CheckInStatus = (): JSX.Element => {
           .add(day, 'day')
 
         // CHECK IF DAY IS BEFORE TODAY
-        if (dayjs(daysDate).isBefore(dayjs())) {
+        if (dayjs(daysDate).isBefore(dayjs().add(1, 'day'), 'day')) {
           // IF DAY IS TODAY IT SHOULD NOT DEFAULT TO "NOT" CHECKED IN
           if (!dayjs(daysDate).isSame(dayjs(), 'day')) {
             checkedIn = false

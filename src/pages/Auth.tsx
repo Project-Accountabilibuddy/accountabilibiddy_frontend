@@ -97,36 +97,32 @@ const Authentication = (): JSX.Element => {
         password,
         attributes: { email: userEmail },
         autoSignIn: { enabled: true }
-      }).then(() => {
-        setAuthFormInView('CONFIRM_EMAIL')
       })
+      setAuthFormInView('CONFIRM_EMAIL')
     } catch (error) {
       console.log('error signing up:', error)
     }
   }
 
   const handleConfirmSignUpUser = async (): Promise<any> => {
-    await Auth.confirmSignUp(userEmail, code)
-      .then((res) => {
-        console.log('NEW USER RES', res)
-        navigate(
-          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
-        )
-      })
-      .catch((err) => {
-        console.log('error confirming sign up', err)
-      })
+    try {
+      const response = await Auth.confirmSignUp(userEmail, code)
+
+      navigate(`${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`)
+      console.log('NEW USER RES', response)
+    } catch (error) {
+      console.log('error confirming sign up', error)
+    }
   }
 
   const handleSignInUser = async (): Promise<any> => {
     setGlobalLoading(true)
     try {
-      await Auth.signIn(userEmail, password).then(() => {
-        navigate(ROUTES.PROJECT)
+      await Auth.signIn(userEmail, password)
 
-        handleGetProjects(() => {
-          setGlobalLoading(false)
-        })
+      navigate(ROUTES.PROJECT)
+      await handleGetProjects(() => {
+        setGlobalLoading(false)
       })
     } catch (error) {
       console.log('error signing in', error)
