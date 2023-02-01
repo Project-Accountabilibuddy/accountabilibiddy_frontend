@@ -49,6 +49,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       const {
         projectName,
         projectStartDate,
+        userCompletedSignUpFlow,
         userResponseWhatLongForm,
         userResponseWhyLongForm,
         userResponseSacrificeLongForm,
@@ -59,6 +60,14 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
         daysResponseFeed
       } = response.data.Items[0]
 
+      // TODO: NAV LOGIC SHOULD BE CONSOLIDATED
+      console.log('userCompletedSignUpFlow: ', userCompletedSignUpFlow)
+      if (userCompletedSignUpFlow === false) {
+        navigate(
+          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
+        )
+      }
+
       setProjectName(projectName)
       setProjectStartDate(projectStartDate)
       setUserResponseWhatLongForm(userResponseWhatLongForm)
@@ -66,7 +75,6 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
       setUserResponseHatersLongForm(userResponseHatersLongForm)
       setWeeksExpectedToComplete(weeksExpectedToComplete)
-
       setDaysResponseFeed(JSON.parse(daysResponseFeed))
 
       JSON.parse(userResponseWhyShortForm).forEach(

@@ -123,7 +123,7 @@ const App = (): JSX.Element => {
     })
   }, [])
 
-  const onProjectPage = pathname === ROUTES.PROJECT
+  const showLogo = pathname === '/' || pathname === ROUTES.AUTH
 
   return (
     <GlobalTheme>
@@ -131,7 +131,7 @@ const App = (): JSX.Element => {
         <StyledApp>
           <div className="foreground">
             <div className="content">
-              {!onProjectPage && <LogoBig className="logo" />}
+              {showLogo && <LogoBig className="logo" />}
               {globalLoading && (
                 <StyledGlobalLoading>
                   <CircularProgress />
