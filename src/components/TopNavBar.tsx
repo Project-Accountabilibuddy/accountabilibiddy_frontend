@@ -16,7 +16,7 @@ const StyledTopNavBar = styled.div`
   width: 100vw;
   top: 0;
 
-  .username {
+  .project_name {
     padding-left: 24px;
   }
 
@@ -41,7 +41,7 @@ const StyledTopNavBar = styled.div`
 const TopNavBar = (): JSX.Element => {
   const navigate = useNavigate()
 
-  const { userName } = useGlobalState()
+  const { projectName } = useGlobalState()
 
   const handleSignOut = async (): Promise<any> => {
     try {
@@ -54,16 +54,16 @@ const TopNavBar = (): JSX.Element => {
 
   return (
     <StyledTopNavBar>
-      <h1 className="caption username">{`Hello, ${userName}`}</h1>
+      <h2 className="caption project_name">{projectName}</h2>
       <LogoBig className="project_logo" />
-      <h1
+      <h2
         className="caption sign_out_button"
         onClick={() => {
           void handleSignOut()
         }}
       >
         Sign Out
-      </h1>
+      </h2>
     </StyledTopNavBar>
   )
 }
