@@ -23,7 +23,6 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setUserResponseWhyShortForm,
     setUserResponseHatersShortForm,
     setDaysResponseFeed,
-    setUserCompletedSignUpFlow,
     projectName
   } = useGlobalState()
 
@@ -61,9 +60,16 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
         daysResponseFeed
       } = response.data.Items[0]
 
+      // TODO: NAV LOGIC SHOULD BE CONSOLIDATED
+      console.log('userCompletedSignUpFlow: ', userCompletedSignUpFlow)
+      if (userCompletedSignUpFlow === false) {
+        navigate(
+          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
+        )
+      }
+
       setProjectName(projectName)
       setProjectStartDate(projectStartDate)
-      setUserCompletedSignUpFlow(userCompletedSignUpFlow)
       setUserResponseWhatLongForm(userResponseWhatLongForm)
       setUserResponseWhyLongForm(userResponseWhyLongForm)
       setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
@@ -82,13 +88,6 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
           setUserResponseHatersShortForm(response, index)
         }
       )
-
-      // TODO: NAV LOGIC SHOULD BE CONSOLIDATED
-      if (userCompletedSignUpFlow === false) {
-        navigate(
-          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
-        )
-      }
     } catch (err: any) {
       console.log('GET PROJECT ERR', err)
 
