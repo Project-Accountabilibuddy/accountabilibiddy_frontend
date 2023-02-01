@@ -9,8 +9,10 @@ import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
 import { ROUTES } from './global/Constants'
-import BackGroundImage from './test_background.jpeg'
+
 import LogoBig from './icons/LogoBig'
+import SunBackgroundImage from './images/sun_background.png'
+import MountainforegroundImage from './images/mountain_foreground.png'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'
@@ -18,42 +20,48 @@ import ProjectSetUpPage from './pages/ProjectSetup'
 import ProjectPage from './pages/Project'
 
 const StyledApp = styled.div`
-  background-image: url(${BackGroundImage});
+  background-image: url(${SunBackgroundImage});
   background-size: auto 100%;
-  animation: animatedBackground 300s linear infinite;
+  background-position: center;
 
-  @keyframes animatedBackground {
-    0% {
-      background-position: 0 0;
+  .foreground {
+    background-image: url(${MountainforegroundImage});
+    background-size: auto 100%;
+    animation: animatedBackground 200s linear infinite;
+
+    @keyframes animatedBackground {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100% 0;
+      }
     }
-    100% {
-      background-position: 100% 0;
-    }
-  }
 
-  :before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  .content {
-    color: var(--color-white);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-
-    .logo {
-      width: 100%;
+    :before {
+      content: '';
       position: absolute;
-      top: 80px;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .content {
+      color: var(--color-white);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+
+      .logo {
+        width: 100%;
+        position: absolute;
+        top: 40px;
+      }
     }
   }
 `
@@ -121,24 +129,26 @@ const App = (): JSX.Element => {
     <GlobalTheme>
       <GlobalTypography>
         <StyledApp>
-          <div className="content">
-            {showLogo && <LogoBig className="logo" />}
-            {globalLoading && (
-              <StyledGlobalLoading>
-                <CircularProgress />
-              </StyledGlobalLoading>
-            )}
-            {!globalLoading && (
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route
-                  path={`${ROUTES.PROJECT_SETUP}/*`}
-                  element={<ProjectSetUpPage />}
-                />
-                <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
-                <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
-              </Routes>
-            )}
+          <div className="foreground">
+            <div className="content">
+              {showLogo && <LogoBig className="logo" />}
+              {globalLoading && (
+                <StyledGlobalLoading>
+                  <CircularProgress />
+                </StyledGlobalLoading>
+              )}
+              {!globalLoading && (
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route
+                    path={`${ROUTES.PROJECT_SETUP}/*`}
+                    element={<ProjectSetUpPage />}
+                  />
+                  <Route path={`${ROUTES.AUTH}/*`} element={<AuthPage />} />
+                  <Route path={`${ROUTES.PROJECT}`} element={<ProjectPage />} />
+                </Routes>
+              )}
+            </div>
           </div>
         </StyledApp>
       </GlobalTypography>
