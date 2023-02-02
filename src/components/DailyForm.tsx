@@ -102,7 +102,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    return dayjs().isSame(response.dateSubmitted, 'second')
+    return dayjs().isSame(response.dateSubmitted, 'day')
   })
 
   return (

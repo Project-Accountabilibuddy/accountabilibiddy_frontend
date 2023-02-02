@@ -13,7 +13,7 @@ interface checkInDays {
   checkedIn: boolean | undefined
 }
 
-interface AllDayCheckInStatuses {
+interface CompleteWeek {
   currentWeek: boolean
   days: checkInDays[]
 }
@@ -102,7 +102,7 @@ const CheckInStatus = (): JSX.Element => {
   const { daysResponseFeed, weeksExpectedToComplete, projectStartDate } =
     useGlobalState()
 
-  const buildCheckInStatus = (): AllDayCheckInStatuses[] => {
+  const buildCheckInStatus = (): CompleteWeek[] => {
     const allWeeks = []
 
     const allCheckInDates = daysResponseFeed.map((day) => {
@@ -111,7 +111,7 @@ const CheckInStatus = (): JSX.Element => {
 
     // BUILD ALL WEEKS BASED ON WEEKS EXPECTED TO COMPLETE
     for (let week = 0; week < Number(weeksExpectedToComplete); week++) {
-      const allDayCheckInStatuses: AllDayCheckInStatuses = {
+      const completeWeek: CompleteWeek = {
         currentWeek: dayjs(projectStartDate)
           .add(week, 'week')
           .isSame(dayjs(), 'week'),
@@ -141,11 +141,11 @@ const CheckInStatus = (): JSX.Element => {
           })
         }
 
-        allDayCheckInStatuses.days.push({ day: daysDate, checkedIn })
+        completeWeek.days.push({ day: daysDate, checkedIn })
         checkedIn = undefined
       }
 
-      allWeeks.push(allDayCheckInStatuses)
+      allWeeks.push(completeWeek)
     }
 
     return allWeeks
