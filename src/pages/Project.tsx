@@ -54,7 +54,7 @@ const StyledProject = styled.div`
     .section_top_right,
     .section_bottom_right {
       display: flex;
-      align-items: flex-end;
+      align-items: flex-start;
       flex-direction: column;
       position: relative;
       border: 1px solid var(--color-primary);
@@ -65,6 +65,14 @@ const StyledProject = styled.div`
       overflow: scroll;
       text-align: start;
       background-color: var(--color-black);
+
+      .scroll_container {
+        height: 100%;
+        overflow: scroll;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
 
     .section_bottom_left,
@@ -127,8 +135,8 @@ const StyledProject = styled.div`
 
         .fade_edit {
           position: absolute;
-          right: 10px;
-          top: 20px;
+          bottom: 8px;
+          right: 0px;
 
           :hover {
             cursor: pointer;
@@ -178,8 +186,9 @@ const StyledProject = styled.div`
   }
 
   .edit_icon {
-    position: sticky;
-    bottom: 0px;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
 
     :hover {
       cursor: pointer;
@@ -238,7 +247,9 @@ const Project = (): JSX.Element => {
             <CheckInStatusSection />
             <div className="section_top_left">
               <h2 className="heading-3 section_title">What are you doing?</h2>
-              <h3 className="caption">{userResponseWhatLongForm}</h3>
+              <div className="scroll_container">
+                <h3 className="caption">{userResponseWhatLongForm}</h3>
+              </div>
               <EditIcon
                 className="edit_icon"
                 color="primary"
@@ -251,7 +262,9 @@ const Project = (): JSX.Element => {
               <h2 className="heading-3 section_title">
                 Why are you doing this?
               </h2>
-              <h3 className="caption">{userResponseWhyLongForm}</h3>
+              <div className="scroll_container">
+                <h3 className="caption">{userResponseWhyLongForm}</h3>
+              </div>
               <EditIcon
                 className="edit_icon"
                 color="primary"
@@ -311,12 +324,16 @@ const Project = (): JSX.Element => {
                       <h6 className="caption response_text">
                         {userResponseFocusYesterday}
                       </h6>
-                      <h6 className="caption response_title">
-                        How did you excel yesterday?
-                      </h6>
-                      <h6 className="caption response_text">
-                        {userResponseExcelYesterday}
-                      </h6>
+                      {userResponseExcelYesterday !== '' && (
+                        <>
+                          <h6 className="caption response_title">
+                            How did you excel yesterday?
+                          </h6>
+                          <h6 className="caption response_text">
+                            {userResponseExcelYesterday}
+                          </h6>
+                        </>
+                      )}
                     </div>
                   )
                 }
@@ -328,7 +345,9 @@ const Project = (): JSX.Element => {
               <h2 className="heading-3 section_title">
                 What will your internal hater say?
               </h2>
-              <h3 className="caption">{userResponseHatersLongForm}</h3>
+              <div className="scroll_container">
+                <h3 className="caption">{userResponseHatersLongForm}</h3>
+              </div>
               <EditIcon
                 onClick={() => {
                   handleEditField(SETUP_PROJECT_SCREENS.HATERS_LONG_FORM)
@@ -341,7 +360,9 @@ const Project = (): JSX.Element => {
               <h2 className="heading-3 section_title">
                 What are you sacrificing?
               </h2>
-              <h3 className="caption">{userResponseSacrificeLongForm}</h3>
+              <div className="scroll_container">
+                <h3 className="caption">{userResponseSacrificeLongForm}</h3>
+              </div>
               <EditIcon
                 onClick={() => {
                   handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)

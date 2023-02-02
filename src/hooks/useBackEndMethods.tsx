@@ -75,9 +75,9 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       setUserResponseSacrificeLongForm(userResponseSacrificeLongForm)
       setUserResponseHatersLongForm(userResponseHatersLongForm)
       setWeeksExpectedToComplete(weeksExpectedToComplete)
-      setDaysResponseFeed(JSON.parse(daysResponseFeed))
       setAllUserResponseWhyShortForm(JSON.parse(userResponseWhyShortForm))
       setAllUserResponseHatersShortForm(JSON.parse(userResponseHatersShortForm))
+      setDaysResponseFeed(JSON.parse(daysResponseFeed))
     } catch (err: any) {
       console.log('GET PROJECT ERR', err)
 
