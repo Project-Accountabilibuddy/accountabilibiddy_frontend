@@ -42,12 +42,13 @@ const StyledTopNavBar = styled.div`
 const TopNavBar = (): JSX.Element => {
   const navigate = useNavigate()
 
-  const { projectName } = useGlobalState()
+  const { projectName, resetGlobalState } = useGlobalState()
 
   const handleSignOut = async (): Promise<any> => {
     try {
       await Auth.signOut()
       navigate('/')
+      resetGlobalState()
     } catch (error) {
       console.log('error signing out: ', error)
     }
