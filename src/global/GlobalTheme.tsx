@@ -11,7 +11,7 @@ export const GlobalPallete = {
     primary: '#3CFFD5',
     secondary: '#4333A3',
     background: '#222629',
-    lightGrey: '#6B6E70',
+    lightGrey: '#C0C0C0',
     darkGrey: '#474B4F',
     white: '#FFFFFF',
     red: '#FF424A',

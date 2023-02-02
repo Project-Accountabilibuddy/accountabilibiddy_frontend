@@ -192,7 +192,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 5/7"
-            title="Here is your bullshit reason for doing this, now distill it into some bull shit one liners"
+            title="Here are your reasons for doing this, now distill them into some one liners to inspire you when you want to give up"
             groupResponses={userResponseWhyShortForm}
             responseText={userResponseWhyLongForm}
             updateNumberOfGroupResponses={updateWhyShortFormNumberOfResponses}
@@ -218,7 +218,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 6/7"
-            title="Distill the voice of others and your own inner bitch that tells you why you can't"
+            title="Distill the voice of others and your own inner bitch that tells you why you can't with the aim of pushing yourself onward."
             groupResponses={userResponseHatersShortForm}
             responseText={userResponseHatersLongForm}
             updateNumberOfGroupResponses={
@@ -246,10 +246,8 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="NUMBER"
             step="Last Step"
-            title="Choose a time that is inspiring but not impossible"
-            description="This can nto be edited, deadlines are important,
-           what is to keep you from continueing to push this shit out.
-            If the project was meaningful enough do a part two after this is done"
+            title="Choose a number of weeks to complete your aim in an amount of time that is inspiring but not impossible"
+            description="This can not be edited, deadlines are important, what is to keep you from continueing to push this shit out. If the project was meaningful enough do a part two after this is done"
             responseNumber={Number(weeksExpectedToComplete)}
             setResponseNumber={(text) => {
               setWeeksExpectedToComplete(String(text))
