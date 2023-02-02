@@ -218,7 +218,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 6/7"
-            title="Distill the voice of others and your own inner bitch that tells you why you can't with the aim of pushing yourself onward."
+            title="Distill the voice of others and your own inner bitch that tell you why you can't with the aim of pushing yourself onward."
             groupResponses={userResponseHatersShortForm}
             responseText={userResponseHatersLongForm}
             updateNumberOfGroupResponses={

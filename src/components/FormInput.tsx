@@ -89,7 +89,7 @@ const StyledFormInput = styled.div`
     flex-direction: column;
     justify-content: center;
 
-    .body-1 {
+    .caption {
       max-height: 200px;
       overflow: scroll;
     }
@@ -202,8 +202,11 @@ const FormInput = ({
       {type === 'MULTIPLE_TEXT' && (
         <>
           <div className="group_responses">
-            <h4 className="body-1">{responseText}</h4>
+            <h4 className="caption">{responseText}</h4>
             {groupResponses?.map((response, index) => {
+              const showCloseIcon =
+                groupResponses.length - 1 === index && groupResponses.length > 3
+
               return (
                 <div className="input_group" key={index}>
                   <textarea
@@ -216,15 +219,14 @@ const FormInput = ({
                       setGroupResponse(e.target.value, index)
                     }}
                   />
-                  {groupResponses.length - 1 === index &&
-                    groupResponses.length > 3 && (
-                      <CloseIcon
-                        color="primary"
-                        onClick={() => {
-                          updateNumberOfGroupResponses('REMOVE')
-                        }}
-                      />
-                    )}
+                  {showCloseIcon && (
+                    <CloseIcon
+                      color="primary"
+                      onClick={() => {
+                        updateNumberOfGroupResponses('REMOVE')
+                      }}
+                    />
+                  )}
                 </div>
               )
             })}
