@@ -89,6 +89,11 @@ const StyledFormInput = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    .body-1 {
+      max-height: 200px;
+      overflow: scroll;
+    }
+
     .input_group {
       width: 100%;
       display: flex;
@@ -124,6 +129,10 @@ const StyledFormInput = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
+
+    button {
+      margin: 48px 24px 0 24px;
+    }
   }
 `
 
@@ -192,8 +201,8 @@ const FormInput = ({
       )}
       {type === 'MULTIPLE_TEXT' && (
         <>
-          <h4 className="body-1">{responseText}</h4>
           <div className="group_responses">
+            <h4 className="body-1">{responseText}</h4>
             {groupResponses?.map((response, index) => {
               return (
                 <div className="input_group" key={index}>
