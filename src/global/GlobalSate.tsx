@@ -2,19 +2,19 @@ import create from 'zustand'
 import dayjs from 'dayjs'
 
 const INITIAL_STATE = {
+  projectName: '',
   userResponseWhatLongForm: '',
   userResponseSacrificeLongForm: '',
-  projectName: '',
-  projectStartDate: dayjs(),
   userResponseWhyLongForm: '',
-  userResponseWhyShortForm: ['', '', ''],
   userResponseHatersLongForm: '',
+  userResponseWhyShortForm: ['', '', ''],
   userResponseHatersShortForm: ['', '', ''],
   weeksExpectedToComplete: '6',
-  inEditFormMode: false,
-  globalLoading: false,
+  projectStartDate: dayjs(),
   daysResponseFeed: [],
-  userName: ''
+  userName: '',
+  inEditFormMode: false,
+  globalLoading: false
 }
 
 interface DaysResponse {
