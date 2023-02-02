@@ -84,12 +84,12 @@ const StyledFormInput = styled.div`
     margin-bottom: 24px;
   }
 
-  .group_responses {
+  .short_responses {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    .caption {
+    .long_response_text {
       max-height: 200px;
       overflow: scroll;
     }
@@ -201,8 +201,8 @@ const FormInput = ({
       )}
       {type === 'MULTIPLE_TEXT' && (
         <>
-          <div className="group_responses">
-            <h4 className="caption">{responseText}</h4>
+          <div className="short_responses">
+            <h4 className="caption long_response_text">{responseText}</h4>
             {groupResponses?.map((response, index) => {
               const showCloseIcon =
                 groupResponses.length - 1 === index && groupResponses.length > 3
