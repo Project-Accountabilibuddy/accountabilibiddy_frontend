@@ -11,8 +11,7 @@ import useGlobalState from './global/GlobalSate'
 import { ROUTES } from './global/Constants'
 
 import LogoBig from './icons/LogoBig'
-import SunBackgroundImage from './images/sun_background.png'
-import MountainforegroundImage from './images/mountain_foreground.png'
+import { MountainforegroundImage, SunBackgroundImage } from './images'
 
 import LandingPage from './pages/Landing'
 import AuthPage from './pages/Auth'

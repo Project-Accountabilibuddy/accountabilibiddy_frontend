@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../global/Constants'
-import ProjectExampleImage from '../images/example_dashboard.png'
+import { ProjectExampleImage } from '../images'
 
 const StyledLanding = styled.div`
   display: flex;
