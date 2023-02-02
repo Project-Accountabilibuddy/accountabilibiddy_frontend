@@ -20,8 +20,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
     setUserResponseWhyLongForm,
     setUserResponseHatersLongForm,
     setWeeksExpectedToComplete,
-    setUserResponseWhyShortForm,
-    setUserResponseHatersShortForm,
+    setAllUserResponseWhyShortForm,
+    setAllUserResponseHatersShortForm,
     setDaysResponseFeed,
     projectName
   } = useGlobalState()
@@ -76,18 +76,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       setUserResponseHatersLongForm(userResponseHatersLongForm)
       setWeeksExpectedToComplete(weeksExpectedToComplete)
       setDaysResponseFeed(JSON.parse(daysResponseFeed))
-
-      JSON.parse(userResponseWhyShortForm).forEach(
-        (response: string, index: number) => {
-          setUserResponseWhyShortForm(response, index)
-        }
-      )
-
-      JSON.parse(userResponseHatersShortForm).forEach(
-        (response: string, index: number) => {
-          setUserResponseHatersShortForm(response, index)
-        }
-      )
+      setAllUserResponseWhyShortForm(JSON.parse(userResponseWhyShortForm))
+      setAllUserResponseHatersShortForm(JSON.parse(userResponseHatersShortForm))
     } catch (err: any) {
       console.log('GET PROJECT ERR', err)
 

@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
+import CloseIcon from '@mui/icons-material/Close'
 
 import useGlobalState from '../global/GlobalSate'
 
@@ -83,19 +84,44 @@ const StyledFormInput = styled.div`
     margin-bottom: 24px;
   }
 
-  .group_responses {
+  .short_responses {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    .single_row_textarea {
-      background-color: var(--color-light-grey);
-      height: auto;
+    .long_response_text {
+      max-height: 200px;
+      overflow: scroll;
     }
 
-    .group_responses_buttons {
+    .input_group {
+      width: 100%;
       display: flex;
       justify-content: space-between;
+      position: relative;
+
+      .single_row_textarea {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px solid var(--color-primary);
+        border-radius: 0;
+        margin-right: 40px;
+      }
+
+      .remove_icon {
+        margin-left: 24px;
+        position: absolute;
+        right: 0;
+
+        :hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .add_more_button {
+      margin-top: 24px;
+      width: 200px;
     }
   }
 
@@ -103,6 +129,10 @@ const StyledFormInput = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
+
+    button {
+      margin: 48px 24px 0 24px;
+    }
   }
 `
 
@@ -171,43 +201,46 @@ const FormInput = ({
       )}
       {type === 'MULTIPLE_TEXT' && (
         <>
-          <h4 className="body-1">{responseText}</h4>
-          <div className="group_responses">
+          <div className="short_responses">
+            <h4 className="caption long_response_text">{responseText}</h4>
             {groupResponses?.map((response, index) => {
+              const showCloseIcon =
+                groupResponses.length - 1 === index && groupResponses.length > 3
+
               return (
-                <textarea
-                  key={index}
-                  className="single_row_textarea"
-                  ref={ref}
-                  name="text"
-                  rows={1}
-                  value={response}
-                  onChange={(e) => {
-                    setGroupResponse(e.target.value, index)
-                  }}
-                />
+                <div className="input_group" key={index}>
+                  <textarea
+                    className="single_row_textarea"
+                    ref={index === 0 ? ref : null}
+                    name="text"
+                    rows={1}
+                    value={response}
+                    onChange={(e) => {
+                      setGroupResponse(e.target.value, index)
+                    }}
+                  />
+                  {showCloseIcon && (
+                    <CloseIcon
+                      className="remove_icon"
+                      color="primary"
+                      onClick={() => {
+                        updateNumberOfGroupResponses('REMOVE')
+                      }}
+                    />
+                  )}
+                </div>
               )
             })}
-            <div className="group_responses_buttons">
-              <Button
-                disabled={groupResponses.length < 2}
-                variant="outlined"
-                onClick={() => {
-                  updateNumberOfGroupResponses('REMOVE')
-                }}
-              >
-                Remove Reason
-              </Button>
-              <Button
-                disabled={groupResponses.length > 4}
-                variant="outlined"
-                onClick={() => {
-                  updateNumberOfGroupResponses('ADD')
-                }}
-              >
-                Add Reason
-              </Button>
-            </div>
+            <Button
+              className="add_more_button"
+              disabled={groupResponses.length > 4}
+              variant="outlined"
+              onClick={() => {
+                updateNumberOfGroupResponses('ADD')
+              }}
+            >
+              Add More
+            </Button>
           </div>
         </>
       )}
