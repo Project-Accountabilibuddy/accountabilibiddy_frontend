@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -70,6 +70,11 @@ const StyledAuthentication = styled.div`
     }
   }
 
+  .error_text {
+    color: var(--color-red);
+    margin-bottom: 24px;
+  }
+
   button {
     margin-bottom: 24px;
     width: 400px;
@@ -81,14 +86,19 @@ const Authentication = (): JSX.Element => {
 
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-
   const [code, setCode] = useState('')
+
+  const [errorText, setErrorText] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const { handleGetProjects } = useBackEndMethods()
   const { setGlobalLoading } = useGlobalState()
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    setErrorText('')
+  }, [userEmail, password, code, setErrorText, authFormInView])
 
   const handleSignUpUser = async (): Promise<any> => {
     try {
@@ -99,8 +109,15 @@ const Authentication = (): JSX.Element => {
         autoSignIn: { enabled: true }
       })
       setAuthFormInView('CONFIRM_EMAIL')
-    } catch (error) {
+    } catch (error: any) {
       console.log('error signing up:', error)
+      const passwordError = error?.message?.toLowerCase().includes('password')
+
+      if (passwordError === true) {
+        setErrorText('Ivalid password.')
+      } else {
+        setErrorText(error?.message)
+      }
     }
   }
 
@@ -110,8 +127,9 @@ const Authentication = (): JSX.Element => {
 
       navigate(`${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`)
       console.log('NEW USER RES', response)
-    } catch (error) {
+    } catch (error: any) {
       console.log('error confirming sign up', error)
+      setErrorText(error?.message)
     }
   }
 
@@ -124,9 +142,17 @@ const Authentication = (): JSX.Element => {
       await handleGetProjects(() => {
         setGlobalLoading(false)
       })
-    } catch (error) {
+    } catch (error: any) {
       console.log('error signing in', error)
       setGlobalLoading(false)
+
+      const passwordError = error?.message?.toLowerCase().includes('password')
+
+      if (passwordError === true) {
+        setErrorText('Ivalid password.')
+      } else {
+        setErrorText(error?.message)
+      }
     }
   }
 
@@ -168,6 +194,7 @@ const Authentication = (): JSX.Element => {
               )
             }}
           />
+          <h6 className="caption error_text">{errorText}</h6>
           <Button
             variant="outlined"
             onClick={() => {
@@ -232,6 +259,7 @@ const Authentication = (): JSX.Element => {
               setCode(e.target.value)
             }}
           />
+          <h6 className="caption error_text">{errorText}</h6>
           <Button
             onClick={() => {
               void handleConfirmSignUpUser()
@@ -275,6 +303,7 @@ const Authentication = (): JSX.Element => {
               )
             }}
           />
+          <h6 className="caption error_text">{errorText}</h6>
           <Button
             variant="outlined"
             onClick={() => {
