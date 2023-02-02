@@ -18,6 +18,9 @@ const StyledDailyForm = styled.div`
   .form_content {
     height: 272px;
     transition: height 2s ease-in-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
     .heading {
       display: flex;
@@ -57,6 +60,8 @@ const StyledDailyForm = styled.div`
     .submit_button {
       width: 100%;
       margin-top: 12px;
+      position: absolute;
+      bottom: 0;
     }
   }
 
@@ -97,7 +102,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    return dayjs().isSame(response.dateSubmitted, 'day')
+    return dayjs().isSame(response.dateSubmitted, 'second')
   })
 
   return (
@@ -129,20 +134,27 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           }}
           rows={4}
         />
-        <h3 className="caption question_title">How did you excel yesterday?</h3>
-        <textarea
-          disabled={formHasBeenFilledOutToday}
-          className="form_input_field"
-          value={inputExcelYesterday}
-          onChange={(e) => {
-            setinputExcelYesterday(e.target.value)
-          }}
-          rows={4}
-        />
+        {daysResponseFeed.length !== 0 && (
+          <>
+            <h3 className="caption question_title">
+              How did you excel yesterday?
+            </h3>
+            <textarea
+              disabled={formHasBeenFilledOutToday}
+              className="form_input_field"
+              value={inputExcelYesterday}
+              onChange={(e) => {
+                setinputExcelYesterday(e.target.value)
+              }}
+              rows={4}
+            />
+          </>
+        )}
         <Button
           className="submit_button"
           variant="outlined"
           onClick={handleSubmitWeekReview}
+          disabled={inputFocusToday === ''}
         >
           Submit
         </Button>

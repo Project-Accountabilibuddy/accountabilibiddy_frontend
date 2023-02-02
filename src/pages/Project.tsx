@@ -324,12 +324,16 @@ const Project = (): JSX.Element => {
                       <h6 className="caption response_text">
                         {userResponseFocusYesterday}
                       </h6>
-                      <h6 className="caption response_title">
-                        How did you excel yesterday?
-                      </h6>
-                      <h6 className="caption response_text">
-                        {userResponseExcelYesterday}
-                      </h6>
+                      {userResponseExcelYesterday !== '' && (
+                        <>
+                          <h6 className="caption response_title">
+                            How did you excel yesterday?
+                          </h6>
+                          <h6 className="caption response_text">
+                            {userResponseExcelYesterday}
+                          </h6>
+                        </>
+                      )}
                     </div>
                   )
                 }
