@@ -34,6 +34,7 @@ interface GlobalState {
     userResponseWhyShortForm: string,
     index: number
   ) => void
+  setAllUserResponseWhyShortForm: (responses: string[]) => void
 
   setUserResponseHatersLongForm: (userResponseHatersLongForm: string) => void
 
@@ -42,6 +43,7 @@ interface GlobalState {
     userResponseHatersShortForm: string,
     index: number
   ) => void
+  setAllUserResponseHatersShortForm: (responses: string[]) => void
 
   weeksExpectedToComplete: string
   setWeeksExpectedToComplete: (weeksExpectedToComplete: string) => void
@@ -111,6 +113,10 @@ const useGlobalState = create<GlobalState>((set) => ({
     }))
   },
 
+  setAllUserResponseWhyShortForm: (responses) => {
+    set(() => ({ userResponseWhyShortForm: responses }))
+  },
+
   userResponseHatersLongForm: '',
   setUserResponseHatersLongForm: (userResponseHatersLongForm) => {
     set(() => ({ userResponseHatersLongForm }))
@@ -145,6 +151,9 @@ const useGlobalState = create<GlobalState>((set) => ({
         []
       )
     }))
+  },
+  setAllUserResponseHatersShortForm: (responses) => {
+    set(() => ({ userResponseHatersShortForm: responses }))
   },
 
   userResponseWeeksToAccomplish: 1,
