@@ -108,7 +108,7 @@ const StyledFormInput = styled.div`
         margin-right: 40px;
       }
 
-      svg {
+      .remove_icon {
         margin-left: 24px;
         position: absolute;
         right: 0;
@@ -221,6 +221,7 @@ const FormInput = ({
                   />
                   {showCloseIcon && (
                     <CloseIcon
+                      className="remove_icon"
                       color="primary"
                       onClick={() => {
                         updateNumberOfGroupResponses('REMOVE')
