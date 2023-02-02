@@ -211,7 +211,7 @@ const FormInput = ({
                 <div className="input_group" key={index}>
                   <textarea
                     className="single_row_textarea"
-                    ref={ref}
+                    ref={index === 0 ? ref : null}
                     name="text"
                     rows={1}
                     value={response}
