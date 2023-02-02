@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
+import CloseIcon from '@mui/icons-material/Close'
 
 import useGlobalState from '../global/GlobalSate'
 
@@ -88,14 +89,34 @@ const StyledFormInput = styled.div`
     flex-direction: column;
     justify-content: center;
 
-    .single_row_textarea {
-      background-color: var(--color-light-grey);
-      height: auto;
-    }
-
-    .group_responses_buttons {
+    .input_group {
+      width: 100%;
       display: flex;
       justify-content: space-between;
+      position: relative;
+
+      .single_row_textarea {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px solid var(--color-primary);
+        border-radius: 0;
+        margin-right: 40px;
+      }
+
+      svg {
+        margin-left: 24px;
+        position: absolute;
+        right: 0;
+
+        :hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .add_more_button {
+      margin-top: 24px;
+      width: 200px;
     }
   }
 
@@ -175,39 +196,39 @@ const FormInput = ({
           <div className="group_responses">
             {groupResponses?.map((response, index) => {
               return (
-                <textarea
-                  key={index}
-                  className="single_row_textarea"
-                  ref={ref}
-                  name="text"
-                  rows={1}
-                  value={response}
-                  onChange={(e) => {
-                    setGroupResponse(e.target.value, index)
-                  }}
-                />
+                <div className="input_group" key={index}>
+                  <textarea
+                    className="single_row_textarea"
+                    ref={ref}
+                    name="text"
+                    rows={1}
+                    value={response}
+                    onChange={(e) => {
+                      setGroupResponse(e.target.value, index)
+                    }}
+                  />
+                  {groupResponses.length - 1 === index &&
+                    groupResponses.length > 3 && (
+                      <CloseIcon
+                        color="primary"
+                        onClick={() => {
+                          updateNumberOfGroupResponses('REMOVE')
+                        }}
+                      />
+                    )}
+                </div>
               )
             })}
-            <div className="group_responses_buttons">
-              <Button
-                disabled={groupResponses.length < 2}
-                variant="outlined"
-                onClick={() => {
-                  updateNumberOfGroupResponses('REMOVE')
-                }}
-              >
-                Remove Reason
-              </Button>
-              <Button
-                disabled={groupResponses.length > 4}
-                variant="outlined"
-                onClick={() => {
-                  updateNumberOfGroupResponses('ADD')
-                }}
-              >
-                Add Reason
-              </Button>
-            </div>
+            <Button
+              className="add_more_button"
+              disabled={groupResponses.length > 4}
+              variant="outlined"
+              onClick={() => {
+                updateNumberOfGroupResponses('ADD')
+              }}
+            >
+              Add More
+            </Button>
           </div>
         </>
       )}
