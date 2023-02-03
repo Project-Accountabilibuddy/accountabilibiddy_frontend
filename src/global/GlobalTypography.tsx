@@ -29,6 +29,7 @@ const StyledGlobalTypography = styled.div`
     height: 48px;
     text-transform: initial;
 
+    // TODO: BODY-2 IS APPLIED TO ALL BUTTONS (SHOULD BREAK OUT INTO BUTTON COMPONENT)
     opacity: 1;
     color: var(--color-primary);
     font-family: 'Ubuntu Mono', monospace;
