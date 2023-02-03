@@ -25,6 +25,22 @@ const StyledGlobalTypography = styled.div`
     }
   }
 
+  button {
+    height: 48px;
+    text-transform: initial;
+
+    // TODO: BODY-2 IS APPLIED TO ALL BUTTONS (SHOULD BREAK OUT INTO BUTTON COMPONENT)
+    opacity: 1;
+    color: var(--color-primary);
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    line-height: 22px;
+  }
+
   .heading-1 {
     opacity: 1;
     color: var(--color-white);

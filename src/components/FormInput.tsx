@@ -65,12 +65,12 @@ const StyledFormInput = styled.div`
       align-items: center;
       juect-content: center;
       padding: 24px;
-      border: 2px solid var(--color-light-grey);
+      border: 2px solid var(--color-primary);
       color: var(--color-white);
       border-radius: 4px;
 
       :hover {
-        border: 2px solid var(--color-primary);
+        border: 2px solid var(--color-white);
         cursor: pointer;
       }
     }

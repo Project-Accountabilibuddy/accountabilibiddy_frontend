@@ -24,11 +24,11 @@ const StyledProject = styled.div`
 
   .caption {
     text-align: start;
-    color: var(--color-light-grey);
+    color: var(--color-white);
   }
 
   .section_title {
-    color: var(--color-white);
+    color: var(--color-light-grey);
     text-align: start;
     margin-bottom: 12px;
     width: 100%;
@@ -98,8 +98,7 @@ const StyledProject = styled.div`
       padding-bottom: 36px;
 
       .section_middle_top,
-      .section_daily_form_fields,
-      .section_daily_feed {
+      .section_daily_form_fields {
         border: 1px solid var(--color-primary);
         border-radius: 2px;
         margin-bottom: 12px;
@@ -107,7 +106,6 @@ const StyledProject = styled.div`
         background-color: var(--color-black);
       }
 
-      .section_daily_feed,
       .section_middle_top,
       .section_daily_form_fields,
       :before {
@@ -154,8 +152,11 @@ const StyledProject = styled.div`
         overflow: scroll;
 
         .weeks_response {
-          border-bottom: 1px solid var(--color-primary);
+          border: 1px solid var(--color-primary);
+          border-radius: 2px;
+          padding: 12px;
           margin-bottom: 12px;
+          background-color: var(--color-black);
 
           .time_submitted {
             width: 100%;
@@ -169,6 +170,15 @@ const StyledProject = styled.div`
           .response_text {
             padding-bottom: 12px;
           }
+
+          :last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        .weeks_response,
+        :before {
+          background: rgba(0, 0, 0, 0.6);
         }
       }
     }
@@ -316,7 +326,7 @@ const Project = (): JSX.Element => {
                   return (
                     <div key={i} className="weeks_response">
                       <h5 className="caption time_submitted">
-                        {dayjs(dateSubmitted).format('ddd MMM D')}
+                        {dayjs(dateSubmitted).format('ddd, MMM D')}
                       </h5>
                       <h6 className="caption response_title">
                         What is your focus today?

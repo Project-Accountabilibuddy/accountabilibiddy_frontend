@@ -245,7 +245,7 @@ const ProjectSetup = (): JSX.Element => {
         {endOfPath === SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE && (
           <FormInput
             type="NUMBER"
-            step="Last Step"
+            step="7/7"
             title="Choose a number of weeks to complete your aim in an amount of time that is inspiring but not impossible"
             description="This can not be edited, deadlines are important, what is to keep you from continueing to push this shit out. If the project was meaningful enough do a part two after this is done"
             responseNumber={Number(weeksExpectedToComplete)}

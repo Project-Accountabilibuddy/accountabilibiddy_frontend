@@ -25,12 +25,13 @@ const StyledLanding = styled.div`
       flex-direction: column;
       justify-content: flex-start;
       padding-right: 34px;
+      padding-top: 54px;
 
       .welcome_text,
       .quote_text,
       .inspire_text {
         text-align: start;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
 
         .heading-3 {
           text-align: start;
@@ -44,7 +45,6 @@ const StyledLanding = styled.div`
 
     .top_right_section {
       img {
-        margin-top: -12px;
         margin-right: -36px;
       }
     }
@@ -64,7 +64,7 @@ const Landing = (): JSX.Element => {
       <div className="top_section">
         <div className="top_left_section">
           <h1 className="heading-1 welcome_text">
-            Welcome To A Struggle Worth Of You
+            Welcome to a struggle worth of you
           </h1>
           <div className="quote_text">
             <h2 className="heading-3">
