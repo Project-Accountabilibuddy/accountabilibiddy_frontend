@@ -1,6 +1,22 @@
 import create from 'zustand'
 import dayjs from 'dayjs'
 
+const INITIAL_STATE = {
+  projectName: '',
+  userResponseWhatLongForm: '',
+  userResponseSacrificeLongForm: '',
+  userResponseWhyLongForm: '',
+  userResponseHatersLongForm: '',
+  userResponseWhyShortForm: ['', '', ''],
+  userResponseHatersShortForm: ['', '', ''],
+  weeksExpectedToComplete: '6',
+  projectStartDate: dayjs(),
+  daysResponseFeed: [],
+  userName: '',
+  inEditFormMode: false,
+  globalLoading: false
+}
+
 interface DaysResponse {
   userResponseExcelYesterday: string
   userResponseFocusYesterday: string
@@ -57,35 +73,33 @@ interface GlobalState {
   // USER AUTH STATE
   setUserName: (userName: string) => void
   userName: string
+
+  // MISCELLANEOUS
+  resetGlobalState: () => void
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
-  userResponseWhatLongForm: '',
+  ...INITIAL_STATE,
+
   setUserResponseWhatLongForm: (userResponseWhatLongForm) => {
     set(() => ({ userResponseWhatLongForm }))
   },
 
-  userResponseSacrificeLongForm: '',
   setUserResponseSacrificeLongForm: (userResponseSacrificeLongForm) => {
     set(() => ({ userResponseSacrificeLongForm }))
   },
 
-  projectName: '',
   setProjectName: (projectName) => {
     set(() => ({ projectName }))
   },
 
-  projectStartDate: dayjs(),
   setProjectStartDate: (projectStartDate) => {
     set(() => ({ projectStartDate }))
   },
 
-  userResponseWhyLongForm: '',
   setUserResponseWhyLongForm: (userResponseWhyLongForm) => {
     set(() => ({ userResponseWhyLongForm }))
   },
-
-  userResponseWhyShortForm: ['', '', ''],
 
   updateWhyShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
@@ -117,12 +131,9 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ userResponseWhyShortForm: responses }))
   },
 
-  userResponseHatersLongForm: '',
   setUserResponseHatersLongForm: (userResponseHatersLongForm) => {
     set(() => ({ userResponseHatersLongForm }))
   },
-
-  userResponseHatersShortForm: ['', '', ''],
 
   updateHatersShortFormNumberOfResponses: (removeOrAdd) => {
     set((state) => {
@@ -156,8 +167,6 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ userResponseHatersShortForm: responses }))
   },
 
-  userResponseWeeksToAccomplish: 1,
-  daysResponseFeed: [],
   setDaysResponse: (daysResponse) => {
     set((state) => ({
       daysResponseFeed: [daysResponse, ...state.daysResponseFeed]
@@ -167,18 +176,15 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ daysResponseFeed }))
   },
 
-  weeksExpectedToComplete: '6',
   setWeeksExpectedToComplete: (weeksExpectedToComplete) => {
     set(() => ({ weeksExpectedToComplete }))
   },
 
   // APP UI STATE
-  inEditFormMode: false,
   setInEditFormMode: (inEditFormMode) => {
     set(() => ({ inEditFormMode }))
   },
 
-  globalLoading: false,
   setGlobalLoading: (globalLoading) => {
     set(() => ({ globalLoading }))
   },
@@ -187,7 +193,11 @@ const useGlobalState = create<GlobalState>((set) => ({
   setUserName: (userName) => {
     set(() => ({ userName }))
   },
-  userName: ''
+
+  // MISCELLANEOUS
+  resetGlobalState: () => {
+    set(INITIAL_STATE)
+  }
 }))
 
 export default useGlobalState
