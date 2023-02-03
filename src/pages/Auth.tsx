@@ -211,7 +211,8 @@ const Authentication = (): JSX.Element => {
           <div className="auth_options">
             <div className="auth_option">
               <Button
-                variant="outlined"
+                color="secondary"
+                variant="contained"
                 onClick={() => {
                   void Auth.federatedSignIn({
                     provider: CognitoHostedUIIdentityProvider.Google
@@ -224,7 +225,8 @@ const Authentication = (): JSX.Element => {
             </div>
             <div className="auth_option">
               <Button
-                variant="outlined"
+                color="secondary"
+                variant="contained"
                 onClick={() => {
                   void Auth.federatedSignIn({
                     provider: CognitoHostedUIIdentityProvider.Facebook
@@ -261,6 +263,7 @@ const Authentication = (): JSX.Element => {
           />
           <h6 className="caption error_text">{errorText}</h6>
           <Button
+            variant="outlined"
             onClick={() => {
               void handleConfirmSignUpUser()
             }}

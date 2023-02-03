@@ -173,7 +173,7 @@ const CheckInStatus = (): JSX.Element => {
               {week.days.map(({ day, checkedIn }, i) => {
                 return (
                   <div className="day_check" key={i}>
-                    <div className="caption">{dayjs(day).format('ddd')}</div>
+                    <div className="caption">{dayjs(day).format('dd')}</div>
                     {checkedIn === true && <CheckCircleIcon color="primary" />}
                     {checkedIn === false && <CancelIcon />}
                     {checkedIn === undefined && (

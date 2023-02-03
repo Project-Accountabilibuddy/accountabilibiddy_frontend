@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import cx from 'classnames'
 import dayjs from 'dayjs'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
@@ -118,11 +118,11 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           )}
           {formHasBeenFilledOutToday && (
             <div className="checked_in">
-              <CheckBoxIcon color="primary" />
+              <CheckCircleIcon color="primary" />
               <h2 className="heading-3">Checked in today... Nice</h2>
             </div>
           )}
-          <h3 className="caption">{dayjs().format('ddd MMM D')}</h3>
+          <h3 className="caption">{dayjs().format('ddd, MMM D')}</h3>
         </div>
         <h3 className="caption question_title">What is your focus today?</h3>
         <textarea
