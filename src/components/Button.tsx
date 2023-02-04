@@ -4,9 +4,9 @@ import MaterialUIButton from '@mui/material/Button'
 
 interface ButtonProps {
   text: string
-  className?: string
+  onClick: () => void
   variant?: 'text' | 'outlined' | 'contained'
-  onClick?: () => void
+  className?: string
   disabled?: boolean
 }
 
@@ -31,9 +31,9 @@ const StyledButton = styled.div`
 
 const Button = ({
   text,
-  className = '',
-  variant,
   onClick,
+  variant = 'outlined',
+  className = '',
   disabled = false
 }: ButtonProps): JSX.Element => {
   return (
