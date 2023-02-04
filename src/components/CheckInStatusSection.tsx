@@ -53,18 +53,18 @@ const StyledCheckInStatus = styled.div<{
           margin-bottom: 2px;
         }
 
-        .empty_circle {
+        .circle {
           width: 18px;
           height: 18px;
           border-radius: 50%;
+        }
+
+        .empty_circle {
           border: 2px solid var(--color-primary);
         }
 
         .hidden_circle {
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          border: 2px solid var(--color-primary);
+          border: 2px solid;
           opacity: 0;
         }
       }
@@ -136,7 +136,7 @@ const CheckInStatus = (): JSX.Element => {
           .add(week, 'week')
           .add(day, 'day')
 
-        // CHECK IF DAY IS BEFORE TODAY AND AFTER PROJECT START DATE
+        // CHECK IF DAY IS BEFORE "TODAY" AND AFTER PROJECT START DATE
         if (
           dayjs(daysDate).isBefore(dayjs().add(1, 'day'), 'day') &&
           dayjs(daysDate).isAfter(
@@ -149,7 +149,7 @@ const CheckInStatus = (): JSX.Element => {
             checkedIn = 'SKIPPED'
           }
 
-          // CHECK IF DAY IS IN CHECK IN DATES
+          // USER CHECKED IN IF DATE IS IN ALL_CHECK_IN_DATES
           allCheckInDates.forEach((checkInDate) => {
             if (dayjs(checkInDate).isSame(daysDate, 'day')) {
               checkedIn = 'DONE'
@@ -157,11 +157,14 @@ const CheckInStatus = (): JSX.Element => {
           })
         }
 
+        // IF DAY IS BEFORE PROJECT START DATE ITS OUT OF RANGE
         if (dayjs(daysDate.add(1, 'day')).isBefore(dayjs(projectStartDate))) {
-          checkedIn = 'PRE_DATE'
+          checkedIn = 'OUT_OF_RANGE'
         }
 
         completeWeek.days.push({ day: daysDate, checkedIn })
+
+        // DFAULT CHECKED IN TO "UP COMMING" IF NOT SET TO "DONE" "SKIPPED" OR "OUT OF RANGE"
         checkedIn = 'UP_COMMING'
       }
 
@@ -199,10 +202,10 @@ const CheckInStatus = (): JSX.Element => {
                     )}
                     {checkedIn === 'SKIPPED' && <CancelIcon />}
                     {checkedIn === 'UP_COMMING' && (
-                      <div className="empty_circle" />
+                      <div className="circle empty_circle" />
                     )}
-                    {checkedIn === 'PRE_DATE' && (
-                      <div className="hidden_circle" />
+                    {checkedIn === 'OUT_OF_RANGE' && (
+                      <div className="circle hidden_circle" />
                     )}
                   </div>
                 )

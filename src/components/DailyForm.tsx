@@ -16,7 +16,7 @@ const StyledDailyForm = styled.div`
   margin-top: 78px;
 
   .form_content {
-    height: 200px;
+    height: 160px;
     transition: height 1s ease-in-out;
     position: relative;
     display: flex;
@@ -69,7 +69,7 @@ const StyledDailyForm = styled.div`
     height: 272px;
   }
 
-  .form_content.formnotavailable {
+  .form_content.close_daily_form {
     height: 28px;
 
     .form_input_field,
@@ -107,7 +107,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    return dayjs().isSame(response.dateSubmitted, 'day')
+    return dayjs().isSame(response.dateSubmitted, 'second')
   })
 
   return (
@@ -122,7 +122,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
     >
       <div
         className={cx('form_content', {
-          formnotavailable: formHasBeenFilledOutToday,
+          close_daily_form: formHasBeenFilledOutToday,
           form_focused: focusedOnForm
         })}
       >
@@ -148,7 +148,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           }}
           rows={4}
         />
-        {daysResponseFeed.length !== 0 && (
+        {daysResponseFeed.length !== 0 && focusedOnForm && (
           <>
             <h3 className="caption question_title">
               How did you excel yesterday?*
