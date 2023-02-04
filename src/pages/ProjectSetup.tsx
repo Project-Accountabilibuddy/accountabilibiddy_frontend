@@ -11,10 +11,7 @@ import TopNavBar from '../components/TopNavBar'
 const StyledProjectSetup = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
-  justify-content: center;
   padding: 0 20%;
-  height: 100%;
   width: 100%;
   position: relative;
 `
@@ -169,7 +166,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="TEXT"
             step="Step 4/7"
-            title="What sacrifces will be made? Is this actually worth it?"
+            title="What sacrifces will be made?"
             description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
             responseText={userResponseSacrificeLongForm}
             setResponseText={(text) => {

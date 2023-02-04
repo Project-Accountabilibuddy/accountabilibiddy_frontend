@@ -10,7 +10,7 @@ import useGlobalState from '../global/GlobalSate'
 
 interface checkInDays {
   day: dayjs.Dayjs
-  checkedIn: boolean | undefined
+  checkedIn: string
 }
 
 interface CompleteWeek {
@@ -53,11 +53,19 @@ const StyledCheckInStatus = styled.div<{
           margin-bottom: 2px;
         }
 
-        .empty_circle {
+        .circle {
           width: 18px;
           height: 18px;
           border-radius: 50%;
+        }
+
+        .empty_circle {
           border: 2px solid var(--color-primary);
+        }
+
+        .hidden_circle {
+          border: 2px solid;
+          opacity: 0;
         }
       }
 
@@ -118,31 +126,46 @@ const CheckInStatus = (): JSX.Element => {
         days: []
       }
 
+      const sundayOfStartWeek = dayjs(projectStartDate).startOf('week')
+
       // BUILD ALL DAYS FOR EACH WEEK ADDING CHECK IN STATUS
       for (let day = 0; day < 7; day++) {
-        let checkedIn
+        let checkedIn = 'UP_COMMING'
 
-        const daysDate = dayjs(projectStartDate)
+        const daysDate = dayjs(sundayOfStartWeek)
           .add(week, 'week')
           .add(day, 'day')
 
-        // CHECK IF DAY IS BEFORE TODAY
-        if (dayjs(daysDate).isBefore(dayjs().add(1, 'day'), 'day')) {
+        // CHECK IF DAY IS BEFORE "TODAY" AND AFTER PROJECT START DATE
+        if (
+          dayjs(daysDate).isBefore(dayjs().add(1, 'day'), 'day') &&
+          dayjs(daysDate).isAfter(
+            dayjs(projectStartDate).subtract(1, 'day'),
+            'day'
+          )
+        ) {
           // IF DAY IS TODAY IT SHOULD NOT DEFAULT TO "NOT" CHECKED IN
           if (!dayjs(daysDate).isSame(dayjs(), 'day')) {
-            checkedIn = false
+            checkedIn = 'SKIPPED'
           }
 
-          // CHECK IF DAY IS IN CHECK IN DATES
+          // USER CHECKED IN IF DATE IS IN ALL_CHECK_IN_DATES
           allCheckInDates.forEach((checkInDate) => {
             if (dayjs(checkInDate).isSame(daysDate, 'day')) {
-              checkedIn = true
+              checkedIn = 'DONE'
             }
           })
         }
 
+        // IF DAY IS BEFORE PROJECT START DATE ITS OUT OF RANGE
+        if (dayjs(daysDate.add(1, 'day')).isBefore(dayjs(projectStartDate))) {
+          checkedIn = 'OUT_OF_RANGE'
+        }
+
         completeWeek.days.push({ day: daysDate, checkedIn })
-        checkedIn = undefined
+
+        // DFAULT CHECKED IN TO "UP COMMING" IF NOT SET TO "DONE" "SKIPPED" OR "OUT OF RANGE"
+        checkedIn = 'UP_COMMING'
       }
 
       allWeeks.push(completeWeek)
@@ -174,10 +197,15 @@ const CheckInStatus = (): JSX.Element => {
                 return (
                   <div className="day_check" key={i}>
                     <div className="caption">{dayjs(day).format('dd')}</div>
-                    {checkedIn === true && <CheckCircleIcon color="primary" />}
-                    {checkedIn === false && <CancelIcon />}
-                    {checkedIn === undefined && (
-                      <div className="empty_circle" />
+                    {checkedIn === 'DONE' && (
+                      <CheckCircleIcon color="primary" />
+                    )}
+                    {checkedIn === 'SKIPPED' && <CancelIcon />}
+                    {checkedIn === 'UP_COMMING' && (
+                      <div className="circle empty_circle" />
+                    )}
+                    {checkedIn === 'OUT_OF_RANGE' && (
+                      <div className="circle hidden_circle" />
                     )}
                   </div>
                 )

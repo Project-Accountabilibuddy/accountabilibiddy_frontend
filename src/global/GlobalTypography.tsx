@@ -31,7 +31,6 @@ const StyledGlobalTypography = styled.div`
 
     // TODO: BODY-2 IS APPLIED TO ALL BUTTONS (SHOULD BREAK OUT INTO BUTTON COMPONENT)
     opacity: 1;
-    color: var(--color-primary);
     font-family: 'Ubuntu Mono', monospace;
     font-size: 18px;
     font-weight: 400;
@@ -39,6 +38,16 @@ const StyledGlobalTypography = styled.div`
     letter-spacing: 0px;
     text-align: center;
     line-height: 22px;
+
+    // TODO: WORK ON SPECIAL GRAIDENT BUTTON
+    // :hover {
+    //   color: var(--color-white);
+    //   background: linear-gradient(
+    //     0deg,
+    //     var(--color-primary),
+    //     var(--color-secondary)
+    //   );
+    // }
   }
 
   .heading-1 {

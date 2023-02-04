@@ -44,8 +44,10 @@ const StyledLanding = styled.div`
     }
 
     .top_right_section {
-      img {
+      .project_example_image {
         margin-right: -36px;
+        width: 580px;
+        height: 100%;
       }
     }
   }
@@ -91,7 +93,11 @@ const Landing = (): JSX.Element => {
           </Button>
         </div>
         <div className="top_right_section">
-          <img src={ProjectExampleImage} alt="Dashboard Example" />
+          <img
+            className="project_example_image"
+            src={ProjectExampleImage}
+            alt="Dashboard Example"
+          />
         </div>
       </div>
       <h3 className="body-2">

@@ -26,16 +26,12 @@ const StyledFormInput = styled.div`
   display: flex;
   flex-direction: column;
 
-  .heading-1,
-  .heading-2 {
+  .title_text,
+  .description_text {
     margin-bottom: 24px;
   }
 
-  .heading-1 {
-    color: var(--color-primary);
-  }
-
-  .heading-2 {
+  .description_text {
     color: var(--color-light-grey);
   }
 
@@ -65,23 +61,26 @@ const StyledFormInput = styled.div`
       align-items: center;
       juect-content: center;
       padding: 24px;
-      border: 2px solid var(--color-primary);
+      border: 2px solid var(--color-white);
       color: var(--color-white);
       border-radius: 4px;
 
       :hover {
-        border: 2px solid var(--color-white);
+        border: 2px solid var(--color-primary);
+        color: var(--color-primary);
         cursor: pointer;
       }
     }
 
     .selected {
       border: 2px solid var(--color-primary);
+      color: var(--color-primary);
     }
   }
 
-  .body-1 {
+  .step_text {
     margin-bottom: 24px;
+    color: var(--color-white);
   }
 
   .short_responses {
@@ -133,6 +132,10 @@ const StyledFormInput = styled.div`
     button {
       margin: 48px 24px 0 24px;
     }
+
+    .back_button {
+      color: var(--color-light-grey);
+    }
   }
 `
 
@@ -163,9 +166,11 @@ const FormInput = ({
 
   return (
     <StyledFormInput>
-      {!inEditFormMode && <h1 className="body-1">{step}</h1>}
-      <h1 className="heading-1">{title}</h1>
-      {Boolean(description) && <h3 className="heading-2">{description}</h3>}
+      {!inEditFormMode && <h1 className="step_text caption">{step}</h1>}
+      <h1 className="title_text heading-1">{title}</h1>
+      {Boolean(description) && (
+        <h3 className="description_text caption">{description}</h3>
+      )}
       {type === 'TEXT' && (
         <textarea
           ref={ref}
@@ -246,7 +251,11 @@ const FormInput = ({
       )}
       <div className="nav_buttons">
         {backAction !== null && !inEditFormMode && (
-          <Button variant="text" onClick={backAction}>
+          <Button
+            className="caption back_button"
+            variant="text"
+            onClick={backAction}
+          >
             Back
           </Button>
         )}
