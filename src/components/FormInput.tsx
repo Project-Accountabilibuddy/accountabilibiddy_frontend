@@ -137,10 +137,6 @@ const StyledFormInput = styled.div`
     button {
       margin: 48px 24px 0 24px;
     }
-
-    .back_button {
-      color: var(--color-light-grey);
-    }
   }
 `
 
@@ -256,7 +252,7 @@ const FormInput = ({
       <div className="nav_buttons">
         {backAction !== null && !inEditFormMode && (
           <MaterialUIButton
-            className="caption back_button"
+            className="caption"
             variant="text"
             onClick={backAction}
           >
