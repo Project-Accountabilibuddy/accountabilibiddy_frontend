@@ -13,9 +13,7 @@ const StyledProjectSetup = styled.div`
   flex-direction: column;
   text-align: flex-start;
   justify-content: flex-start;
-  padding: 0 20%;
-  margin-top: 20%;
-  height: 100%;
+  padding: 0 30%;
   width: 100%;
   position: relative;
 `
@@ -170,7 +168,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="TEXT"
             step="Step 4/7"
-            title="What sacrifces will be made? Is this actually worth it?"
+            title="What sacrifces will be made?"
             description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
             responseText={userResponseSacrificeLongForm}
             setResponseText={(text) => {
