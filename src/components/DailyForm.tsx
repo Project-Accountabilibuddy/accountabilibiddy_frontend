@@ -86,7 +86,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   const [inputFocusToday, setInputFocusToday] = useState('')
   const [focusedOnForm, setFocusedOnForm] = useState(false)
 
-  const { daysResponseFeed, setDaysResponse } = useGlobalState()
+  const { daysResponseFeed, setDaysResponse, projectName } = useGlobalState()
   const { handleUpdateProject } = useBackEndMethods()
 
   const handleSubmitWeekReview = (): void => {
@@ -139,6 +139,11 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
         <h3 className="caption question_title">What is your focus today?*</h3>
         <textarea
           className="form_input_field"
+          placeholder={
+            daysResponseFeed.length !== 0
+              ? ''
+              : `Complete the setup proccess for ${projectName} `
+          }
           value={inputFocusToday}
           disabled={formHasBeenFilledOutToday}
           onChange={(e) => {
