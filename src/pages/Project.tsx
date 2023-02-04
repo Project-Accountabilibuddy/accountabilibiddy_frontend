@@ -236,11 +236,11 @@ const Project = (): JSX.Element => {
     }
 
     setInterval(() => {
-      setShortResponseInView({ text: '', type: '' })
+      setShortResponseInView({ text: '', type: shortResponseInView.type })
       setTimeout(() => {
         setShortResponseInView(getRandomShortAnswer())
       }, 100)
-    }, 10000)
+    }, 5000)
   }, [])
 
   const handleEditField = (fieldToEdit: string): void => {
@@ -309,7 +309,12 @@ const Project = (): JSX.Element => {
                   }
                 }}
               >
-                <EditIcon className="edit_icon" color="primary" />
+                <EditIcon
+                  className="edit_icon"
+                  color={
+                    shortResponseInView.type === 'WHY' ? 'primary' : 'error'
+                  }
+                />
               </div>
             </div>
             <DailyForm className="section_daily_form_fields" />
