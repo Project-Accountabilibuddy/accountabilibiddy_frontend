@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import Button from '@mui/material/Button'
+import MaterialUIButton from '@mui/material/Button'
 import cx from 'classnames'
 import CloseIcon from '@mui/icons-material/Close'
 
 import useGlobalState from '../global/GlobalSate'
+import Button from '../components/Button'
 
 interface FormInputProps {
   type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
@@ -74,7 +75,11 @@ const StyledFormInput = styled.div`
 
     .selected {
       border: 2px solid var(--color-primary);
-      color: var(--color-primary);
+      background: linear-gradient(
+        0deg,
+        var(--color-secondary),
+        var(--color-primary)
+      );
     }
   }
 
@@ -243,29 +248,27 @@ const FormInput = ({
               onClick={() => {
                 updateNumberOfGroupResponses('ADD')
               }}
-            >
-              Add More
-            </Button>
+              text="Add More"
+            />
           </div>
         </>
       )}
       <div className="nav_buttons">
         {backAction !== null && !inEditFormMode && (
-          <Button
+          <MaterialUIButton
             className="caption back_button"
             variant="text"
             onClick={backAction}
           >
             Back
-          </Button>
+          </MaterialUIButton>
         )}
         <Button
           disabled={responseText.length === 0 && type === 'TEXT'}
           variant="outlined"
           onClick={continueAction}
-        >
-          {inEditFormMode ? 'Save' : 'Next'}
-        </Button>
+          text={inEditFormMode ? 'Save' : 'Next'}
+        />
       </div>
     </StyledFormInput>
   )

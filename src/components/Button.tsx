@@ -7,38 +7,45 @@ interface ButtonProps {
   className?: string
   variant?: 'text' | 'outlined' | 'contained'
   onClick?: () => void
+  disabled?: boolean
 }
 
-const StyledButton = styled(MaterialUIButton)`
-  height: 48px;
-  text-transform: initial;
-  font-family: 'Ubuntu Mono', monospace;
-  font-size: 18px;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0px;
-  text-align: center;
-  line-height: 22px;
+const StyledButton = styled.div`
+  button {
+    height: 48px;
+    border: 1px solid var(--color-primary);
+    border-radius: 2px;
+    text-transform: initial;
+    color: var(--color-primary);
 
-  :hover {
-    color: var(--color-white);
-    background: linear-gradient(
-      0deg,
-      var(--color-primary),
-      var(--color-secondary)
-    );
+    :hover {
+      color: var(--color-white);
+      background: linear-gradient(
+        0deg,
+        var(--color-secondary),
+        var(--color-primary)
+      );
+    }
   }
 `
 
 const Button = ({
   text,
-  className,
+  className = '',
   variant,
-  onClick
+  onClick,
+  disabled = false
 }: ButtonProps): JSX.Element => {
   return (
-    <StyledButton className={className} variant={variant} onClick={onClick}>
-      {text}
+    <StyledButton>
+      <MaterialUIButton
+        className={`${className} body-2`}
+        variant={variant}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {text}
+      </MaterialUIButton>
     </StyledButton>
   )
 }

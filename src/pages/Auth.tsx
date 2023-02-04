@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import MaterialUIButton from '@mui/material/Button'
 import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
@@ -13,6 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import Button from '../components/Button'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -78,6 +79,7 @@ const StyledAuthentication = styled.div`
   button {
     margin-bottom: 24px;
     width: 400px;
+    color: var(--color-primary);
   }
 `
 
@@ -196,13 +198,13 @@ const Authentication = (): JSX.Element => {
           />
           <h6 className="caption error_text">{errorText}</h6>
           <Button
+            text="Sign Up"
             variant="outlined"
             onClick={() => {
               void handleSignUpUser()
             }}
-          >
-            Sign Up
-          </Button>
+          />
+
           <div className="or_group">
             <div className="or_line" />
             <h5 className="caption"> OR </h5>
@@ -210,7 +212,7 @@ const Authentication = (): JSX.Element => {
           </div>
           <div className="auth_options">
             <div className="auth_option">
-              <Button
+              <MaterialUIButton
                 color="secondary"
                 variant="contained"
                 onClick={() => {
@@ -221,10 +223,10 @@ const Authentication = (): JSX.Element => {
               >
                 <GoogleIcon color="primary" />
                 Google
-              </Button>
+              </MaterialUIButton>
             </div>
             <div className="auth_option">
-              <Button
+              <MaterialUIButton
                 color="secondary"
                 variant="contained"
                 onClick={() => {
@@ -235,18 +237,18 @@ const Authentication = (): JSX.Element => {
               >
                 <FacebookIcon color="primary" />
                 Facebook
-              </Button>
+              </MaterialUIButton>
             </div>
           </div>
 
-          <Button
+          <MaterialUIButton
             variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_IN')
             }}
           >
             I have an account
-          </Button>
+          </MaterialUIButton>
         </>
       )}
       {authFormInView === 'CONFIRM_EMAIL' && (
@@ -267,9 +269,8 @@ const Authentication = (): JSX.Element => {
             onClick={() => {
               void handleConfirmSignUpUser()
             }}
-          >
-            Verify Code
-          </Button>
+            text="Verify Code"
+          />
         </>
       )}
       {authFormInView === 'SIGN_IN' && (
@@ -312,17 +313,16 @@ const Authentication = (): JSX.Element => {
             onClick={() => {
               void handleSignInUser()
             }}
-          >
-            Log In
-          </Button>
-          <Button
+            text="Log In"
+          />
+          <MaterialUIButton
             variant="text"
             onClick={() => {
               setAuthFormInView('SIGN_UP')
             }}
           >
             I don't have an account
-          </Button>
+          </MaterialUIButton>
         </>
       )}
     </StyledAuthentication>

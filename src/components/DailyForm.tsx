@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Button from '@mui/material/Button'
 import cx from 'classnames'
 import dayjs from 'dayjs'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
+import Button from '../components/Button'
 
 interface DailyFormProps {
   className: string
@@ -62,6 +62,7 @@ const StyledDailyForm = styled.div`
       margin-top: 12px;
       position: absolute;
       bottom: 0;
+      left: 0;
     }
   }
 
@@ -74,7 +75,7 @@ const StyledDailyForm = styled.div`
 
     .form_input_field,
     .question_title,
-    button {
+    .submit_button {
       display: none;
     }
   }
@@ -107,7 +108,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   }
 
   const formHasBeenFilledOutToday = daysResponseFeed.some((response) => {
-    return dayjs().isSame(response.dateSubmitted, 'minute')
+    return dayjs().isSame(response.dateSubmitted, 'day')
   })
 
   return (
@@ -115,9 +116,6 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
       className={className}
       onClick={() => {
         setFocusedOnForm(true)
-      }}
-      onBlur={() => {
-        setFocusedOnForm(false)
       }}
     >
       <div
@@ -169,9 +167,8 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           variant="outlined"
           onClick={handleSubmitWeekReview}
           disabled={inputFocusToday === ''}
-        >
-          Submit
-        </Button>
+          text="Submit"
+        />
       </div>
     </StyledDailyForm>
   )
