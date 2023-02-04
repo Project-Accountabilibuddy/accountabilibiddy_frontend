@@ -13,7 +13,7 @@ const StyledProjectSetup = styled.div`
   flex-direction: column;
   text-align: flex-start;
   justify-content: flex-start;
-  padding: 0 30%;
+  padding: 0 20%;
   width: 100%;
   position: relative;
 `
