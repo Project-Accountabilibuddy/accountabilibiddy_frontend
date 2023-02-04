@@ -96,6 +96,7 @@ const StyledFormInput = styled.div`
     .long_response_text {
       max-height: 200px;
       overflow: scroll;
+      margin-bottom: 24px;
     }
 
     .input_group {

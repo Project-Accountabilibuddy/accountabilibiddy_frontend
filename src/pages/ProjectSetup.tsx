@@ -243,7 +243,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="NUMBER"
             step="7/7"
-            title="Choose a number of weeks to complete your aim in an amount of time that is inspiring but not impossible"
+            title="Choose a number of weeks to achieve your aim, in an amount of time that is inspiring but not impossible"
             description="This can not be edited, deadlines are important, what is to keep you from continueing to push this shit out. If the project was meaningful enough do a part two after this is done"
             responseNumber={Number(weeksExpectedToComplete)}
             setResponseNumber={(text) => {

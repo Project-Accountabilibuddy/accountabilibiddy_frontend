@@ -27,6 +27,11 @@ const StyledAuthentication = styled.div`
     width: 400px;
   }
 
+  .subheading_text {
+    margin-bottom: 24px;
+    color: var(--color-light-grey);
+  }
+
   .text_field {
     margin-bottom: 24px;
     width: 400px;
@@ -254,6 +259,9 @@ const Authentication = (): JSX.Element => {
       {authFormInView === 'CONFIRM_EMAIL' && (
         <>
           <h3 className="heading-1">Confirm Sign Up</h3>
+          <h4 className="caption subheading_text">
+            A code has been sent to your email
+          </h4>
           <TextField
             className="text_field"
             variant="standard"
