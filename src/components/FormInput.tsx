@@ -76,8 +76,9 @@ const StyledFormInput = styled.div`
     }
   }
 
-  .body-1 {
+  .step_text {
     margin-bottom: 24px;
+    color: var(--color-white);
   }
 
   .short_responses {
@@ -159,7 +160,7 @@ const FormInput = ({
 
   return (
     <StyledFormInput>
-      {!inEditFormMode && <h1 className="body-1">{step}</h1>}
+      {!inEditFormMode && <h1 className="step_text caption">{step}</h1>}
       <h1 className="heading-1">{title}</h1>
       {Boolean(description) && <h3 className="caption">{description}</h3>}
       {type === 'TEXT' && (
