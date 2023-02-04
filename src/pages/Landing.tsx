@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../global/Constants'
 import { ProjectExampleImage } from '../images'
+import Button from '../components/Button'
 
 const StyledLanding = styled.div`
   display: flex;
@@ -88,9 +88,8 @@ const Landing = (): JSX.Element => {
             onClick={() => {
               navigate(ROUTES.AUTH)
             }}
-          >
-            Begin Journey
-          </Button>
+            text="Begin Journey"
+          />
         </div>
         <div className="top_right_section">
           <img
