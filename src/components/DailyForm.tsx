@@ -16,8 +16,8 @@ const StyledDailyForm = styled.div`
   margin-top: 78px;
 
   .form_content {
-    height: 272px;
-    transition: height 2s ease-in-out;
+    height: 200px;
+    transition: height 1s ease-in-out;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -44,7 +44,7 @@ const StyledDailyForm = styled.div`
     }
 
     .question_title {
-      color: var(--color-white);
+      color: var(--color-light-grey);
     }
 
     .form_input_field {
@@ -65,6 +65,10 @@ const StyledDailyForm = styled.div`
     }
   }
 
+  .form_content.form_focused {
+    height: 272px;
+  }
+
   .form_content.formnotavailable {
     height: 28px;
 
@@ -79,6 +83,7 @@ const StyledDailyForm = styled.div`
 const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   const [inputExcelYesterday, setinputExcelYesterday] = useState('')
   const [inputFocusToday, setInputFocusToday] = useState('')
+  const [focusedOnForm, setFocusedOnForm] = useState(false)
 
   const { daysResponseFeed, setDaysResponse } = useGlobalState()
   const { handleUpdateProject } = useBackEndMethods()
@@ -106,10 +111,19 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
   })
 
   return (
-    <StyledDailyForm className={className}>
+    <StyledDailyForm
+      className={className}
+      onClick={() => {
+        setFocusedOnForm(true)
+      }}
+      onBlur={() => {
+        setFocusedOnForm(false)
+      }}
+    >
       <div
         className={cx('form_content', {
-          formnotavailable: formHasBeenFilledOutToday
+          formnotavailable: formHasBeenFilledOutToday,
+          form_focused: focusedOnForm
         })}
       >
         <div className="heading">
@@ -124,7 +138,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           )}
           <h3 className="caption">{dayjs().format('ddd, MMM D')}</h3>
         </div>
-        <h3 className="caption question_title">What is your focus today?</h3>
+        <h3 className="caption question_title">What is your focus today?*</h3>
         <textarea
           className="form_input_field"
           value={inputFocusToday}
@@ -137,7 +151,7 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
         {daysResponseFeed.length !== 0 && (
           <>
             <h3 className="caption question_title">
-              How did you excel yesterday?
+              How did you excel yesterday?*
             </h3>
             <textarea
               disabled={formHasBeenFilledOutToday}
