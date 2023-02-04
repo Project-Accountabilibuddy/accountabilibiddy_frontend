@@ -11,8 +11,6 @@ import TopNavBar from '../components/TopNavBar'
 const StyledProjectSetup = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: flex-start;
-  justify-content: flex-start;
   padding: 0 20%;
   width: 100%;
   position: relative;

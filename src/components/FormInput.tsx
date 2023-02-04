@@ -26,12 +26,12 @@ const StyledFormInput = styled.div`
   display: flex;
   flex-direction: column;
 
-  .heading-1,
-  .caption {
+  .title_text,
+  .description_text {
     margin-bottom: 24px;
   }
 
-  .caption {
+  .description_text {
     color: var(--color-light-grey);
   }
 
@@ -167,8 +167,10 @@ const FormInput = ({
   return (
     <StyledFormInput>
       {!inEditFormMode && <h1 className="step_text caption">{step}</h1>}
-      <h1 className="heading-1">{title}</h1>
-      {Boolean(description) && <h3 className="caption">{description}</h3>}
+      <h1 className="title_text heading-1">{title}</h1>
+      {Boolean(description) && (
+        <h3 className="description_text caption">{description}</h3>
+      )}
       {type === 'TEXT' && (
         <textarea
           ref={ref}
