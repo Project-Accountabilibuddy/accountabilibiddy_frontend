@@ -130,6 +130,10 @@ const StyledFormInput = styled.div`
     button {
       margin: 48px 24px 0 24px;
     }
+
+    .back_button {
+      color: var(--color-light-grey);
+    }
   }
 `
 
@@ -243,7 +247,11 @@ const FormInput = ({
       )}
       <div className="nav_buttons">
         {backAction !== null && !inEditFormMode && (
-          <Button variant="text" onClick={backAction}>
+          <Button
+            className="caption back_button"
+            variant="text"
+            onClick={backAction}
+          >
             Back
           </Button>
         )}
