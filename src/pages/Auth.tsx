@@ -21,7 +21,7 @@ const StyledAuthentication = styled.div`
   justify-content: center;
   padding: 0 20%;
 
-  .heading-2 {
+  .heading-1 {
     margin-bottom: 24px;
     width: 400px;
   }
@@ -160,7 +160,7 @@ const Authentication = (): JSX.Element => {
     <StyledAuthentication>
       {authFormInView === 'SIGN_UP' && (
         <>
-          <h3 className="heading-2">
+          <h3 className="heading-1">
             Let's get you set up before your ass is kicked
           </h3>
           <TextField
@@ -251,7 +251,7 @@ const Authentication = (): JSX.Element => {
       )}
       {authFormInView === 'CONFIRM_EMAIL' && (
         <>
-          <h3 className="heading-2">Confirm Sign Up</h3>
+          <h3 className="heading-1">Confirm Sign Up</h3>
           <TextField
             className="text_field"
             variant="standard"
@@ -274,7 +274,7 @@ const Authentication = (): JSX.Element => {
       )}
       {authFormInView === 'SIGN_IN' && (
         <>
-          <h3 className="heading-2">Let's get back to work</h3>
+          <h3 className="heading-1">Let's get back to work</h3>
           <TextField
             className="text_field"
             variant="standard"

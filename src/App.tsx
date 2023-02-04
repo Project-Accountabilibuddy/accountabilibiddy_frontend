@@ -90,7 +90,7 @@ const App = (): JSX.Element => {
       } catch (err) {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === ROUTES.PROJECT) {
-          navigate('/')
+          // navigate('/')
         }
       }
     }
