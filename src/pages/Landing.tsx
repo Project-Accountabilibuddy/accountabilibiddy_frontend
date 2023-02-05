@@ -107,18 +107,18 @@ const Landing = (): JSX.Element => {
         you will actually make it to the last one.
       </h3>
       <h3 className="body-2">
-        Billibuddy will help support users to achieve there aims. This is done
-        through an initial sign up flow of long form writing along with the very
-        important questions “how long will you give yourself to active this aim?
-        Once the sign up flow is complete, users will be taken to their very own
-        dashboard. Here they will be presented with constant reminders as to why
-        they decided to take there chosen project on. There is also a daily
-        check in feature to help hold users accountable to themselves.
+        Billibuddy will help you achieve your aims. This is done through an
+        initial sign-up flow of long-form writing along with a very important
+        question “how long will you give yourself to active this aim? Once the
+        sign-up flow is complete, you will be taken to your very own dashboard.
+        Here you will be presented with constant reminders as to why you decided
+        to take this chosen project on. There is also a daily check-in feature
+        to help hold you accountable to yourself.
       </h3>
       <h3 className="body-2">
         Just because it will take time does not mean you have to do it all in a
         single go, we recommend taking breaks in between questions to keep your
-        brain from melting
+        brain from melting.
       </h3>
     </StyledLanding>
   )

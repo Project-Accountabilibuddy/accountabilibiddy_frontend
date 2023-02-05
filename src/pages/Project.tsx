@@ -123,8 +123,11 @@ const StyledProject = styled.div`
         margin-right: 114px;
 
         .fade_in_out_text {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
           color: var(--color-primary);
-          padding: 0 12px;
+          margin-right: 34px;
         }
 
         .fade_in_out_text.hate_res {

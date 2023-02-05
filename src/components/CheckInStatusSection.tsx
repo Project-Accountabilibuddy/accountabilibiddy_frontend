@@ -174,8 +174,6 @@ const CheckInStatus = (): JSX.Element => {
     return allWeeks
   }
 
-  //   console.log('BUILD CHECK IN STATUS: ', buildCheckInStatus())
-
   return (
     <StyledCheckInStatus
       checinsectionopenheight={42 * Number(weeksExpectedToComplete)}

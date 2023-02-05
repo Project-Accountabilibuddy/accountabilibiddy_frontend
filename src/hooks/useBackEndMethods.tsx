@@ -61,8 +61,8 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       } = response.data.Items[0]
 
       // TODO: NAV LOGIC SHOULD BE CONSOLIDATED
-      console.log('userCompletedSignUpFlow: ', userCompletedSignUpFlow)
       if (userCompletedSignUpFlow === false) {
+        console.log('userCompletedSignUpFlow: ', userCompletedSignUpFlow)
         navigate(
           `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
         )
