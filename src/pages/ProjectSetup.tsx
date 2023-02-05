@@ -82,7 +82,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="TEXT"
             step="Feel free to take a break at any point, progress is saved every time you click next"
-            title="Better come up with an inspring name"
+            title="Better come up with an inspring name for your project..."
             description="Note: be careful this can not be changed..."
             responseText={projectName}
             setResponseText={(text) => {
@@ -143,7 +143,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="TEXT"
             step="Step 3/7"
-            title="What will your internal bitch say?"
+            title="What will your internal voice say that thinks you cant?"
             description="Write fast and dirty straigh from the heart for at least 10 minutes, if that's too much effort then you are not serious about this, please quit"
             responseText={userResponseHatersLongForm}
             setResponseText={(text) => {
@@ -215,7 +215,7 @@ const ProjectSetup = (): JSX.Element => {
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 6/7"
-            title="Distill the voice of others and your own inner bitch that tell you why you can't with the aim of pushing yourself onward."
+            title="Distill the voice of others and your own that tell you why you can't with the aim of pushing yourself onward."
             groupResponses={userResponseHatersShortForm}
             responseText={userResponseHatersLongForm}
             updateNumberOfGroupResponses={

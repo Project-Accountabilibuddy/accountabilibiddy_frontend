@@ -131,7 +131,11 @@ const DailyForm = ({ className }: DailyFormProps): JSX.Element => {
           {formHasBeenFilledOutToday && (
             <div className="checked_in">
               <CheckCircleIcon color="primary" />
-              <h2 className="heading-3">Checked in today... Nice</h2>
+              <h2 className="heading-3">
+                {daysResponseFeed.length === 1
+                  ? 'Do this again tomorrow'
+                  : 'Checked in today... Nice'}
+              </h2>
             </div>
           )}
           <h3 className="caption">{dayjs().format('ddd, MMM D')}</h3>
