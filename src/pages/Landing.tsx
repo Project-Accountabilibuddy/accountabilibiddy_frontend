@@ -66,7 +66,7 @@ const Landing = (): JSX.Element => {
       <div className="top_section">
         <div className="top_left_section">
           <h1 className="heading-1 welcome_text">
-            Welcome to struggle worthy of you
+            Welcome to a struggle worthy of you
           </h1>
           <div className="quote_text">
             <h2 className="heading-3">
