@@ -16,6 +16,7 @@ interface checkInDays {
 interface CompleteWeek {
   currentWeek: boolean
   days: checkInDays[]
+  weekIndex: number
 }
 
 const StyledCheckInStatus = styled.div<{
@@ -123,7 +124,8 @@ const CheckInStatus = (): JSX.Element => {
         currentWeek: dayjs(projectStartDate)
           .add(week, 'week')
           .isSame(dayjs(), 'week'),
-        days: []
+        days: [],
+        weekIndex: week + 1
       }
 
       const sundayOfStartWeek = dayjs(projectStartDate).startOf('week')
@@ -183,38 +185,42 @@ const CheckInStatus = (): JSX.Element => {
           checkinstatusopen: checkInStatusSectionOpen
         })}
       >
-        {buildCheckInStatus().map((week, k) => {
-          return (
-            <div
-              key={k}
-              className={cx('current_week_check_in', {
-                showweek: checkInStatusSectionOpen || k === 0
-              })}
-            >
-              {week.days.map(({ day, checkedIn }, i) => {
-                return (
-                  <div className="day_check" key={i}>
-                    <div className="caption">{dayjs(day).format('dd')}</div>
-                    {checkedIn === 'DONE' && (
-                      <CheckCircleIcon color="primary" />
-                    )}
-                    {checkedIn === 'SKIPPED' && <CancelIcon />}
-                    {checkedIn === 'UP_COMMING' && (
-                      <div className="circle empty_circle" />
-                    )}
-                    {checkedIn === 'OUT_OF_RANGE' && (
-                      <div className="circle hidden_circle" />
-                    )}
-                  </div>
-                )
-              })}
-              <h3 className="body-1 week_label_text">
-                {`${k + 1}/${weeksExpectedToComplete}`}
-                <span className="caption wks_text"> wks</span>
-              </h3>
-            </div>
-          )
-        })}
+        {buildCheckInStatus()
+          .filter((week) => {
+            return checkInStatusSectionOpen ? true : week.currentWeek
+          })
+          .map((week, k) => {
+            return (
+              <div
+                key={k}
+                className={cx('current_week_check_in', {
+                  showweek: checkInStatusSectionOpen || k === 0
+                })}
+              >
+                {week.days.map(({ day, checkedIn }, i) => {
+                  return (
+                    <div className="day_check" key={i}>
+                      <div className="caption">{dayjs(day).format('dd')}</div>
+                      {checkedIn === 'DONE' && (
+                        <CheckCircleIcon color="primary" />
+                      )}
+                      {checkedIn === 'SKIPPED' && <CancelIcon />}
+                      {checkedIn === 'UP_COMMING' && (
+                        <div className="circle empty_circle" />
+                      )}
+                      {checkedIn === 'OUT_OF_RANGE' && (
+                        <div className="circle hidden_circle" />
+                      )}
+                    </div>
+                  )
+                })}
+                <h3 className="body-1 week_label_text">
+                  {`${week.weekIndex}/${weeksExpectedToComplete}`}
+                  <span className="caption wks_text"> wks</span>
+                </h3>
+              </div>
+            )
+          })}
         <KeyboardArrowDownIcon
           className={cx('open_close_arrow', {
             pointarrowup: checkInStatusSectionOpen
