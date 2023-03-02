@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense, lazy } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { Edit as EditIcon } from '@mui/icons-material'
@@ -7,9 +7,14 @@ import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+
 import DailyForm from '../components/DailyForm'
-import CheckInStatusSection from '../components/CheckInStatusSection'
 import TopNavBar from '../components/TopNavBar'
+
+// TODO: EXPERIMENTING WITH LAZY LOADING UNNECESSARY OPTIMIZATION CURRENTLY
+const CheckInStatusSection = lazy(
+  async () => await import('../components/CheckInStatusSection')
+)
 
 interface ShortAnswer {
   text: string
@@ -257,7 +262,9 @@ const Project = (): JSX.Element => {
       <StyledProject>
         <div className="section_group">
           <div className="section_left">
-            <CheckInStatusSection />
+            <Suspense fallback={<div>Loading...</div>}>
+              <CheckInStatusSection />
+            </Suspense>
             <div className="section_top_left">
               <h2 className="heading-3 section_title">What are you doing?</h2>
               <div className="scroll_container">
