@@ -16,6 +16,13 @@ const StyledGlobalTypography = styled.div`
     animation: fadein 2s;
   }
 
+  svg,
+  input,
+  img,
+  button {
+    animation: fadein 2s;
+  }
+
   @keyframes fadein {
     from {
       opacity: 0;
