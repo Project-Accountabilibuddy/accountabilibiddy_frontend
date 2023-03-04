@@ -10,7 +10,7 @@ export const GlobalPallete = {
   colors: {
     primary: '#3CFFD5',
     secondary: '#4333A3',
-    background: '#222629',
+    background: '#1D0327',
     lightGrey: '#6B6E70',
     darkGrey: '#474B4F',
     white: '#FFFFFF',
