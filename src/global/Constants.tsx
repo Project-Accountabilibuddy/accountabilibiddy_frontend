@@ -10,6 +10,7 @@ const SETUP_PROJECT_SCREENS = {
 }
 
 const ROUTES = {
+  LANDING: '/',
   AUTH: '/auth',
   PROJECT: '/project',
   PROJECT_SETUP: '/project-setup'

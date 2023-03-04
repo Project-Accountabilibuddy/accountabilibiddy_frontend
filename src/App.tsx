@@ -17,6 +17,7 @@ const LandingPage = lazy(async () => await import('./pages/Landing'))
 const ProjectSetUpPage = lazy(async () => await import('./pages/ProjectSetup'))
 const ProjectPage = lazy(async () => await import('./pages/Project'))
 const AuthPage = lazy(async () => await import('./pages/Auth'))
+const NotFoundPage = lazy(async () => await import('./pages/NotFound'))
 
 const StyledApp = styled.div`
   background-image: url(${SunBackgroundImage});
@@ -150,6 +151,7 @@ const App = (): JSX.Element => {
                       path={`${ROUTES.PROJECT}`}
                       element={<ProjectPage />}
                     />
+                    <Route path="*" element={<NotFoundPage />} />
                   </Routes>
                 </Suspense>
               )}
