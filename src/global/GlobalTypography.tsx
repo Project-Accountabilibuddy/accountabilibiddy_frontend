@@ -38,84 +38,84 @@ const StyledGlobalTypography = styled.div`
     text-transform: initial;
     opacity: 1;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 22px;
+    line-height: 1.3rem;
   }
 
   .heading-1 {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 38px;
+    font-size: 2.4rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 42px;
+    line-height: 2.6rem;
   }
 
   .heading-2 {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 30px;
+    line-height: 1.8rem;
   }
 
   .heading-3 {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 28px;
+    line-height: 1.7rem;
   }
 
   .body-1 {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 24px;
+    line-height: 1.5rem;
   }
 
   .body-2 {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 22px;
+    line-height: 1.3rem;
   }
 
   .caption {
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 20px;
+    line-height: 1.2rem;
   }
 `
 

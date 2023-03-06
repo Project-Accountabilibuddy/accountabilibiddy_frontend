@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import useGlobalState from '../global/GlobalSate'
 import LogoBig from '../icons/LogoBig'
+import { ROUTES } from '../global/Constants'
 
 const StyledTopNavBar = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ const TopNavBar = (): JSX.Element => {
   const handleSignOut = async (): Promise<any> => {
     try {
       await Auth.signOut()
-      navigate('/')
+      navigate(ROUTES.LANDING)
       resetGlobalState()
     } catch (error) {
       console.log('error signing out: ', error)
