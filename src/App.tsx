@@ -86,13 +86,13 @@ const App = (): JSX.Element => {
       try {
         await Auth.currentAuthenticatedUser()
         // DIRECT USER INTO AUTHED ROUTES IF SIGNED IN
-        if (pathname === '/' || pathname === ROUTES.AUTH) {
+        if (pathname === ROUTES.LANDING || pathname === ROUTES.AUTH) {
           navigate(ROUTES.PROJECT)
         }
       } catch (err) {
         // KICK USER OUT OF AUTHED ROUTES IF NOT SIGNED IN
         if (pathname === ROUTES.PROJECT) {
-          navigate('/')
+          navigate(ROUTES.LANDING)
         }
       }
     }
@@ -124,7 +124,7 @@ const App = (): JSX.Element => {
     })
   }, [])
 
-  const showLogo = pathname === '/' || pathname === ROUTES.AUTH
+  const showLogo = pathname === ROUTES.LANDING || pathname === ROUTES.AUTH
 
   return (
     <GlobalTheme>

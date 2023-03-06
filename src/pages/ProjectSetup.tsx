@@ -44,7 +44,7 @@ const ProjectSetup = (): JSX.Element => {
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const endOfPath = pathname.split('/').slice(-1)[0]
+  const endOfPath = pathname.split(ROUTES.LANDING).slice(-1)[0]
 
   // USER SHOULD NEVER BE ABLE TO UPDATE PROJECT NAME
   useEffect(() => {

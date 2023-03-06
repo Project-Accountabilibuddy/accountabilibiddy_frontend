@@ -38,7 +38,7 @@ const StyledGlobalTypography = styled.div`
     text-transform: initial;
     opacity: 1;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
@@ -50,7 +50,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 38px;
+    font-size: 2.4rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
@@ -62,7 +62,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
@@ -74,7 +74,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Prompt', sans-serif;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 300;
     font-style: normal;
     letter-spacing: 0px;
@@ -86,7 +86,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
@@ -98,7 +98,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
@@ -110,7 +110,7 @@ const StyledGlobalTypography = styled.div`
     opacity: 1;
     color: var(--color-white);
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0px;
