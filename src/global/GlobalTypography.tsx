@@ -43,7 +43,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 22px;
+    line-height: 1.3rem;
   }
 
   .heading-1 {
@@ -55,7 +55,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 42px;
+    line-height: 2.6rem;
   }
 
   .heading-2 {
@@ -67,7 +67,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 30px;
+    line-height: 1.8rem;
   }
 
   .heading-3 {
@@ -79,7 +79,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 28px;
+    line-height: 1.7rem;
   }
 
   .body-1 {
@@ -91,7 +91,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 24px;
+    line-height: 1.5rem;
   }
 
   .body-2 {
@@ -103,7 +103,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 22px;
+    line-height: 1.3rem;
   }
 
   .caption {
@@ -115,7 +115,7 @@ const StyledGlobalTypography = styled.div`
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
-    line-height: 20px;
+    line-height: 1.2rem;
   }
 `
 
