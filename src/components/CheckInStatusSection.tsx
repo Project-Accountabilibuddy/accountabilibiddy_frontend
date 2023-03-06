@@ -48,8 +48,8 @@ const StyledCheckInStatus = styled.div<{
         align-items: center;
 
         .caption {
-          font-size: .8rem;
-          line-height: 14px;
+          font-size: 0.8rem;
+          line-height: 0.9rem;
           color: var(--color-light-grey);
           margin-bottom: 2px;
         }
