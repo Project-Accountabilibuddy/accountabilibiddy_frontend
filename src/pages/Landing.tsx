@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../global/Constants'
 import { ProjectExampleImage } from '../images'
 import Button from '../components/Button'
+import useGlobalCopy from '../hooks/useGlobalCopy'
 
 const StyledLanding = styled.div`
   display: flex;
@@ -61,12 +62,14 @@ const StyledLanding = styled.div`
 const Landing = (): JSX.Element => {
   const navigate = useNavigate()
 
+  const { userChosenGlobalCopy } = useGlobalCopy()
+
   return (
     <StyledLanding>
       <div className="top_section">
         <div className="top_left_section">
           <h1 className="heading-1 welcome_text">
-            Welcome to a struggle worthy of you
+            {userChosenGlobalCopy.LANDING_TITLE}
           </h1>
           <div className="quote_text">
             <h2 className="heading-3">

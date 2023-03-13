@@ -23,6 +23,11 @@ interface DaysResponse {
   dateSubmitted: dayjs.Dayjs
 }
 
+type UserChosenCopySeverity =
+  | 'DRILL_SEARGENT'
+  | 'CATHOLIC_NUN'
+  | 'SUNDAY_SCHOOL_TEACHER'
+
 interface GlobalState {
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
@@ -64,17 +69,21 @@ interface GlobalState {
   weeksExpectedToComplete: string
   setWeeksExpectedToComplete: (weeksExpectedToComplete: string) => void
 
-  // APP UI STATE
+  // * APP UI STATE
   inEditFormMode: boolean
   setInEditFormMode: (inEditFormMode: boolean) => void
   globalLoading: boolean
   setGlobalLoading: (globalLoading: boolean) => void
+  userChosenCopySeverity: UserChosenCopySeverity
+  setUserChosenCopySeverity: (
+    userChosenCopySeverity: UserChosenCopySeverity
+  ) => void
 
-  // USER AUTH STATE
+  // * USER AUTH STATE
   setUserName: (userName: string) => void
   userName: string
 
-  // MISCELLANEOUS
+  // * MISCELLANEOUS
   resetGlobalState: () => void
 }
 
@@ -180,7 +189,7 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ weeksExpectedToComplete }))
   },
 
-  // APP UI STATE
+  // * APP UI STATE
   setInEditFormMode: (inEditFormMode) => {
     set(() => ({ inEditFormMode }))
   },
@@ -189,12 +198,17 @@ const useGlobalState = create<GlobalState>((set) => ({
     set(() => ({ globalLoading }))
   },
 
-  // USER AUTH STATE
+  userChosenCopySeverity: 'DRILL_SEARGENT',
+  setUserChosenCopySeverity: (userChosenCopySeverity) => {
+    set(() => ({ userChosenCopySeverity }))
+  },
+
+  // * USER AUTH STATE
   setUserName: (userName) => {
     set(() => ({ userName }))
   },
 
-  // MISCELLANEOUS
+  // * MISCELLANEOUS
   resetGlobalState: () => {
     set(INITIAL_STATE)
   }
