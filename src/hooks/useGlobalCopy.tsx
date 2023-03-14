@@ -1,14 +1,19 @@
 import useGlobalState from '../global/GlobalSate'
-import GLOBAL_COPY from '../global/GlobalCopy'
+import GLOBAL_COPY, { CopySections } from '../global/GlobalCopy'
 
 interface useGlobalCopyReturn {
-  userChosenGlobalCopy: {}
+  userChosenGlobalCopy: { [key in CopySections]: string }[]
+}
+
+/* eslint @typescript-eslint/consistent-indexed-object-style: ["error", "index-signature"] */
+interface UserChosenGlobalCopy {
+  [key: string]: unknown
 }
 
 const useGlobalCopy = (): useGlobalCopyReturn => {
   const { userChosenCopySeverity } = useGlobalState()
 
-  const userChosenGlobalCopy = {}
+  const userChosenGlobalCopy: UserChosenGlobalCopy = {}
 
   Object.keys(GLOBAL_COPY).forEach((key) => {
     userChosenGlobalCopy[key] = GLOBAL_COPY[key][userChosenCopySeverity]
