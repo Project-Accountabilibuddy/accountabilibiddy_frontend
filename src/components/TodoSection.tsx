@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 interface DailyFormProps {
   className: string
@@ -11,20 +12,27 @@ const StyledTodoSection = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 24px;
 
-    .single_row_textarea {
+    .todo_item {
+      display: flex;
+      flex-direction: row;
       width: 100%;
-      height: auto;
-      border-bottom: 2px solid var(--color-primary);
-      border-radius: 0;
-      margin-right: 40px;
+      margin-bottom: 24px;
+
+      .todo_input {
+        margin-left: 12px;
+        height: auto;
+        border: none;
+        border-bottom: 2px solid var(--color-primary);
+        border-radius: 0;
+        background: none;
+      }
     }
   }
 `
 
 const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
-  const [todos, setTodos] = useState([''])
+  const [todos, setTodos] = useState(['', '', ''])
 
   const handleUpdateTodos = ({
     copy,
@@ -45,16 +53,21 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
         <div className="todo_items">
           {todos.map((todo, index) => {
             return (
-              <textarea
-                key={todo}
-                className="single_row_textarea"
-                name="text"
-                rows={1}
-                value={todo}
-                onChange={(e) => {
-                  handleUpdateTodos({ copy: e.target.value, todoIndex: index })
-                }}
-              />
+              <div key={todo} className="todo_item">
+                <CheckCircleIcon color="primary" />
+                <textarea
+                  className="todo_input"
+                  name="text"
+                  rows={1}
+                  value={todo}
+                  onChange={(e) => {
+                    handleUpdateTodos({
+                      copy: e.target.value,
+                      todoIndex: index
+                    })
+                  }}
+                />
+              </div>
             )
           })}
         </div>

@@ -9,6 +9,7 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
+import TodoSection from '../components/TodoSection'
 import TopNavBar from '../components/TopNavBar'
 
 interface ShortAnswer {
@@ -359,7 +360,7 @@ const Project = (): JSX.Element => {
             </div>
           </div>
           <div className="section_right">
-            <div className="section_top_right">
+            {/* <div className="section_top_right">
               <h2 className="heading-3 section_title">
                 What will your internal hater say?
               </h2>
@@ -373,7 +374,8 @@ const Project = (): JSX.Element => {
                 className="edit_icon"
                 color="primary"
               />
-            </div>
+            </div> */}
+            <TodoSection className="section_top_right" />
             <div className="section_bottom_right">
               <h2 className="heading-3 section_title">
                 What are you sacrificing?
