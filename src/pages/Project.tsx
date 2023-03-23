@@ -239,7 +239,7 @@ const Project = (): JSX.Element => {
 
   // HANDLES FADE IN/OUT OF SHORT RESPONSES
   useEffect(() => {
-    const getRandomShortAnswer = (): ShortAnswer => {
+    const getRandomShortAnswer = (): typeof shortResponseInView => {
       const randInt = Math.floor(Math.random() * allShortResponses.length)
       return allShortResponses[randInt]
     }

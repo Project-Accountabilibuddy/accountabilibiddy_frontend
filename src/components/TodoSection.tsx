@@ -65,10 +65,7 @@ const StyledTodoSection = styled.div`
 `
 
 const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
-  const [todos, setTodos] = useState<Todo[]>([
-    { text: 'Todo 1', completed: false, id: 1, focused: false },
-    { text: 'Todo 2', completed: false, id: 2, focused: false }
-  ])
+  const [todos, setTodos] = useState<Todo[]>([] as Todo[])
 
   const handleCreateTodo = (): void => {
     const newTodo = {
