@@ -5,7 +5,7 @@ import MaterialUIButton from '@mui/material/Button'
 
 import Button from '../components/Button'
 
-interface DailyFormProps {
+interface TodoSectionProps {
   className: string
 }
 
@@ -64,7 +64,7 @@ const StyledTodoSection = styled.div`
   }
 `
 
-const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
+const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
   const [todos, setTodos] = useState<Todo[]>([
     { text: 'Todo 1', completed: false, id: 1, focused: false },
     { text: 'Todo 2', completed: false, id: 2, focused: false }
