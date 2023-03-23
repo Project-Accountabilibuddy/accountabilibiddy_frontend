@@ -35,8 +35,10 @@ const StyledTodoSection = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
+        width: 100%;
 
         .todo_input {
+          width: 100%;
           color: var(--color-white);
           background-color: var(--color-light-background);
           border: none;
