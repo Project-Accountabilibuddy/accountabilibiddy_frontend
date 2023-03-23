@@ -14,7 +14,7 @@ import TopNavBar from '../components/TopNavBar'
 
 interface ShortAnswer {
   text: string
-  type: string
+  type: 'HATE' | 'WHY'
 }
 
 const StyledProject = styled.div`
@@ -225,9 +225,13 @@ const Project = (): JSX.Element => {
     setInEditFormMode
   } = useGlobalState()
 
-  const allShortResponses = [
-    ...userResponseWhyShortForm.map((res) => ({ text: res, type: 'WHY' })),
-    ...userResponseHatersShortForm.map((res) => ({ text: res, type: 'HATE' }))
+  const allShortResponses: ShortAnswer[] = [
+    ...userResponseWhyShortForm.map(
+      (res): ShortAnswer => ({ text: res, type: 'WHY' })
+    ),
+    ...userResponseHatersShortForm.map(
+      (res): ShortAnswer => ({ text: res, type: 'HATE' })
+    )
   ]
   const [shortResponseInView, setShortResponseInView] = useState(
     allShortResponses[0]
