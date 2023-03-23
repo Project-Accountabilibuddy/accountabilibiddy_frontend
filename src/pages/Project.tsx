@@ -68,6 +68,7 @@ const StyledProject = styled.div`
       background-color: var(--color-black);
 
       .scroll_container {
+        width: -webkit-fill-available;
         height: 100%;
         overflow: scroll;
         display: flex;

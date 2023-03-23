@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import MaterialUIButton from '@mui/material/Button'
 
 import Button from '../components/Button'
 
@@ -21,30 +22,37 @@ const StyledTodoSection = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 100%;
 
     .todo_item {
       display: flex;
       flex-direction: row;
       width: 100%;
-      margin-bottom: 12px;
       align-items: center;
+      justify-content: space-between;
 
-      .todo_input {
-        color: var(--color-white);
-        background-color: var(--color-light-background);
-        border: none;
-        outline: none;
-        resize: none;
-        padding: 8px 8px 8px 0;
-        margin-left: 8px;
-        border-radius: 4px;
-        caret-color: var(--color-primary);
-        border-radius: 0;
-        border-bottom: 1px solid var(--color-background);
-      }
+      .complete_box_and_input {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
 
-      .todo_input:focus {
-        border-bottom: 1px solid var(--color-primary);
+        .todo_input {
+          color: var(--color-white);
+          background-color: var(--color-light-background);
+          border: none;
+          outline: none;
+          resize: none;
+          padding: 4px 4px 4px 0;
+          margin: 0 8px;
+          border-radius: 4px;
+          caret-color: var(--color-primary);
+          border-radius: 0;
+          border-bottom: 1px solid var(--color-background);
+        }
+
+        .todo_input:focus {
+          border-bottom: 1px solid var(--color-primary);
+        }
       }
     }
   }
@@ -61,6 +69,16 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
     { text: 'Todo 1', completed: false, id: 1, focused: false },
     { text: 'Todo 2', completed: false, id: 2, focused: false }
   ])
+
+  const handleCreateTodo = (): void => {
+    const newTodo = {
+      focused: true,
+      text: 'get shit done',
+      completed: false,
+      id: todos.length + 1
+    }
+    setTodos([...todos, newTodo])
+  }
 
   const handleUpdateTodo = ({
     copy,
@@ -80,14 +98,15 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
     setTodos(updatedTodos)
   }
 
-  const handleCreateTodo = (): void => {
-    const newTodo = {
-      focused: true,
-      text: 'get shit done',
-      completed: false,
-      id: todos.length + 1
-    }
-    setTodos([...todos, newTodo])
+  const handleCompleteTodo = (todoToCompleteId: number): void => {
+    const updatedTodos = todos.map((todo) => {
+      if (todoToCompleteId === todo.id) {
+        return { ...todo, completed: true }
+      } else {
+        return todo
+      }
+    })
+    setTodos(updatedTodos)
   }
 
   const handleDeleteTodo = (todoToDeleteId: number): void => {
@@ -103,19 +122,29 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
           {todos.map(({ id, text, completed, focused }) => {
             return (
               <div key={id} className="todo_item">
-                <CheckCircleIcon color="primary" />
-                <input
-                  className="todo_input caption"
-                  name="text"
-                  autoFocus={focused}
-                  value={text}
-                  onChange={(e) => {
-                    handleUpdateTodo({
-                      copy: e.target.value,
-                      todoToUpdateId: id
-                    })
+                <div className="complete_box_and_input">
+                  <CheckCircleIcon color="primary" />
+                  <input
+                    className="todo_input caption"
+                    name="text"
+                    autoFocus={focused}
+                    value={text}
+                    onChange={(e) => {
+                      handleUpdateTodo({
+                        copy: e.target.value,
+                        todoToUpdateId: id
+                      })
+                    }}
+                  />
+                </div>
+                <MaterialUIButton
+                  variant="text"
+                  onClick={() => {
+                    handleDeleteTodo(id)
                   }}
-                />
+                >
+                  Delete
+                </MaterialUIButton>
               </div>
             )
           })}
