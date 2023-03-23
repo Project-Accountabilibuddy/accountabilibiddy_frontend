@@ -215,7 +215,7 @@ const Project = (): JSX.Element => {
 
   const {
     userResponseWhyLongForm,
-    userResponseHatersLongForm,
+    // userResponseHatersLongForm,
     daysResponseFeed,
     userResponseWhyShortForm,
     userResponseHatersShortForm,

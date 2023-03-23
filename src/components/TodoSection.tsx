@@ -2,8 +2,17 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
+import Button from '../components/Button'
+
 interface DailyFormProps {
   className: string
+}
+
+interface Todo {
+  text: string
+  completed: boolean
+  id: number
+  focused: boolean
 }
 
 const StyledTodoSection = styled.div`
@@ -17,32 +26,72 @@ const StyledTodoSection = styled.div`
       display: flex;
       flex-direction: row;
       width: 100%;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+      align-items: center;
 
       .todo_input {
-        margin-left: 12px;
-        height: auto;
+        color: var(--color-white);
+        background-color: var(--color-light-background);
         border: none;
-        border-bottom: 2px solid var(--color-primary);
+        outline: none;
+        resize: none;
+        padding: 8px 8px 8px 0;
+        margin-left: 8px;
+        border-radius: 4px;
+        caret-color: var(--color-primary);
         border-radius: 0;
-        background: none;
+        border-bottom: 1px solid var(--color-background);
+      }
+
+      .todo_input:focus {
+        border-bottom: 1px solid var(--color-primary);
       }
     }
+  }
+
+  .create_todo_button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 `
 
 const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
-  const [todos, setTodos] = useState(['', '', ''])
+  const [todos, setTodos] = useState<Todo[]>([
+    { text: 'Todo 1', completed: false, id: 1, focused: false },
+    { text: 'Todo 2', completed: false, id: 2, focused: false }
+  ])
 
-  const handleUpdateTodos = ({
+  const handleUpdateTodo = ({
     copy,
-    todoIndex
+    todoToUpdateId
   }: {
     copy: string
-    todoIndex: number
+    todoToUpdateId: number
   }): void => {
-    const updatedTodos: string[] = [...todos]
-    updatedTodos[todoIndex] = copy
+    const updatedTodos = todos.map((todo) => {
+      if (todoToUpdateId === todo.id) {
+        return { ...todo, text: copy }
+      } else {
+        return todo
+      }
+    })
+
+    setTodos(updatedTodos)
+  }
+
+  const handleCreateTodo = (): void => {
+    const newTodo = {
+      focused: true,
+      text: 'get shit done',
+      completed: false,
+      id: todos.length + 1
+    }
+    setTodos([...todos, newTodo])
+  }
+
+  const handleDeleteTodo = (todoToDeleteId: number): void => {
+    const updatedTodos = todos.filter((todo) => todo.id !== todoToDeleteId)
     setTodos(updatedTodos)
   }
 
@@ -51,19 +100,19 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
       <h2 className="heading-3 section_title">High Impact Todos</h2>
       <div className="scroll_container">
         <div className="todo_items">
-          {todos.map((todo, index) => {
+          {todos.map(({ id, text, completed, focused }) => {
             return (
-              <div key={todo} className="todo_item">
+              <div key={id} className="todo_item">
                 <CheckCircleIcon color="primary" />
-                <textarea
-                  className="todo_input"
+                <input
+                  className="todo_input caption"
                   name="text"
-                  rows={1}
-                  value={todo}
+                  autoFocus={focused}
+                  value={text}
                   onChange={(e) => {
-                    handleUpdateTodos({
+                    handleUpdateTodo({
                       copy: e.target.value,
-                      todoIndex: index
+                      todoToUpdateId: id
                     })
                   }}
                 />
@@ -71,6 +120,13 @@ const TodoSection = ({ className }: DailyFormProps): JSX.Element => {
             )
           })}
         </div>
+      </div>
+      <div className="create_todo_button">
+        <Button
+          variant="outlined"
+          onClick={handleCreateTodo}
+          text="Create Todo"
+        />
       </div>
     </StyledTodoSection>
   )
