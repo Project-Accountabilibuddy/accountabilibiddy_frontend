@@ -37,6 +37,17 @@ const StyledTodoSection = styled.div`
         align-items: center;
         width: 100%;
 
+        .incomplete_box {
+          width: 24px;
+          height: 20px;
+          border-radius: 12px;
+          border: 2px solid var(--color-primary);
+
+          :hover {
+            cursor: pointer;
+          }
+        }
+
         .todo_input {
           width: 100%;
           color: var(--color-white);
@@ -122,7 +133,16 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
             return (
               <div key={id} className="todo_item">
                 <div className="complete_box_and_input">
-                  <CheckCircleIcon color="primary" />
+                  {completed ? (
+                    <CheckCircleIcon color="primary" />
+                  ) : (
+                    <div
+                      className="incomplete_box"
+                      onClick={() => {
+                        handleCompleteTodo(id)
+                      }}
+                    />
+                  )}
                   <input
                     className="todo_input caption"
                     name="text"
