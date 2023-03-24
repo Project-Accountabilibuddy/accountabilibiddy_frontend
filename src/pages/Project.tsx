@@ -9,11 +9,12 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
+import TodoSection from '../components/TodoSection'
 import TopNavBar from '../components/TopNavBar'
 
 interface ShortAnswer {
   text: string
-  type: string
+  type: 'HATE' | 'WHY'
 }
 
 const StyledProject = styled.div`
@@ -67,6 +68,7 @@ const StyledProject = styled.div`
       background-color: var(--color-black);
 
       .scroll_container {
+        width: -webkit-fill-available;
         height: 100%;
         overflow: scroll;
         display: flex;
@@ -214,7 +216,7 @@ const Project = (): JSX.Element => {
 
   const {
     userResponseWhyLongForm,
-    userResponseHatersLongForm,
+    // userResponseHatersLongForm,
     daysResponseFeed,
     userResponseWhyShortForm,
     userResponseHatersShortForm,
@@ -223,9 +225,13 @@ const Project = (): JSX.Element => {
     setInEditFormMode
   } = useGlobalState()
 
-  const allShortResponses = [
-    ...userResponseWhyShortForm.map((res) => ({ text: res, type: 'WHY' })),
-    ...userResponseHatersShortForm.map((res) => ({ text: res, type: 'HATE' }))
+  const allShortResponses: ShortAnswer[] = [
+    ...userResponseWhyShortForm.map(
+      (res): ShortAnswer => ({ text: res, type: 'WHY' })
+    ),
+    ...userResponseHatersShortForm.map(
+      (res): ShortAnswer => ({ text: res, type: 'HATE' })
+    )
   ]
   const [shortResponseInView, setShortResponseInView] = useState(
     allShortResponses[0]
@@ -233,7 +239,7 @@ const Project = (): JSX.Element => {
 
   // HANDLES FADE IN/OUT OF SHORT RESPONSES
   useEffect(() => {
-    const getRandomShortAnswer = (): ShortAnswer => {
+    const getRandomShortAnswer = (): typeof shortResponseInView => {
       const randInt = Math.floor(Math.random() * allShortResponses.length)
       return allShortResponses[randInt]
     }
@@ -359,7 +365,7 @@ const Project = (): JSX.Element => {
             </div>
           </div>
           <div className="section_right">
-            <div className="section_top_right">
+            {/* <div className="section_top_right">
               <h2 className="heading-3 section_title">
                 What will your internal hater say?
               </h2>
@@ -373,7 +379,8 @@ const Project = (): JSX.Element => {
                 className="edit_icon"
                 color="primary"
               />
-            </div>
+            </div> */}
+            <TodoSection className="section_top_right" />
             <div className="section_bottom_right">
               <h2 className="heading-3 section_title">
                 What are you sacrificing?

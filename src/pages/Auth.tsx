@@ -15,6 +15,8 @@ import useGlobalState from '../global/GlobalSate'
 import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
 import Button from '../components/Button'
 
+type AuthOptions = 'SIGN_UP' | 'SIGN_IN' | 'CONFIRM_EMAIL'
+
 const StyledAuthentication = styled.div`
   display: flex;
   flex-direction: column;
@@ -89,7 +91,7 @@ const StyledAuthentication = styled.div`
 `
 
 const Authentication = (): JSX.Element => {
-  const [authFormInView, setAuthFormInView] = useState('SIGN_UP')
+  const [authFormInView, setAuthFormInView] = useState<AuthOptions>('SIGN_UP')
 
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
