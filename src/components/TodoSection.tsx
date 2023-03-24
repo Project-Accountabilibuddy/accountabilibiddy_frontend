@@ -133,9 +133,8 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
             return (
               <div key={id} className="todo_item">
                 <div className="complete_box_and_input">
-                  {completed ? (
-                    <CheckCircleIcon color="primary" />
-                  ) : (
+                  {completed && <CheckCircleIcon color="primary" />}
+                  {!completed && (
                     <div
                       className="incomplete_box"
                       onClick={() => {
