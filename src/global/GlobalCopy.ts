@@ -1,4 +1,4 @@
-type UserChosenCopySeverity =
+export type UserChosenCopySeverity =
   | 'DRILL_SEARGENT'
   | 'CATHOLIC_NUN'
   | 'SUNDAY_SCHOOL_TEACHER'

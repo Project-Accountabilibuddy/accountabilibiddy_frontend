@@ -1,6 +1,8 @@
 import create from 'zustand'
 import dayjs from 'dayjs'
 
+import { UserChosenCopySeverity } from './GlobalCopy'
+
 const INITIAL_STATE = {
   projectName: '',
   userResponseWhatLongForm: '',
@@ -22,11 +24,6 @@ interface DaysResponse {
   userResponseFocusYesterday: string
   dateSubmitted: dayjs.Dayjs
 }
-
-type UserChosenCopySeverity =
-  | 'DRILL_SEARGENT'
-  | 'CATHOLIC_NUN'
-  | 'SUNDAY_SCHOOL_TEACHER'
 
 interface GlobalState {
   userResponseWhatLongForm: string
