@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import MaterialUIButton from '@mui/material/Button'
 import cx from 'classnames'
@@ -156,15 +156,7 @@ const FormInput = ({
   updateNumberOfGroupResponses = () => {},
   setResponseNumber = () => {}
 }: FormInputProps): JSX.Element => {
-  const ref = useRef<HTMLTextAreaElement>(null)
-
   const { inEditFormMode } = useGlobalState()
-
-  useEffect(() => {
-    if (ref?.current != null) {
-      ref?.current?.focus()
-    }
-  }, [])
 
   return (
     <StyledFormInput>
@@ -175,7 +167,7 @@ const FormInput = ({
       )}
       {type === 'TEXT' && (
         <textarea
-          ref={ref}
+          autoFocus
           name="text"
           rows={14}
           cols={10}
@@ -218,7 +210,7 @@ const FormInput = ({
                 <div className="input_group" key={index}>
                   <textarea
                     className="single_row_textarea"
-                    ref={index === 0 ? ref : null}
+                    autoFocus={index === 0}
                     name="text"
                     rows={1}
                     value={response}
