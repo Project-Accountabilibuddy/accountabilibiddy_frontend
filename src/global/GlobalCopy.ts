@@ -5,7 +5,6 @@ export type UserChosenCopySeverity =
 
 export type CopySections = 'LANDING_TITLE' | 'LANDING_PARAGRAPH'
 
-/* eslint @typescript-eslint/consistent-indexed-object-style: ["error", "index-signature"] */
 type GlobalCopy = {
   [key in CopySections]: {
     [key in UserChosenCopySeverity]: string
