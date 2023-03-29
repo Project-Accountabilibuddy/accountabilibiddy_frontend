@@ -63,14 +63,13 @@ const Landing = (): JSX.Element => {
   const navigate = useNavigate()
 
   const { userChosenGlobalCopy } = useGlobalCopy()
+  const { LANDING_TITLE, LANDING_PARAGRAPH } = userChosenGlobalCopy
 
   return (
     <StyledLanding>
       <div className="top_section">
         <div className="top_left_section">
-          <h1 className="heading-1 welcome_text">
-            {userChosenGlobalCopy.LANDING_TITLE}
-          </h1>
+          <h1 className="heading-1 welcome_text">{LANDING_TITLE}</h1>
           <div className="quote_text">
             <h2 className="heading-3">
               “He who has a why to live for can bear
@@ -79,12 +78,7 @@ const Landing = (): JSX.Element => {
               almost any how.” - Friedrich Nietzsche
             </h2>
           </div>
-          <h3 className="caption inspire_text">
-            In today's “safe” society motivation rarely comes from external
-            sources, it must come from within. Billibuddy can not motivate you.
-            However, it might help you inspire yourself to achieve something you
-            have always wanted to make happen.
-          </h3>
+          <h3 className="caption inspire_text">{LANDING_PARAGRAPH}</h3>
           <Button
             className="begin_button"
             variant="outlined"

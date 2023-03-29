@@ -17,12 +17,12 @@ const GLOBAL_COPY: GlobalCopy = {
     SUNDAY_SCHOOL_TEACHER: 'You are about to be taught a lesson'
   },
   LANDING_PARAGRAPH: {
-    DRILL_SEARGENT: 'Drill Sergeant',
-    CATHOLIC_NUN: 'Catholic Nun',
-    SUNDAY_SCHOOL_TEACHER: 'Sunday School Teacher'
-  },
-  LANDING_PARAGsRAPH: {
-    DRILL_SEARGENT: 'Drill Sergeant',
+    DRILL_SEARGENT: `
+    In today's “safe” society motivation rarely comes from external
+    sources, it must come from within. Billibuddy can not motivate you.
+    However, it might help you inspire yourself to achieve something you
+    have always wanted to make happen.
+    `,
     CATHOLIC_NUN: 'Catholic Nun',
     SUNDAY_SCHOOL_TEACHER: 'Sunday School Teacher'
   }

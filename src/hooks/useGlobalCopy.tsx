@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import useGlobalState from '../global/GlobalSate'
 import GLOBAL_COPY from '../global/GlobalCopy'
 
@@ -9,16 +11,24 @@ interface useGlobalCopyReturn {
   userChosenGlobalCopy: UserChosenGlobalCopy
 }
 
+// TODO: SHOULD ELIVATE THIS HOOK TO ONLY BE CALLED ONCE AT APP LEVEL
 const useGlobalCopy = (): useGlobalCopyReturn => {
+  const [userChosenGlobalCopy, setUserChosenGlobalCopy] =
+    useState<UserChosenGlobalCopy>({})
+
   const { userChosenCopySeverity } = useGlobalState()
 
-  const userChosenGlobalCopy: UserChosenGlobalCopy = {}
+  useEffect(() => {
+    const buildChosenGlobalCopy: UserChosenGlobalCopy = {}
 
-  const copySections = Object.keys(GLOBAL_COPY)
+    const copySections = Object.keys(GLOBAL_COPY)
 
-  copySections.forEach((key): void => {
-    userChosenGlobalCopy[key] = GLOBAL_COPY[key][userChosenCopySeverity]
-  })
+    copySections.forEach((key): void => {
+      buildChosenGlobalCopy[key] = GLOBAL_COPY[key][userChosenCopySeverity]
+    })
+
+    setUserChosenGlobalCopy(buildChosenGlobalCopy)
+  }, [userChosenCopySeverity, setUserChosenGlobalCopy])
 
   return { userChosenGlobalCopy }
 }
