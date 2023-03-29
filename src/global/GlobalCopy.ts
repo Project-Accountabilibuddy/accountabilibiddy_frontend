@@ -3,10 +3,9 @@ export type UserChosenCopySeverity =
   | 'CATHOLIC_NUN'
   | 'SUNDAY_SCHOOL_TEACHER'
 
-export type CopySections = 'LANDING_TITLE' | 'LANDING_PARAGRAPH'
-
-type GlobalCopy = {
-  [key in CopySections]: {
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+interface GlobalCopy {
+  [key: string]: {
     [key in UserChosenCopySeverity]: string
   }
 }
@@ -18,6 +17,11 @@ const GLOBAL_COPY: GlobalCopy = {
     SUNDAY_SCHOOL_TEACHER: 'You are about to be taught a lesson'
   },
   LANDING_PARAGRAPH: {
+    DRILL_SEARGENT: 'Drill Sergeant',
+    CATHOLIC_NUN: 'Catholic Nun',
+    SUNDAY_SCHOOL_TEACHER: 'Sunday School Teacher'
+  },
+  LANDING_PARAGsRAPH: {
     DRILL_SEARGENT: 'Drill Sergeant',
     CATHOLIC_NUN: 'Catholic Nun',
     SUNDAY_SCHOOL_TEACHER: 'Sunday School Teacher'
