@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import CircularProgress from '@mui/material/CircularProgress'
 import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 import QuoteCard from '../components/QuoteCard'
 
@@ -21,12 +23,19 @@ const StyledQuotes = styled.div`
     margin-bottom: 48px;
   }
 
-  .text_field {
-    margin-bottom: 24px;
-    width: 400px;
+  .quote_view_management_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 
-    .visibility_icon:hover {
-      cursor: pointer;
+    .text_field {
+      margin-bottom: 24px;
+      width: 400px;
+
+      .visibility_icon:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -72,14 +81,19 @@ const Quotes = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
 
   const [searchText, setSearchText] = useState('')
+  const [age, setAge] = useState('')
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string)
+  }
 
   // todo: auto call on filter change
-  const handleGetQuotes = async (): Promise<any> => {
+  const handleGetQuotes = async (age: string): Promise<any> => {
     setLoading(true)
     try {
       const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
       const response = await fetch(
-        `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}}`
+        `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}}]&keyword=${age} `
       )
 
       const data = await response.json()
@@ -90,12 +104,12 @@ const Quotes = (): JSX.Element => {
   }
 
   useEffect(() => {
-    handleGetQuotes().finally(() => {
+    handleGetQuotes(age).finally(() => {
       setTimeout(() => {
         setLoading(false)
       }, 1000)
     })
-  }, [])
+  }, [age])
 
   useEffect(() => {
     let searchedQuotes: Quote[] = []
@@ -114,7 +128,7 @@ const Quotes = (): JSX.Element => {
   return (
     <StyledQuotes>
       <h1 className="heading-1 title">Quotes</h1>
-      <div>
+      <div className="quote_view_management_header">
         <TextField
           className="text_field"
           variant="standard"
@@ -124,6 +138,17 @@ const Quotes = (): JSX.Element => {
             setSearchText(e.target.value)
           }}
         />
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={'love'}>Love</MenuItem>
+          <MenuItem value={'life'}>Life</MenuItem>
+          <MenuItem value={'happiness'}>Happiness</MenuItem>
+        </Select>
       </div>
       <div className="scroll_container">
         {loading && (
