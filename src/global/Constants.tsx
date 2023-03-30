@@ -2,7 +2,8 @@ const ROUTES = {
   LANDING: '/',
   AUTH: '/auth',
   PROJECT: '/project',
-  PROJECT_SETUP: '/project-setup'
+  PROJECT_SETUP: '/project-setup',
+  QUOTES: '/quotes'
 }
 
 const SETUP_PROJECT_SCREENS = {
