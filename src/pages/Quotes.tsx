@@ -7,9 +7,16 @@ import Select from '@mui/material/Select'
 
 import QuoteCard from '../components/QuoteCard'
 
+const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
+
 interface Quote {
   q: string
   a: string
+}
+
+interface KeyWordOption {
+  k: string
+  l: string
 }
 
 const StyledQuotes = styled.div`
@@ -17,7 +24,6 @@ const StyledQuotes = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 20%;
 
   .title {
     margin-bottom: 48px;
@@ -81,18 +87,17 @@ const Quotes = (): JSX.Element => {
   const [quotes, setQuotes] = useState<Quote[]>([])
   const [loading, setLoading] = useState(true)
 
-  const [searchText, setSearchText] = useState('')
-  const [filterText, setFilterText] = useState('')
+  const [keyWordOptions, setKeyWordOptions] = useState<KeyWordOption[]>([])
+  const [chosenKeyWord, setChosenKeyWord] = useState('')
 
-  const handleGetQuotes = async (filterText: string): Promise<any> => {
+  const handleGetQuotes = async (chosenKeyWord: string): Promise<any> => {
     setLoading(true)
     try {
       // todo: move key to .env file
-      const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
       const response = await fetch(
-        filterText === ''
+        chosenKeyWord === ''
           ? `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}`
-          : `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}}]&keyword=${filterText}`
+          : `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}}]&keyword=${chosenKeyWord}`
       )
 
       const data = await response.json()
@@ -103,54 +108,51 @@ const Quotes = (): JSX.Element => {
   }
 
   useEffect(() => {
-    handleGetQuotes(filterText).finally(() => {
+    const getAllKeyWordOptions = async (): Promise<any> => {
+      try {
+        const response = await fetch(
+          `https://zenquotes.io/api/keywords/[${ZEN_QUOTES_KEY}]`
+        )
+
+        const data = await response.json()
+        setKeyWordOptions(data)
+      } catch (error) {
+        console.log('ERROR FETCHING QUITES: ', error)
+      }
+    }
+
+    getAllKeyWordOptions().finally(() => {
+      console.log('keyWordOptions: ', keyWordOptions)
+    })
+  }, [])
+
+  useEffect(() => {
+    handleGetQuotes(chosenKeyWord).finally(() => {
       setTimeout(() => {
         setLoading(false)
       }, 1000)
     })
-  }, [filterText])
-
-  // todo: bug ~ must filter on all possible quotes...
-  // todo: not just the ones that are currently displayed
-  useEffect(() => {
-    let searchedQuotes: Quote[] = []
-    if (searchText !== '') {
-      searchedQuotes = quotes.filter((quote) => {
-        const { q, a } = quote
-        return (
-          q.toLowerCase().includes(searchText.toLowerCase()) ||
-          a.toLowerCase().includes(searchText.toLowerCase())
-        )
-      })
-      setQuotes(searchedQuotes)
-    }
-  }, [searchText])
+  }, [chosenKeyWord])
 
   return (
     <StyledQuotes>
       <h1 className="heading-1 title">Quotes</h1>
       <div className="quote_view_manfilterTextment_header">
-        <TextField
-          className="text_field"
-          variant="standard"
-          label="Search"
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value)
-          }}
-        />
         <Select
           className="text_field"
-          variant="standard"
-          value={filterText}
-          label="filterText"
+          variant="outlined"
+          value={chosenKeyWord}
           onChange={(event) => {
-            setFilterText(event.target.value)
+            setChosenKeyWord(event.target.value)
           }}
         >
-          <MenuItem value={'love'}>Love</MenuItem>
-          <MenuItem value={'life'}>Life</MenuItem>
-          <MenuItem value={'happiness'}>Happiness</MenuItem>
+          {keyWordOptions.map((keyWordOption) => {
+            return (
+              <MenuItem key={keyWordOption.k} value={keyWordOption.k}>
+                {keyWordOption.k}
+              </MenuItem>
+            )
+          })}
         </Select>
       </div>
       <div className="scroll_container">
