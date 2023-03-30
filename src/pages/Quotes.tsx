@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import CircularProgress from '@mui/material/CircularProgress'
-import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 
 import QuoteCard from '../components/QuoteCard'
+import TopNavBar from '../components/TopNavBar'
 
 const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
 
@@ -127,9 +127,7 @@ const Quotes = (): JSX.Element => {
       }
     }
 
-    getAllKeyWordOptions().finally(() => {
-      console.log('keyWordOptions: ', keyWordOptions)
-    })
+    getAllKeyWordOptions().finally(() => {})
   }, [])
 
   useEffect(() => {
@@ -141,52 +139,54 @@ const Quotes = (): JSX.Element => {
   }, [chosenKeyWord])
 
   return (
-    <StyledQuotes>
-      <h1 className="heading-1 title">Quotes</h1>
-      <div className="quote_view_manfilterTextment_header">
-        <Select
-          className="text_field"
-          variant="outlined"
-          value={chosenKeyWord}
-          disabled={loading || keyWordOptions.length === 0}
-          onChange={(event) => {
-            setChosenKeyWord(event.target.value)
-          }}
-        >
-          {keyWordOptions.map((keyWordOption) => {
-            return (
-              <MenuItem key={keyWordOption.k} value={keyWordOption.k}>
-                {keyWordOption.k}
-              </MenuItem>
-            )
-          })}
-        </Select>
-        <h5 className="caption">{`Quotes in view: ${quotes.length}`}</h5>
-      </div>
-      <div className="scroll_container">
-        {loading && (
-          <div className="loading_quotes">
-            <CircularProgress />
-          </div>
-        )}
-        {!loading && (
-          <div className="quotes">
-            {quotes.map((quote) => {
-              console.log('quote: ', quote)
-              const { q: quoteTitle, a: subquoteTitle, i: imageUri } = quote
+    <>
+      <TopNavBar />
+      <StyledQuotes>
+        <h1 className="heading-1 title"></h1>
+        <div className="quote_view_manfilterTextment_header">
+          <Select
+            className="text_field"
+            variant="outlined"
+            value={chosenKeyWord}
+            disabled={loading || keyWordOptions.length === 0}
+            onChange={(event) => {
+              setChosenKeyWord(event.target.value)
+            }}
+          >
+            {keyWordOptions.map((keyWordOption) => {
               return (
-                <QuoteCard
-                  key={quoteTitle}
-                  quoteTitle={quoteTitle}
-                  subquoteTitle={subquoteTitle}
-                  imageUri={imageUri}
-                />
+                <MenuItem key={keyWordOption.k} value={keyWordOption.k}>
+                  {keyWordOption.k}
+                </MenuItem>
               )
             })}
-          </div>
-        )}
-      </div>
-    </StyledQuotes>
+          </Select>
+          <h5 className="heading-2">Quotes</h5>
+        </div>
+        <div className="scroll_container">
+          {loading && (
+            <div className="loading_quotes">
+              <CircularProgress />
+            </div>
+          )}
+          {!loading && (
+            <div className="quotes">
+              {quotes.map((quote) => {
+                const { q: quoteTitle, a: subquoteTitle, i: imageUri } = quote
+                return (
+                  <QuoteCard
+                    key={quoteTitle}
+                    quoteTitle={quoteTitle}
+                    subquoteTitle={subquoteTitle}
+                    imageUri={imageUri}
+                  />
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </StyledQuotes>
+    </>
   )
 }
 
