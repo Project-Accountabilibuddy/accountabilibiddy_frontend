@@ -7,7 +7,8 @@ import Select from '@mui/material/Select'
 import QuoteCard from '../components/QuoteCard'
 import TopNavBar from '../components/TopNavBar'
 
-const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
+const APP_ZEN_QUOTES_KEY = process.env.REACT_APP_ZEN_QUOTES_KEY
+const ZEN_QUOTES_BASE_URL = 'https://zenquotes.io/api'
 
 interface Quote {
   q: string
@@ -99,11 +100,11 @@ const Quotes = (): JSX.Element => {
   const handleGetQuotes = async (chosenKeyWord: string): Promise<any> => {
     setLoading(true)
     try {
-      // todo: move key to .env file
+      const keyWordOption =
+        chosenKeyWord === '' ? '' : `&keyword=${chosenKeyWord}`
+
       const response = await fetch(
-        chosenKeyWord === ''
-          ? `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}`
-          : `https://zenquotes.io/api/quotes/${ZEN_QUOTES_KEY}}]&keyword=${chosenKeyWord}`
+        `https://zenquotes.io/api/quotes/${APP_ZEN_QUOTES_KEY}${keyWordOption}`
       )
 
       const data = await response.json()
@@ -117,7 +118,7 @@ const Quotes = (): JSX.Element => {
     const getAllKeyWordOptions = async (): Promise<any> => {
       try {
         const response = await fetch(
-          `https://zenquotes.io/api/keywords/[${ZEN_QUOTES_KEY}]`
+          `${ZEN_QUOTES_BASE_URL}/keywords/[${APP_ZEN_QUOTES_KEY}]`
         )
 
         const data = await response.json()
