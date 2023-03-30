@@ -24,6 +24,7 @@ const StyledQuotes = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: calc(100vw - 124px);
 
   .title {
     margin-bottom: 48px;
@@ -37,7 +38,7 @@ const StyledQuotes = styled.div`
 
     .text_field {
       margin-bottom: 24px;
-      width: 400px;
+      width: 200px;
 
       .visibility_icon:hover {
         cursor: pointer;
@@ -70,14 +71,18 @@ const StyledQuotes = styled.div`
   }
 
   @media (max-width: 1024px) {
-    .quotes {
-      grid-template-columns: repeat(3, 1fr);
+    .scroll_container {
+      .quotes {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 
   @media (max-width: 768px) {
-    .quotes {
-      grid-template-columns: repeat(2, 1fr);
+    .scroll_container {
+      .quotes {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 `
@@ -154,6 +159,7 @@ const Quotes = (): JSX.Element => {
             )
           })}
         </Select>
+        <h5 className="caption">{`Quotes in view: ${quotes.length}`}</h5>
       </div>
       <div className="scroll_container">
         {loading && (

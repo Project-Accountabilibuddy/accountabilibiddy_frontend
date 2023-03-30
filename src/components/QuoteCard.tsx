@@ -11,7 +11,6 @@ const StyledQuoteCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 14rem;
   height: 10rem;
   border: 1px solid var(--color-primary);
   border-radius: 2px;
