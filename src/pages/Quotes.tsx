@@ -12,6 +12,7 @@ const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
 interface Quote {
   q: string
   a: string
+  i: string
 }
 
 interface KeyWordOption {
@@ -147,6 +148,7 @@ const Quotes = (): JSX.Element => {
           className="text_field"
           variant="outlined"
           value={chosenKeyWord}
+          disabled={loading || keyWordOptions.length === 0}
           onChange={(event) => {
             setChosenKeyWord(event.target.value)
           }}
@@ -169,13 +171,15 @@ const Quotes = (): JSX.Element => {
         )}
         {!loading && (
           <div className="quotes">
-            {quotes.map((quote, index) => {
-              const { q: quoteTitle, a: subquoteTitle } = quote
+            {quotes.map((quote) => {
+              console.log('quote: ', quote)
+              const { q: quoteTitle, a: subquoteTitle, i: imageUri } = quote
               return (
                 <QuoteCard
-                  key={index}
+                  key={quoteTitle}
                   quoteTitle={quoteTitle}
                   subquoteTitle={subquoteTitle}
+                  imageUri={imageUri}
                 />
               )
             })}
