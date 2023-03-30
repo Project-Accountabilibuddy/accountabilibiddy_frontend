@@ -76,6 +76,7 @@ const StyledQuotes = styled.div`
   }
 `
 
+// todo: update to generaly be more testable
 const Quotes = (): JSX.Element => {
   const [quotes, setQuotes] = useState<Quote[]>([])
   const [loading, setLoading] = useState(true)
@@ -83,10 +84,10 @@ const Quotes = (): JSX.Element => {
   const [searchText, setSearchText] = useState('')
   const [filterText, setFilterText] = useState('')
 
-  // todo: auto call on filter change
   const handleGetQuotes = async (filterText: string): Promise<any> => {
     setLoading(true)
     try {
+      // todo: move key to .env file
       const ZEN_QUOTES_KEY = '7c5e0fd68ce088e5a460c5e742c128e9'
       const response = await fetch(
         filterText === ''
@@ -109,6 +110,8 @@ const Quotes = (): JSX.Element => {
     })
   }, [filterText])
 
+  // todo: bug ~ must filter on all possible quotes...
+  // todo: not just the ones that are currently displayed
   useEffect(() => {
     let searchedQuotes: Quote[] = []
     if (searchText !== '') {
