@@ -35,7 +35,7 @@ const StyledQuotes = styled.div`
     }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     .quotes {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -50,9 +50,12 @@ const Quotes = (): JSX.Element => {
   // todo: auto call on filter change
   const handleGetQuotes = async (): Promise<any> => {
     try {
-      const response = await fetch('https://zenquotes.io/api/quotes/')
+      console.log('i got here')
+      const myKey = '7c5e0fd68ce088e5a460c5e742c128e9'
+      const response = await fetch(`https://zenquotes.io/api/quotes/${myKey}}`)
 
-      console.log(response)
+      const data = await response.json()
+      console.log(data)
     } catch (error) {
       console.log(error)
     }
