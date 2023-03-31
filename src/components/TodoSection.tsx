@@ -86,6 +86,7 @@ const StyledTodoSection = styled.div`
   }
 `
 
+// TODO: further consolidation of methods possible here
 const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [actionStack] = useState<UserAction[]>([])
