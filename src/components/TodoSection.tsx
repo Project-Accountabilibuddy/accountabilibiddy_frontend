@@ -5,15 +5,23 @@ import MaterialUIButton from '@mui/material/Button'
 
 import Button from '../components/Button'
 
+const getRandomHash = (): string => {
+  return Math.random().toString(36).substring(2, 15)
+}
+
 interface TodoSectionProps {
   className: string
 }
 
 interface Todo {
+  id: string
   text: string
   completed: boolean
-  id: number
   focused: boolean
+}
+
+interface UserAction extends Todo {
+  typeOfUserAction: 'create' | 'update' | 'delete' | 'complete'
 }
 
 const StyledTodoSection = styled.div`
@@ -73,55 +81,94 @@ const StyledTodoSection = styled.div`
   .create_todo_button {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
 `
 
+// TODO: further consolidation of methods possible here
 const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
-  const [todos, setTodos] = useState([] as Todo[])
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [actionStack] = useState<UserAction[]>([])
 
-  const handleCreateTodo = (): void => {
-    const newTodo = {
-      focused: true,
-      text: 'get shit done',
-      completed: false,
-      id: todos.length + 1
+  const handleCreateTodo = (action: UserAction | Todo): void => {
+    if ('typeOfUserAction' in action) {
+      const { typeOfUserAction, ...rest } = action
+      setTodos([...todos, rest])
+    } else {
+      setTodos([...todos, action])
+      actionStack.push({ ...action, typeOfUserAction: 'create' })
     }
-    setTodos([...todos, newTodo])
   }
 
-  const handleUpdateTodo = ({
-    copy,
-    todoToUpdateId
-  }: {
-    copy: string
-    todoToUpdateId: number
-  }): void => {
+  const handleUpdateTodo = (action: UserAction | Todo): void => {
+    const { id, text } = action
     const updatedTodos = todos.map((todo) => {
-      if (todoToUpdateId === todo.id) {
-        return { ...todo, text: copy }
+      if (id === todo.id) {
+        return { ...todo, text }
       } else {
         return todo
       }
     })
 
-    setTodos(updatedTodos)
+    if ('typeOfUserAction' in action) {
+      setTodos(updatedTodos)
+    } else {
+      setTodos(updatedTodos)
+      actionStack.push({ ...action, typeOfUserAction: 'update' })
+    }
   }
 
-  const handleCompleteTodo = (todoToCompleteId: number): void => {
+  const handleCompleteTodo = (action: UserAction | Todo): void => {
+    const { id } = action
     const updatedTodos = todos.map((todo) => {
-      if (todoToCompleteId === todo.id) {
-        return { ...todo, completed: true }
+      if (id === todo.id) {
+        return { ...todo, completed: !todo.completed }
       } else {
         return todo
       }
     })
     setTodos(updatedTodos)
+
+    if ('typeOfUserAction' in action) {
+      setTodos(updatedTodos)
+    } else {
+      setTodos(updatedTodos)
+      actionStack.push({ ...action, typeOfUserAction: 'complete' })
+    }
   }
 
-  const handleDeleteTodo = (todoToDeleteId: number): void => {
-    const updatedTodos = todos.filter((todo) => todo.id !== todoToDeleteId)
-    setTodos(updatedTodos)
+  const handleDeleteTodo = (action: UserAction | Todo): void => {
+    const { id } = action
+
+    const updatedTodos = todos.filter((todo) => todo.id !== id)
+
+    if ('typeOfUserAction' in action) {
+      setTodos(updatedTodos)
+    } else {
+      setTodos(updatedTodos)
+      actionStack.push({ ...action, typeOfUserAction: 'delete' })
+    }
+  }
+
+  const handleUndoAction = (): void => {
+    const actionToUndo: UserAction | undefined = actionStack.pop()
+
+    if (typeof actionToUndo === 'undefined') {
+      return
+    }
+
+    const { typeOfUserAction } = actionToUndo
+
+    if (typeOfUserAction === 'delete') {
+      handleCreateTodo(actionToUndo)
+    } else if (typeOfUserAction === 'create') {
+      handleDeleteTodo(actionToUndo)
+    } else if (typeOfUserAction === 'update') {
+      handleUpdateTodo(actionToUndo)
+    } else if (typeOfUserAction === 'complete') {
+      handleCompleteTodo(actionToUndo)
+    }
   }
 
   return (
@@ -129,7 +176,8 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
       <h2 className="heading-3 section_title">High Impact Todos</h2>
       <div className="scroll_container">
         <div className="todo_items">
-          {todos.map(({ id, text, completed, focused }) => {
+          {todos.map((todo) => {
+            const { id, completed, focused, text } = todo
             return (
               <div key={id} className="todo_item">
                 <div className="complete_box_and_input">
@@ -138,7 +186,7 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
                     <div
                       className="incomplete_box"
                       onClick={() => {
-                        handleCompleteTodo(id)
+                        handleCompleteTodo(todo)
                       }}
                     />
                   )}
@@ -148,17 +196,14 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
                     autoFocus={focused}
                     value={text}
                     onChange={(e) => {
-                      handleUpdateTodo({
-                        copy: e.target.value,
-                        todoToUpdateId: id
-                      })
+                      handleUpdateTodo({ ...todo, text: e.target.value })
                     }}
                   />
                 </div>
                 <MaterialUIButton
                   variant="text"
                   onClick={() => {
-                    handleDeleteTodo(id)
+                    handleDeleteTodo(todo)
                   }}
                 >
                   Delete
@@ -169,9 +214,19 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
         </div>
       </div>
       <div className="create_todo_button">
+        <MaterialUIButton variant="text" onClick={handleUndoAction}>
+          Undo Action
+        </MaterialUIButton>
         <Button
           variant="outlined"
-          onClick={handleCreateTodo}
+          onClick={() => {
+            handleCreateTodo({
+              id: getRandomHash(),
+              text: 'get shit done',
+              completed: false,
+              focused: true
+            })
+          }}
           text="Create Todo"
         />
       </div>

@@ -7,7 +7,7 @@ import Select from '@mui/material/Select'
 import QuoteCard from '../components/QuoteCard'
 import TopNavBar from '../components/TopNavBar'
 
-const APP_ZEN_QUOTES_KEY = process.env.REACT_APP_ZEN_QUOTES_KEY
+const APP_ZEN_QUOTES_KEY = process.env.REACT_APP_ZEN_QUOTES_KEY as string
 const ZEN_QUOTES_BASE_URL = 'https://zenquotes.io/api'
 
 interface Quote {
