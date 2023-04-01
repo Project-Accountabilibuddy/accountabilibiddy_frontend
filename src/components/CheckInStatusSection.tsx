@@ -8,9 +8,17 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
+type CheckedInStatus =
+  | 'DONE'
+  | 'CHECKED_IN'
+  | 'NOT_CHECKED_IN'
+  | 'OUT_OF_RANGE'
+  | 'SKIPPED'
+  | 'UP_COMING'
+
 interface checkInDays {
   day: dayjs.Dayjs
-  checkedIn: string
+  checkedIn: CheckedInStatus
 }
 
 interface CompleteWeek {
@@ -132,7 +140,7 @@ const CheckInStatus = (): JSX.Element => {
 
       // BUILD ALL DAYS FOR EACH WEEK ADDING CHECK IN STATUS
       for (let day = 0; day < 7; day++) {
-        let checkedIn = 'UP_COMMING'
+        let checkedIn: CheckedInStatus = 'UP_COMING'
 
         const daysDate = dayjs(sundayOfStartWeek)
           .add(week, 'week')
@@ -167,7 +175,7 @@ const CheckInStatus = (): JSX.Element => {
         completeWeek.days.push({ day: daysDate, checkedIn })
 
         // DFAULT CHECKED IN TO "UP COMMING" IF NOT SET TO "DONE" "SKIPPED" OR "OUT OF RANGE"
-        checkedIn = 'UP_COMMING'
+        checkedIn = 'UP_COMING'
       }
 
       allWeeks.push(completeWeek)
@@ -205,7 +213,7 @@ const CheckInStatus = (): JSX.Element => {
                         <CheckCircleIcon color="primary" />
                       )}
                       {checkedIn === 'SKIPPED' && <CancelIcon />}
-                      {checkedIn === 'UP_COMMING' && (
+                      {checkedIn === 'UP_COMING' && (
                         <div className="circle empty_circle" />
                       )}
                       {checkedIn === 'OUT_OF_RANGE' && (
