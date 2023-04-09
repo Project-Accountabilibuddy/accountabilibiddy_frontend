@@ -3,7 +3,7 @@ import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 
 import useGlobalState from '../global/GlobalSate'
-import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import { PROJECT_SUB_ROUTES, ROUTES } from '../global/Constants'
 
 interface useBackEndMethodsReturn {
   handleGetProjects: (onCompletionCB?: () => void) => Promise<void>
@@ -63,9 +63,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       // TODO: NAV LOGIC SHOULD BE CONSOLIDATED
       if (userCompletedSignUpFlow === false) {
         console.log('userCompletedSignUpFlow: ', userCompletedSignUpFlow)
-        navigate(
-          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
-        )
+        navigate(`${ROUTES.PROJECT_SETUP}/${PROJECT_SUB_ROUTES.WHAT_LONG_FORM}`)
       }
 
       setProjectName(projectName)
@@ -82,9 +80,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       console.log('GET PROJECT ERR', err)
 
       if (err.message === 'PROJECT_NOT_SET_UP_YET') {
-        navigate(
-          `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`
-        )
+        navigate(`${ROUTES.PROJECT_SETUP}/${PROJECT_SUB_ROUTES.PROJECT_NAME}`)
       }
     } finally {
       onCompletionCB()
