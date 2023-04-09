@@ -8,13 +8,14 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import useGlobalState from '../global/GlobalSate'
 
-type CheckedInStatus =
-  | 'DONE'
-  | 'CHECKED_IN'
-  | 'NOT_CHECKED_IN'
-  | 'OUT_OF_RANGE'
-  | 'SKIPPED'
-  | 'UP_COMING'
+enum CheckedInStatus {
+  DONE = 'DONE',
+  CHECKED_IN = 'CHECKED_IN',
+  NOT_CHECKED_IN = 'NOT_CHECKED_IN',
+  OUT_OF_RANGE = 'OUT_OF_RANGE',
+  SKIPPED = 'SKIPPED',
+  UP_COMING = 'UP_COMING'
+}
 
 type checkInDays = {
   day: dayjs.Dayjs
@@ -140,7 +141,7 @@ const CheckInStatus = (): JSX.Element => {
 
       // BUILD ALL DAYS FOR EACH WEEK ADDING CHECK IN STATUS
       for (let day = 0; day < 7; day++) {
-        let checkedIn: CheckedInStatus = 'UP_COMING'
+        let checkedIn: CheckedInStatus = CheckedInStatus.UP_COMING
 
         const daysDate = dayjs(sundayOfStartWeek)
           .add(week, 'week')
@@ -156,26 +157,26 @@ const CheckInStatus = (): JSX.Element => {
         ) {
           // IF DAY IS TODAY IT SHOULD NOT DEFAULT TO "NOT" CHECKED IN
           if (!dayjs(daysDate).isSame(dayjs(), 'day')) {
-            checkedIn = 'SKIPPED'
+            checkedIn = CheckedInStatus.SKIPPED
           }
 
           // USER CHECKED IN IF DATE IS IN ALL_CHECK_IN_DATES
           allCheckInDates.forEach((checkInDate) => {
             if (dayjs(checkInDate).isSame(daysDate, 'day')) {
-              checkedIn = 'DONE'
+              checkedIn = CheckedInStatus.DONE
             }
           })
         }
 
         // IF DAY IS BEFORE PROJECT START DATE ITS OUT OF RANGE
         if (dayjs(daysDate.add(1, 'day')).isBefore(dayjs(projectStartDate))) {
-          checkedIn = 'OUT_OF_RANGE'
+          checkedIn = CheckedInStatus.OUT_OF_RANGE
         }
 
         completeWeek.days.push({ day: daysDate, checkedIn })
 
         // DFAULT CHECKED IN TO "UP COMMING" IF NOT SET TO "DONE" "SKIPPED" OR "OUT OF RANGE"
-        checkedIn = 'UP_COMING'
+        checkedIn = CheckedInStatus.UP_COMING
       }
 
       allWeeks.push(completeWeek)
