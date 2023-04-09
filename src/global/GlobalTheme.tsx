@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-interface ThemeProps {
+type ThemeProps = {
   children: JSX.Element
 }
 

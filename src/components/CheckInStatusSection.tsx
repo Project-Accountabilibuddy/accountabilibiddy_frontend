@@ -16,12 +16,12 @@ type CheckedInStatus =
   | 'SKIPPED'
   | 'UP_COMING'
 
-interface checkInDays {
+type checkInDays = {
   day: dayjs.Dayjs
   checkedIn: CheckedInStatus
 }
 
-interface CompleteWeek {
+type CompleteWeek = {
   currentWeek: boolean
   days: checkInDays[]
   weekIndex: number

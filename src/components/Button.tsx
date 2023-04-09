@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import MaterialUIButton from '@mui/material/Button'
 
-interface ButtonProps {
+type ButtonProps = {
   text: string
   onClick: () => void
   variant?: 'text' | 'outlined' | 'contained'

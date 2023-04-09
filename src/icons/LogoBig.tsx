@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface LogoBigProps {
+type LogoBigProps = {
   className?: string
 }
 

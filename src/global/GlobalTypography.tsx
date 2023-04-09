@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface GlobalTypographyProps {
+type GlobalTypographyProps = {
   children: JSX.Element
 }
 

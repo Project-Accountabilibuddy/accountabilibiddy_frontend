@@ -12,7 +12,7 @@ import CheckInStatusSection from '../components/CheckInStatusSection'
 import TodoSection from '../components/TodoSection'
 import TopNavBar from '../components/TopNavBar'
 
-interface ShortAnswer {
+type ShortAnswer = {
   text: string
   type: 'HATE' | 'WHY'
 }

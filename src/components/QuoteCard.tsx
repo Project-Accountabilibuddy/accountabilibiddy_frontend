@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface QuoteCardProps {
+type QuoteCardProps = {
   quoteTitle?: string
   subquoteTitle?: string
   imageUri?: string

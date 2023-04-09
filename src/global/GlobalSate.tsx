@@ -17,13 +17,13 @@ const INITIAL_STATE = {
   globalLoading: false
 }
 
-interface DaysResponse {
+type DaysResponse = {
   userResponseExcelYesterday: string
   userResponseFocusYesterday: string
   dateSubmitted: dayjs.Dayjs
 }
 
-interface GlobalState {
+type GlobalState = {
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
   projectName: string

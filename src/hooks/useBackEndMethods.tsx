@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useGlobalState from '../global/GlobalSate'
 import { PROJECT_SUB_ROUTES, ROUTES } from '../global/Constants'
 
-interface useBackEndMethodsReturn {
+type useBackEndMethodsReturn = {
   handleGetProjects: (onCompletionCB?: () => void) => Promise<void>
   handleUpdateProject: (fieldToUpdate: object) => Promise<void>
   handleCreateProject: (projectName: object) => Promise<void>
