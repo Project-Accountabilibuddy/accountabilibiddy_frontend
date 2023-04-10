@@ -45,7 +45,7 @@ type GlobalState = {
   setProjectStartDate: (projectStartDate: dayjs.Dayjs) => void
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void
 
-  updateWhyShortFormNumberOfResponses: (removeOrAdd: string) => void
+  updateWhyShortFormNumberOfResponses: (removeOrAdd: 'ADD' | 'REMOVE') => void
   setUserResponseWhyShortForm: (
     userResponseWhyShortForm: string,
     index: number
@@ -54,7 +54,9 @@ type GlobalState = {
 
   setUserResponseHatersLongForm: (userResponseHatersLongForm: string) => void
 
-  updateHatersShortFormNumberOfResponses: (removeOrAdd: string) => void
+  updateHatersShortFormNumberOfResponses: (
+    removeOrAdd: 'ADD' | 'REMOVE'
+  ) => void
   setUserResponseHatersShortForm: (
     userResponseHatersShortForm: string,
     index: number
