@@ -9,19 +9,18 @@ const getRandomHash = (): string => {
   return Math.random().toString(36).substring(2, 15)
 }
 
-interface TodoSectionProps {
+type TodoSectionProps = {
   className: string
 }
 
-interface Todo {
+type TypesOfUserAction = 'create' | 'update' | 'delete' | 'complete'
+
+type TodoAction = {
   id: string
   text: string
   completed: boolean
   focused: boolean
-}
-
-interface UserAction extends Todo {
-  typeOfUserAction: 'create' | 'update' | 'delete' | 'complete'
+  typeOfUserAction?: TypesOfUserAction
 }
 
 const StyledTodoSection = styled.div`
@@ -88,10 +87,10 @@ const StyledTodoSection = styled.div`
 
 // TODO: further consolidation of methods possible here
 const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
-  const [todos, setTodos] = useState<Todo[]>([])
-  const [actionStack] = useState<UserAction[]>([])
+  const [todos, setTodos] = useState<TodoAction[]>([])
+  const [actionStack] = useState<TodoAction[]>([])
 
-  const handleCreateTodo = (action: UserAction | Todo): void => {
+  const handleCreateTodo = (action: TodoAction): void => {
     if ('typeOfUserAction' in action) {
       const { typeOfUserAction, ...rest } = action
       setTodos([...todos, rest])
@@ -101,7 +100,7 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
     }
   }
 
-  const handleUpdateTodo = (action: UserAction | Todo): void => {
+  const handleUpdateTodo = (action: TodoAction): void => {
     const { id, text } = action
     const updatedTodos = todos.map((todo) => {
       if (id === todo.id) {
@@ -119,7 +118,7 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
     }
   }
 
-  const handleCompleteTodo = (action: UserAction | Todo): void => {
+  const handleCompleteTodo = (action: TodoAction): void => {
     const { id } = action
     const updatedTodos = todos.map((todo) => {
       if (id === todo.id) {
@@ -138,7 +137,7 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
     }
   }
 
-  const handleDeleteTodo = (action: UserAction | Todo): void => {
+  const handleDeleteTodo = (action: TodoAction): void => {
     const { id } = action
 
     const updatedTodos = todos.filter((todo) => todo.id !== id)
@@ -152,7 +151,7 @@ const TodoSection = ({ className }: TodoSectionProps): JSX.Element => {
   }
 
   const handleUndoAction = (): void => {
-    const actionToUndo: UserAction | undefined = actionStack.pop()
+    const actionToUndo: TodoAction | undefined = actionStack.pop()
 
     if (typeof actionToUndo === 'undefined') {
       return

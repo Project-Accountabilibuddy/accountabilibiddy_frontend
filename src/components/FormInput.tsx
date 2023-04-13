@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import useGlobalState from '../global/GlobalSate'
 import Button from '../components/Button'
 
-interface FormInputProps {
+type FormInputProps = {
   type: 'TEXT' | 'NUMBER' | 'MULTIPLE_TEXT'
   title: string
   step: string

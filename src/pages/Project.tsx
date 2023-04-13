@@ -6,13 +6,13 @@ import dayjs from 'dayjs'
 import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
-import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Constants'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
 import TodoSection from '../components/TodoSection'
 import TopNavBar from '../components/TopNavBar'
 
-interface ShortAnswer {
+type ShortAnswer = {
   text: string
   type: 'HATE' | 'WHY'
 }
@@ -273,7 +273,7 @@ const Project = (): JSX.Element => {
                 className="edit_icon"
                 color="primary"
                 onClick={() => {
-                  handleEditField(SETUP_PROJECT_SCREENS.WHAT_LONG_FORM)
+                  handleEditField(SUB_ROUTES.WHAT_LONG_FORM)
                 }}
               />
             </div>
@@ -288,7 +288,7 @@ const Project = (): JSX.Element => {
                 className="edit_icon"
                 color="primary"
                 onClick={() => {
-                  handleEditField(SETUP_PROJECT_SCREENS.WHY_LONG_FORM)
+                  handleEditField(SUB_ROUTES.WHY_LONG_FORM)
                 }}
               />
             </div>
@@ -312,9 +312,9 @@ const Project = (): JSX.Element => {
                 className="fade_edit"
                 onClick={() => {
                   if (shortResponseInView.type === 'WHY') {
-                    handleEditField(SETUP_PROJECT_SCREENS.WHY_SHORT_FORM)
+                    handleEditField(SUB_ROUTES.WHY_SHORT_FORM)
                   } else {
-                    handleEditField(SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM)
+                    handleEditField(SUB_ROUTES.HATERS_SHORT_FORM)
                   }
                 }}
               >
@@ -390,7 +390,7 @@ const Project = (): JSX.Element => {
               </div>
               <EditIcon
                 onClick={() => {
-                  handleEditField(SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM)
+                  handleEditField(SUB_ROUTES.SACRIFICES_LONG_FORM)
                 }}
                 className="edit_icon"
                 color="primary"

@@ -8,7 +8,7 @@ import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import Button from '../components/Button'
 
-interface DailyFormProps {
+type DailyFormProps = {
   className: string
 }
 

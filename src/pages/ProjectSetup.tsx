@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
-import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Constants'
 import TopNavBar from '../components/TopNavBar'
 
 const StyledProjectSetup = styled.div`
@@ -48,13 +48,8 @@ const ProjectSetup = (): JSX.Element => {
 
   // USER SHOULD NEVER BE ABLE TO UPDATE PROJECT NAME
   useEffect(() => {
-    if (
-      endOfPath === SETUP_PROJECT_SCREENS.PROJECT_NAME &&
-      projectName !== ''
-    ) {
-      navigate(
-        `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
-      )
+    if (endOfPath === SUB_ROUTES.PROJECT_NAME && projectName !== '') {
+      navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.WHAT_LONG_FORM}`)
     }
   }, [endOfPath])
 
@@ -78,7 +73,7 @@ const ProjectSetup = (): JSX.Element => {
     <>
       <TopNavBar />
       <StyledProjectSetup>
-        {endOfPath === SETUP_PROJECT_SCREENS.PROJECT_NAME && (
+        {endOfPath === SUB_ROUTES.PROJECT_NAME && (
           <FormInput
             type="TEXT"
             step="Feel free to take a break at any point, progress is saved every time you click next"
@@ -92,13 +87,11 @@ const ProjectSetup = (): JSX.Element => {
               handleCreateProject({ projectName }).finally(() => {
                 console.log('create project complete')
               })
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
-              )
+              navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.WHAT_LONG_FORM}`)
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.WHAT_LONG_FORM && (
+        {endOfPath === SUB_ROUTES.WHAT_LONG_FORM && (
           <FormInput
             type="TEXT"
             step="Step 1/7"
@@ -111,12 +104,12 @@ const ProjectSetup = (): JSX.Element => {
             continueAction={() => {
               handleContinueAction(
                 { userResponseWhatLongForm },
-                SETUP_PROJECT_SCREENS.WHY_LONG_FORM
+                SUB_ROUTES.WHY_LONG_FORM
               )
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.WHY_LONG_FORM && (
+        {endOfPath === SUB_ROUTES.WHY_LONG_FORM && (
           <FormInput
             type="TEXT"
             step="Step 2/7"
@@ -129,17 +122,15 @@ const ProjectSetup = (): JSX.Element => {
             continueAction={() => {
               handleContinueAction(
                 { userResponseWhyLongForm },
-                SETUP_PROJECT_SCREENS.HATERS_LONG_FORM
+                SUB_ROUTES.HATERS_LONG_FORM
               )
             }}
             backAction={() => {
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHAT_LONG_FORM}`
-              )
+              navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.WHAT_LONG_FORM}`)
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.HATERS_LONG_FORM && (
+        {endOfPath === SUB_ROUTES.HATERS_LONG_FORM && (
           <FormInput
             type="TEXT"
             step="Step 3/7"
@@ -152,17 +143,15 @@ const ProjectSetup = (): JSX.Element => {
             continueAction={() => {
               handleContinueAction(
                 { userResponseHatersLongForm },
-                SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM
+                SUB_ROUTES.SACRIFICES_LONG_FORM
               )
             }}
             backAction={() => {
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_LONG_FORM}`
-              )
+              navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.WHY_LONG_FORM}`)
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM && (
+        {endOfPath === SUB_ROUTES.SACRIFICES_LONG_FORM && (
           <FormInput
             type="TEXT"
             step="Step 4/7"
@@ -175,17 +164,15 @@ const ProjectSetup = (): JSX.Element => {
             continueAction={() => {
               handleContinueAction(
                 { userResponseSacrificeLongForm },
-                SETUP_PROJECT_SCREENS.WHY_SHORT_FORM
+                SUB_ROUTES.WHY_SHORT_FORM
               )
             }}
             backAction={() => {
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_LONG_FORM}`
-              )
+              navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.HATERS_LONG_FORM}`)
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.WHY_SHORT_FORM && (
+        {endOfPath === SUB_ROUTES.WHY_SHORT_FORM && (
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 5/7"
@@ -201,17 +188,17 @@ const ProjectSetup = (): JSX.Element => {
                     userResponseWhyShortForm
                   )
                 },
-                SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM
+                SUB_ROUTES.HATERS_SHORT_FORM
               )
             }}
             backAction={() => {
               navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.SACRIFICES_LONG_FORM}`
+                `${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.SACRIFICES_LONG_FORM}`
               )
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM && (
+        {endOfPath === SUB_ROUTES.HATERS_SHORT_FORM && (
           <FormInput
             type="MULTIPLE_TEXT"
             step="Step 6/7"
@@ -229,17 +216,15 @@ const ProjectSetup = (): JSX.Element => {
                     userResponseHatersShortForm
                   )
                 },
-                SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE
+                SUB_ROUTES.WEEKS_EXPECTED_TO_COMPLETE
               )
             }}
             backAction={() => {
-              navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.WHY_SHORT_FORM}`
-              )
+              navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.WHY_SHORT_FORM}`)
             }}
           />
         )}
-        {endOfPath === SETUP_PROJECT_SCREENS.WEEKS_EXPECTED_TO_COMPLETE && (
+        {endOfPath === SUB_ROUTES.WEEKS_EXPECTED_TO_COMPLETE && (
           <FormInput
             type="NUMBER"
             step="7/7"
@@ -257,7 +242,7 @@ const ProjectSetup = (): JSX.Element => {
             }}
             backAction={() => {
               navigate(
-                `${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.HATERS_SHORT_FORM}`
+                `${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.HATERS_SHORT_FORM}`
               )
             }}
           />

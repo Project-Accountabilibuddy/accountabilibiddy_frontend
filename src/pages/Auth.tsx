@@ -12,7 +12,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
-import { SETUP_PROJECT_SCREENS, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Constants'
 import Button from '../components/Button'
 
 type AuthOptions = 'SIGN_UP' | 'SIGN_IN' | 'CONFIRM_EMAIL'
@@ -134,7 +134,7 @@ const Authentication = (): JSX.Element => {
     try {
       const response = await Auth.confirmSignUp(userEmail, code)
 
-      navigate(`${ROUTES.PROJECT_SETUP}/${SETUP_PROJECT_SCREENS.PROJECT_NAME}`)
+      navigate(`${ROUTES.PROJECT_SETUP}/${SUB_ROUTES.PROJECT_NAME}`)
       console.log('NEW USER RES', response)
     } catch (error: any) {
       console.log('error confirming sign up', error)

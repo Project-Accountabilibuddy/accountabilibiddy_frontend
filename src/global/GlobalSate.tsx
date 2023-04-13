@@ -17,13 +17,13 @@ const INITIAL_STATE = {
   globalLoading: false
 }
 
-interface DaysResponse {
+type DaysResponse = {
   userResponseExcelYesterday: string
   userResponseFocusYesterday: string
   dateSubmitted: dayjs.Dayjs
 }
 
-interface GlobalState {
+type GlobalState = {
   userResponseWhatLongForm: string
   userResponseSacrificeLongForm: string
   projectName: string
@@ -45,7 +45,7 @@ interface GlobalState {
   setProjectStartDate: (projectStartDate: dayjs.Dayjs) => void
   setUserResponseWhyLongForm: (userResponseWhyLongForm: string) => void
 
-  updateWhyShortFormNumberOfResponses: (removeOrAdd: string) => void
+  updateWhyShortFormNumberOfResponses: (removeOrAdd: 'ADD' | 'REMOVE') => void
   setUserResponseWhyShortForm: (
     userResponseWhyShortForm: string,
     index: number
@@ -54,7 +54,9 @@ interface GlobalState {
 
   setUserResponseHatersLongForm: (userResponseHatersLongForm: string) => void
 
-  updateHatersShortFormNumberOfResponses: (removeOrAdd: string) => void
+  updateHatersShortFormNumberOfResponses: (
+    removeOrAdd: 'ADD' | 'REMOVE'
+  ) => void
   setUserResponseHatersShortForm: (
     userResponseHatersShortForm: string,
     index: number
