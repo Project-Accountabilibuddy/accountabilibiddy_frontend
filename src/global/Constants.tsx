@@ -6,7 +6,7 @@ enum ROUTES {
   QUOTES = '/quotes'
 }
 
-enum PROJECT_SUB_ROUTES {
+enum SUB_ROUTES {
   PROJECT_NAME = 'project-name',
   WHAT_LONG_FORM = 'what-long-form',
   WHY_LONG_FORM = 'why-long-form',
@@ -17,4 +17,4 @@ enum PROJECT_SUB_ROUTES {
   WEEKS_EXPECTED_TO_COMPLETE = 'weeks-expected-to-complete'
 }
 
-export { PROJECT_SUB_ROUTES, ROUTES }
+export { SUB_ROUTES, ROUTES }

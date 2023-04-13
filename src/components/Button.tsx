@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import MaterialUIButton from '@mui/material/Button'
 
+type ButtonVariant = 'text' | 'outlined' | 'contained'
+
 type ButtonProps = {
   text: string
   onClick: () => void
-  variant?: 'text' | 'outlined' | 'contained'
+  variant?: ButtonVariant
   className?: string
   disabled?: boolean
 }

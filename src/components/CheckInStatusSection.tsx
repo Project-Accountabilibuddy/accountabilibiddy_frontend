@@ -10,8 +10,6 @@ import useGlobalState from '../global/GlobalSate'
 
 enum CheckedInStatus {
   DONE = 'DONE',
-  CHECKED_IN = 'CHECKED_IN',
-  NOT_CHECKED_IN = 'NOT_CHECKED_IN',
   OUT_OF_RANGE = 'OUT_OF_RANGE',
   SKIPPED = 'SKIPPED',
   UP_COMING = 'UP_COMING'
@@ -210,14 +208,14 @@ const CheckInStatus = (): JSX.Element => {
                   return (
                     <div className="day_check" key={i}>
                       <div className="caption">{dayjs(day).format('dd')}</div>
-                      {checkedIn === 'DONE' && (
+                      {checkedIn === CheckedInStatus.DONE && (
                         <CheckCircleIcon color="primary" />
                       )}
-                      {checkedIn === 'SKIPPED' && <CancelIcon />}
-                      {checkedIn === 'UP_COMING' && (
+                      {checkedIn === CheckedInStatus.SKIPPED && <CancelIcon />}
+                      {checkedIn === CheckedInStatus.UP_COMING && (
                         <div className="circle empty_circle" />
                       )}
-                      {checkedIn === 'OUT_OF_RANGE' && (
+                      {checkedIn === CheckedInStatus.OUT_OF_RANGE && (
                         <div className="circle hidden_circle" />
                       )}
                     </div>

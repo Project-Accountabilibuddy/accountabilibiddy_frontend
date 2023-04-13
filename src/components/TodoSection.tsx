@@ -13,12 +13,14 @@ type TodoSectionProps = {
   className: string
 }
 
+type TypesOfUserAction = 'create' | 'update' | 'delete' | 'complete'
+
 type TodoAction = {
   id: string
   text: string
   completed: boolean
   focused: boolean
-  typeOfUserAction?: 'create' | 'update' | 'delete' | 'complete'
+  typeOfUserAction?: TypesOfUserAction
 }
 
 const StyledTodoSection = styled.div`
