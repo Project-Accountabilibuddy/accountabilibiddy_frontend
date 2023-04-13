@@ -119,7 +119,7 @@ const CheckInStatus = (): JSX.Element => {
     useGlobalState()
 
   const buildCheckInStatus = (): CompleteWeek[] => {
-    const allWeeks = []
+    const allWeeks: CompleteWeek[] = []
 
     const allCheckInDates = daysResponseFeed.map((day) => {
       return day.dateSubmitted
