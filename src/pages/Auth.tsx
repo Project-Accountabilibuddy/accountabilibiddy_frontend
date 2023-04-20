@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import MaterialUIButton from '@mui/material/Button'
@@ -90,15 +90,52 @@ const StyledAuthentication = styled.div`
   }
 `
 
+const IntialState = {
+  authFormInView: 'SIGN_UP',
+  userEmail: '',
+  password: '',
+  code: '',
+  errorText: '',
+  showPassword: false
+}
+
+type State = typeof IntialState
+
+type Action = {
+  type: 'changePasswordVisibility'
+}
+
+type ActionWithPayload = {
+  type: 'updateAuthFormInView'
+  payload: AuthOptions
+}
+
+const reducer = (state: State, action: Action | ActionWithPayload): State => {
+  if (action.type === 'updateAuthFormInView') {
+    return {
+      ...state,
+      authFormInView: action.payload
+    }
+  }
+
+  if (action.type === 'changePasswordVisibility') {
+    return {
+      ...state,
+      showPassword: !state.showPassword
+    }
+  }
+
+  return state
+}
+
 const Authentication = (): JSX.Element => {
-  const [authFormInView, setAuthFormInView] = useState<AuthOptions>('SIGN_UP')
+  const [state, dispatch] = useReducer(reducer, IntialState)
 
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
   const [code, setCode] = useState('')
 
   const [errorText, setErrorText] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
 
   const { handleGetProjects } = useBackEndMethods()
   const { setGlobalLoading } = useGlobalState()
@@ -107,7 +144,7 @@ const Authentication = (): JSX.Element => {
 
   useEffect(() => {
     setErrorText('')
-  }, [userEmail, password, code, setErrorText, authFormInView])
+  }, [userEmail, password, code, setErrorText, state.authFormInView])
 
   const handleSignUpUser = async (): Promise<any> => {
     try {
@@ -117,7 +154,7 @@ const Authentication = (): JSX.Element => {
         attributes: { email: userEmail },
         autoSignIn: { enabled: true }
       })
-      setAuthFormInView('CONFIRM_EMAIL')
+      dispatch({ type: 'updateAuthFormInView', payload: 'CONFIRM_EMAIL' })
     } catch (error: any) {
       console.log('error signing up:', error)
       const passwordError = error?.message?.toLowerCase().includes('password')
@@ -167,7 +204,7 @@ const Authentication = (): JSX.Element => {
 
   return (
     <StyledAuthentication>
-      {authFormInView === 'SIGN_UP' && (
+      {state.authFormInView === 'SIGN_UP' && (
         <>
           <h3 className="heading-1">
             Let's get you set up before your ass is kicked
@@ -182,7 +219,7 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
-            type={showPassword ? 'text' : 'password'}
+            type={state.showPassword ? 'text' : 'password'}
             className="text_field"
             variant="standard"
             label="Password"
@@ -196,7 +233,7 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      setShowPassword(!showPassword)
+                      dispatch({ type: 'changePasswordVisibility' })
                     }}
                   />
                 </InputAdornment>
@@ -251,14 +288,14 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              setAuthFormInView('SIGN_IN')
+              dispatch({ type: 'updateAuthFormInView', payload: 'SIGN_IN' })
             }}
           >
             I have an account
           </MaterialUIButton>
         </>
       )}
-      {authFormInView === 'CONFIRM_EMAIL' && (
+      {state.authFormInView === 'CONFIRM_EMAIL' && (
         <>
           <h3 className="heading-1">Confirm Sign Up</h3>
           <h4 className="caption subheading_text">
@@ -283,7 +320,7 @@ const Authentication = (): JSX.Element => {
           />
         </>
       )}
-      {authFormInView === 'SIGN_IN' && (
+      {state.authFormInView === 'SIGN_IN' && (
         <>
           <h3 className="heading-1">Let's get back to work</h3>
           <TextField
@@ -296,7 +333,7 @@ const Authentication = (): JSX.Element => {
             }}
           />
           <TextField
-            type={showPassword ? 'text' : 'password'}
+            type={state.showPassword ? 'text' : 'password'}
             className="text_field"
             variant="standard"
             label="Password"
@@ -310,7 +347,7 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      setShowPassword(!showPassword)
+                      dispatch({ type: 'changePasswordVisibility' })
                     }}
                   />
                 </InputAdornment>
@@ -328,7 +365,7 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              setAuthFormInView('SIGN_UP')
+              dispatch({ type: 'updateAuthFormInView', payload: 'SIGN_UP' })
             }}
           >
             I don't have an account
