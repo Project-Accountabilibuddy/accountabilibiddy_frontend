@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import cx from 'classnames'
 
 import useGlobalState from '../global/GlobalSate'
-import { SUB_ROUTES, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Types'
 import DailyForm from '../components/DailyForm'
 import CheckInStatusSection from '../components/CheckInStatusSection'
 import TodoSection from '../components/TodoSection'

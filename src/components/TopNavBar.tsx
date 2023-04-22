@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import useGlobalState from '../global/GlobalSate'
 import LogoBig from '../icons/LogoBig'
-import { ROUTES } from '../global/Constants'
+import { ROUTES } from '../global/Types'
 
 const StyledTopNavBar = styled.div`
   display: flex;

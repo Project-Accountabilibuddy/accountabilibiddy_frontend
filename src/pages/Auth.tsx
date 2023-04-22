@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import MaterialUIButton from '@mui/material/Button'
@@ -12,10 +12,9 @@ import InputAdornment from '@mui/material/InputAdornment'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
-import { SUB_ROUTES, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES, AUTH_SCREENS } from '../global/Types'
 import Button from '../components/Button'
-
-type AuthOptions = 'SIGN_UP' | 'SIGN_IN' | 'CONFIRM_EMAIL'
+import useAuthReducer from '../hooks/useAuthReducer'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -91,14 +90,10 @@ const StyledAuthentication = styled.div`
 `
 
 const Authentication = (): JSX.Element => {
-  const [authFormInView, setAuthFormInView] = useState<AuthOptions>('SIGN_UP')
+  const { authState, authDispatch } = useAuthReducer()
 
-  const [userEmail, setUserEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [code, setCode] = useState('')
-
-  const [errorText, setErrorText] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const { authFormInView, userEmail, password, code, errorText, showPassword } =
+    authState
 
   const { handleGetProjects } = useBackEndMethods()
   const { setGlobalLoading } = useGlobalState()
@@ -106,8 +101,8 @@ const Authentication = (): JSX.Element => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setErrorText('')
-  }, [userEmail, password, code, setErrorText, authFormInView])
+    authDispatch({ type: 'SET_ERROR_TEXT', payload: '' })
+  }, [userEmail, password, code, authFormInView])
 
   const handleSignUpUser = async (): Promise<any> => {
     try {
@@ -117,15 +112,18 @@ const Authentication = (): JSX.Element => {
         attributes: { email: userEmail },
         autoSignIn: { enabled: true }
       })
-      setAuthFormInView('CONFIRM_EMAIL')
+      authDispatch({
+        type: 'NAVIGATE_AUTH',
+        payload: AUTH_SCREENS.CONFIRM_EMAIL_SCREEN
+      })
     } catch (error: any) {
       console.log('error signing up:', error)
       const passwordError = error?.message?.toLowerCase().includes('password')
 
       if (passwordError === true) {
-        setErrorText('Ivalid password.')
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
       } else {
-        setErrorText(error?.message)
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
       }
     }
   }
@@ -138,7 +136,7 @@ const Authentication = (): JSX.Element => {
       console.log('NEW USER RES', response)
     } catch (error: any) {
       console.log('error confirming sign up', error)
-      setErrorText(error?.message)
+      authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
     }
   }
 
@@ -158,16 +156,16 @@ const Authentication = (): JSX.Element => {
       const passwordError = error?.message?.toLowerCase().includes('password')
 
       if (passwordError === true) {
-        setErrorText('Ivalid password.')
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
       } else {
-        setErrorText(error?.message)
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
       }
     }
   }
 
   return (
     <StyledAuthentication>
-      {authFormInView === 'SIGN_UP' && (
+      {authFormInView === 'SIGN_UP_SCREEN' && (
         <>
           <h3 className="heading-1">
             Let's get you set up before your ass is kicked
@@ -178,7 +176,7 @@ const Authentication = (): JSX.Element => {
             label="Email"
             value={userEmail}
             onChange={(e) => {
-              setUserEmail(e.target.value)
+              authDispatch({ type: 'SET_EMAIL', payload: e.target.value })
             }}
           />
           <TextField
@@ -188,7 +186,7 @@ const Authentication = (): JSX.Element => {
             label="Password"
             value={password}
             onChange={(e) => {
-              setPassword(e.target.value)
+              authDispatch({ type: 'SET_PASSWORD', payload: e.target.value })
             }}
             InputProps={{
               endAdornment: (
@@ -196,7 +194,7 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      setShowPassword(!showPassword)
+                      authDispatch({ type: 'CHANGE_PASSWORD_VISIBILITY' })
                     }}
                   />
                 </InputAdornment>
@@ -251,14 +249,17 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              setAuthFormInView('SIGN_IN')
+              authDispatch({
+                type: 'NAVIGATE_AUTH',
+                payload: AUTH_SCREENS.SIGN_IN_SCREEN
+              })
             }}
           >
             I have an account
           </MaterialUIButton>
         </>
       )}
-      {authFormInView === 'CONFIRM_EMAIL' && (
+      {authFormInView === 'CONFIRM_EMAIL_SCREEN' && (
         <>
           <h3 className="heading-1">Confirm Sign Up</h3>
           <h4 className="caption subheading_text">
@@ -270,7 +271,10 @@ const Authentication = (): JSX.Element => {
             label="Code"
             value={code}
             onChange={(e) => {
-              setCode(e.target.value)
+              authDispatch({
+                type: 'SET_CONFIRMATION_CODE',
+                payload: e.target.value
+              })
             }}
           />
           <h6 className="caption error_text">{errorText}</h6>
@@ -283,7 +287,7 @@ const Authentication = (): JSX.Element => {
           />
         </>
       )}
-      {authFormInView === 'SIGN_IN' && (
+      {authFormInView === 'SIGN_IN_SCREEN' && (
         <>
           <h3 className="heading-1">Let's get back to work</h3>
           <TextField
@@ -292,7 +296,10 @@ const Authentication = (): JSX.Element => {
             label="Email"
             value={userEmail}
             onChange={(e) => {
-              setUserEmail(e.target.value)
+              authDispatch({
+                type: 'SET_EMAIL',
+                payload: e.target.value
+              })
             }}
           />
           <TextField
@@ -302,7 +309,10 @@ const Authentication = (): JSX.Element => {
             label="Password"
             value={password}
             onChange={(e) => {
-              setPassword(e.target.value)
+              authDispatch({
+                type: 'SET_PASSWORD',
+                payload: e.target.value
+              })
             }}
             InputProps={{
               endAdornment: (
@@ -310,7 +320,9 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      setShowPassword(!showPassword)
+                      authDispatch({
+                        type: 'CHANGE_PASSWORD_VISIBILITY'
+                      })
                     }}
                   />
                 </InputAdornment>
@@ -328,7 +340,10 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              setAuthFormInView('SIGN_UP')
+              authDispatch({
+                type: 'NAVIGATE_AUTH',
+                payload: AUTH_SCREENS.SIGN_UP_SCREEN
+              })
             }}
           >
             I don't have an account

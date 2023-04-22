@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import MaterialUIButton from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
-import { ROUTES } from '../global/Constants'
+import { ROUTES } from '../global/Types'
 import Button from '../components/Button'
 
 const StyledNotFoundPage = styled.div`

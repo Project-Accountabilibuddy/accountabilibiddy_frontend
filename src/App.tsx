@@ -8,7 +8,7 @@ import GlobalTheme from './global/GlobalTheme'
 import GlobalTypography from './global/GlobalTypography'
 import useBackEndMethods from './hooks/useBackEndMethods'
 import useGlobalState from './global/GlobalSate'
-import { ROUTES } from './global/Constants'
+import { ROUTES } from './global/Types'
 
 import LogoBig from './icons/LogoBig'
 import { MountainforegroundImage, SunBackgroundImage } from './images'
