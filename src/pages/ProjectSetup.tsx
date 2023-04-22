@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormInput from '../components/FormInput'
 import useGlobalState from '../global/GlobalSate'
 import useBackEndMethods from '../hooks/useBackEndMethods'
-import { SUB_ROUTES, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Types'
 import TopNavBar from '../components/TopNavBar'
 
 const StyledProjectSetup = styled.div`

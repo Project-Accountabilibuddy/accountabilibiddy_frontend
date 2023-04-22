@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import MaterialUIButton from '@mui/material/Button'
@@ -12,8 +12,9 @@ import InputAdornment from '@mui/material/InputAdornment'
 
 import useBackEndMethods from '../hooks/useBackEndMethods'
 import useGlobalState from '../global/GlobalSate'
-import { SUB_ROUTES, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES, AUTH_SCREENS } from '../global/Types'
 import Button from '../components/Button'
+import useAuthReducer from '../hooks/useAuthReducer'
 
 const StyledAuthentication = styled.div`
   display: flex;
@@ -88,100 +89,11 @@ const StyledAuthentication = styled.div`
   }
 `
 
-enum AuthScreens {
-  SIGN_UP_SCREEN = 'SIGN_UP_SCREEN',
-  SIGN_IN_SCREEN = 'SIGN_IN_SCREEN',
-  CONFIRM_EMAIL_SCREEN = 'CONFIRM_EMAIL_SCREEN'
-}
-
-const IntialState = {
-  authFormInView: AuthScreens.SIGN_UP_SCREEN,
-  userEmail: '',
-  password: '',
-  code: '',
-  errorText: '',
-  showPassword: false
-}
-
-type FormInputTypes =
-  | 'SET_EMAIL'
-  | 'SET_PASSWORD'
-  | 'SET_CONFIRMATION_CODE'
-  | 'SET_ERROR_TEXT'
-
-type UpdateAuthFormInViewAction = {
-  type: 'NAVIGATE_AUTH'
-  payload: AuthScreens
-}
-
-type UpdateFormInputAction = {
-  type: FormInputTypes
-  payload: string
-}
-
-type UpdateTextVisibilityAction = {
-  type: 'CHANGE_PASSWORD_VISIBILITY'
-}
-
-type Action =
-  | UpdateAuthFormInViewAction
-  | UpdateFormInputAction
-  | UpdateTextVisibilityAction
-
-type State = typeof IntialState
-
-// TODO: BREAK OUT INTO SEPARATE FILE
-const reducer = (state: State, action: Action): State => {
-  if (action.type === 'NAVIGATE_AUTH') {
-    return {
-      ...state,
-      authFormInView: action.payload
-    }
-  }
-
-  if (action.type === 'CHANGE_PASSWORD_VISIBILITY') {
-    return {
-      ...state,
-      showPassword: !state.showPassword
-    }
-  }
-
-  if (action.type === 'SET_EMAIL') {
-    return {
-      ...state,
-      userEmail: action.payload
-    }
-  }
-
-  if (action.type === 'SET_PASSWORD') {
-    return {
-      ...state,
-      password: action.payload
-    }
-  }
-
-  if (action.type === 'SET_CONFIRMATION_CODE') {
-    return {
-      ...state,
-      code: action.payload
-    }
-  }
-
-  if (action.type === 'SET_ERROR_TEXT') {
-    return {
-      ...state,
-      errorText: action.payload
-    }
-  }
-
-  return state
-}
-
 const Authentication = (): JSX.Element => {
-  const [state, dispatch] = useReducer(reducer, IntialState)
+  const { authState, authDispatch } = useAuthReducer()
 
   const { authFormInView, userEmail, password, code, errorText, showPassword } =
-    state
+    authState
 
   const { handleGetProjects } = useBackEndMethods()
   const { setGlobalLoading } = useGlobalState()
@@ -189,7 +101,7 @@ const Authentication = (): JSX.Element => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch({ type: 'SET_ERROR_TEXT', payload: '' })
+    authDispatch({ type: 'SET_ERROR_TEXT', payload: '' })
   }, [userEmail, password, code, authFormInView])
 
   const handleSignUpUser = async (): Promise<any> => {
@@ -200,18 +112,18 @@ const Authentication = (): JSX.Element => {
         attributes: { email: userEmail },
         autoSignIn: { enabled: true }
       })
-      dispatch({
+      authDispatch({
         type: 'NAVIGATE_AUTH',
-        payload: AuthScreens.CONFIRM_EMAIL_SCREEN
+        payload: AUTH_SCREENS.CONFIRM_EMAIL_SCREEN
       })
     } catch (error: any) {
       console.log('error signing up:', error)
       const passwordError = error?.message?.toLowerCase().includes('password')
 
       if (passwordError === true) {
-        dispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
       } else {
-        dispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
       }
     }
   }
@@ -224,7 +136,7 @@ const Authentication = (): JSX.Element => {
       console.log('NEW USER RES', response)
     } catch (error: any) {
       console.log('error confirming sign up', error)
-      dispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
+      authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
     }
   }
 
@@ -244,9 +156,9 @@ const Authentication = (): JSX.Element => {
       const passwordError = error?.message?.toLowerCase().includes('password')
 
       if (passwordError === true) {
-        dispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: 'Invalid Password' })
       } else {
-        dispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
+        authDispatch({ type: 'SET_ERROR_TEXT', payload: error?.message })
       }
     }
   }
@@ -264,7 +176,7 @@ const Authentication = (): JSX.Element => {
             label="Email"
             value={userEmail}
             onChange={(e) => {
-              dispatch({ type: 'SET_EMAIL', payload: e.target.value })
+              authDispatch({ type: 'SET_EMAIL', payload: e.target.value })
             }}
           />
           <TextField
@@ -274,7 +186,7 @@ const Authentication = (): JSX.Element => {
             label="Password"
             value={password}
             onChange={(e) => {
-              dispatch({ type: 'SET_PASSWORD', payload: e.target.value })
+              authDispatch({ type: 'SET_PASSWORD', payload: e.target.value })
             }}
             InputProps={{
               endAdornment: (
@@ -282,7 +194,7 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      dispatch({ type: 'CHANGE_PASSWORD_VISIBILITY' })
+                      authDispatch({ type: 'CHANGE_PASSWORD_VISIBILITY' })
                     }}
                   />
                 </InputAdornment>
@@ -337,9 +249,9 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              dispatch({
+              authDispatch({
                 type: 'NAVIGATE_AUTH',
-                payload: AuthScreens.SIGN_IN_SCREEN
+                payload: AUTH_SCREENS.SIGN_IN_SCREEN
               })
             }}
           >
@@ -359,7 +271,7 @@ const Authentication = (): JSX.Element => {
             label="Code"
             value={code}
             onChange={(e) => {
-              dispatch({
+              authDispatch({
                 type: 'SET_CONFIRMATION_CODE',
                 payload: e.target.value
               })
@@ -384,7 +296,7 @@ const Authentication = (): JSX.Element => {
             label="Email"
             value={userEmail}
             onChange={(e) => {
-              dispatch({
+              authDispatch({
                 type: 'SET_EMAIL',
                 payload: e.target.value
               })
@@ -397,7 +309,7 @@ const Authentication = (): JSX.Element => {
             label="Password"
             value={password}
             onChange={(e) => {
-              dispatch({
+              authDispatch({
                 type: 'SET_PASSWORD',
                 payload: e.target.value
               })
@@ -408,7 +320,7 @@ const Authentication = (): JSX.Element => {
                   <VisibilityIcon
                     className="visibility_icon"
                     onClick={() => {
-                      dispatch({
+                      authDispatch({
                         type: 'CHANGE_PASSWORD_VISIBILITY'
                       })
                     }}
@@ -428,9 +340,9 @@ const Authentication = (): JSX.Element => {
           <MaterialUIButton
             variant="text"
             onClick={() => {
-              dispatch({
+              authDispatch({
                 type: 'NAVIGATE_AUTH',
-                payload: AuthScreens.SIGN_UP_SCREEN
+                payload: AUTH_SCREENS.SIGN_UP_SCREEN
               })
             }}
           >

@@ -3,7 +3,7 @@ import { Auth } from 'aws-amplify'
 import { useNavigate } from 'react-router-dom'
 
 import useGlobalState from '../global/GlobalSate'
-import { SUB_ROUTES, ROUTES } from '../global/Constants'
+import { SUB_ROUTES, ROUTES } from '../global/Types'
 
 type useBackEndMethodsReturn = {
   handleGetProjects: (onCompletionCB?: () => void) => Promise<void>

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
-import { ROUTES } from '../global/Constants'
+import { ROUTES } from '../global/Types'
 import { ProjectExampleImage } from '../images'
 import Button from '../components/Button'
 
