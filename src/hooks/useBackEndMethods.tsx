@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import useGlobalState from '../global/GlobalSate'
 import { SUB_ROUTES, ROUTES } from '../global/Types'
 
+const URI = 'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project'
+
 type useBackEndMethodsReturn = {
   handleGetProjects: (onCompletionCB?: () => void) => Promise<void>
   handleUpdateProject: (fieldToUpdate: object) => Promise<void>
@@ -34,10 +36,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       const idToken = session.getIdToken().getJwtToken()
       const config = { headers: { Authorization: idToken } }
 
-      const response = await axios.get(
-        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
-        config
-      )
+      const response = await axios.get(URI, config)
 
       if (response.data.Items.length === 0) {
         throw new Error('PROJECT_NOT_SET_UP_YET')
@@ -94,7 +93,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       const config = { headers: { Authorization: idToken } }
 
       const response = await axios.put(
-        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
+        URI,
         {
           fieldToUpdate: Object.keys(fieldToUpdate)[0],
           updateValue: Object.values(fieldToUpdate)[0],
@@ -115,11 +114,7 @@ const useBackEndMethods = (): useBackEndMethodsReturn => {
       const idToken = session.getIdToken().getJwtToken()
       const config = { headers: { Authorization: idToken } }
 
-      const response = await axios.post(
-        'https://neu3e8od22.execute-api.us-east-1.amazonaws.com/project',
-        projectName,
-        config
-      )
+      const response = await axios.post(URI, projectName, config)
 
       console.log(response.data)
     } catch (err) {
